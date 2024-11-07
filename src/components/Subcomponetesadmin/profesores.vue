@@ -1,7 +1,6 @@
 <template>
   <div class="profesores-container">
     <h1>Profesores</h1>
-    <p>Tenemos que ver cómo conectar con la base de datos</p>
     
     <form class="profesor-form" @submit.prevent="Loginentrenador" >
       <div class="form-group">

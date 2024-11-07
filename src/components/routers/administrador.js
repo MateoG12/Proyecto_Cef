@@ -4,6 +4,7 @@ import informacion from "../Subcomponetesadmin/informacion.vue";
 import perfil from "../Subcomponetesadmin/perfil.vue";
 import profesores from "../Subcomponetesadmin/profesores.vue";
 
+import Slider from "../Slider.vue";
 import Componente_Entrenadores from "../Componente_Entrenadores.vue";
 import Componente_Usuario from "../Componente_Usuario.vue";
 import Componente_Administrador from "../Componente_Administrador.vue";
@@ -48,6 +49,12 @@ const routes=[
         path:'/Tactica',
         name:'Tactica',
         component:Tactica},
+    {
+        path:'/Slider',
+        name:'Slider',
+        component:Slider
+    }
+
             
 ]
 const router=createRouter({

@@ -1,7 +1,7 @@
 <template>
   <div class="configuracion-container">
-    <h1>REGISTROS</h1>
-    <p>Esta es la sección de generar registros de diferentes tipos.</p>
+    <h1>Noticias</h1>
+    <p>Aqui agrege el titulo y desripcion breve de la noticia y su respectiva noticia.</p>
 
     <div class="registros-container">
       <div class="registro-card" v-for="(registro, index) in registros" :key="index">
@@ -14,20 +14,19 @@
       <input
         v-model="nuevoTitulo"
         type="text"
-        placeholder="Título del nuevo registro"
+        placeholder="Título de la nueva noticia"
         class="registro-input"
       />
       <textarea
         v-model="nuevaDescripcion"
-        placeholder="Descripción del nuevo registro"
+        placeholder="Descripción de la nueva noticia"
         rows="4"
         class="registro-textarea"
       ></textarea>
-      <button @click="agregarRegistro" class="submit-button">Agregar Registro</button>
+      <button @click="agregarRegistro" class="submit-button">Agregar Noticia</button>
     </div>
   </div>
 </template>
-
 <script>
 export default {
   data() {

@@ -1,8 +1,11 @@
 <template>
     <div>
       <h1>Perfil</h1>
-      <p>editar perfiles </p>
+      <button @click="editarDeportista(deportista)">Editar</button>
+      <button @click="eliminarDeportista(deportista)">Eliminar</button>
+      <button @click="consultarDeportista(deportista)">Consultar</button>
     </div>
+    
   </template>
   
   <style scoped>

@@ -3,27 +3,35 @@
     <main>
       <div class="contenedor-admin">
         <div class="perfil-seccion">
+          <h2>TU PERFIL</h2>
           <section class="perfil">
-            <h2>Tu Perfil</h2>
-            <div class="foto-perfil">Foto</div>
+            <div class="info">
             <p>Nombre: {{ nombreAdmin }}</p>
             <p>Email: {{ emailAdmin }}</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+            <p>Usuario: {{ usuario }}</p>
+            <p>Rol: {{ rolusuario }}</p>
+            <p>telefono: {{ telefonousuario }}</p>
+            <button @click="editarUsuario">Editar</button>
+            <button @click="eliminarUsuario">Eliminar</button>
+            </div>
+            <div class="foto-perfil">
+              <img v-if="fotoAdmin" :src="fotoAdmin" alt="Foto de Perfil" />
+              <div v-else>No hay foto disponible</div>
+            </div>
           </section>
         </div>
 
         <div class="contenido-principal">
           <nav class="internal-menu">
             <button @click="currentSection = 'deportista'">Información del Deportista</button>
-            <button @click="currentSection = 'pagos'">Pagos</button>
             <button @click="currentSection = 'inventario'">Inventario</button>
+            <button @click="currentSection = 'pagos'">Pagos</button>
           </nav>
-
           <div class="seccion-actual">
             <template v-if="currentSection === 'deportista' && !editingDeportista">
               <h2>Generar Código</h2>
               <h3>Información del Deportista</h3>
-
+              
               <label for="categoria">Filtrar por categoría:</label>
               <select v-model="selectedCategory" id="categoria">
                 <option value="">Todas</option>
@@ -89,13 +97,10 @@
               <h2>Inventario</h2>
               <h3>Agregar Producto</h3>
               <form @submit.prevent="agregarProducto">
-                <input v-model="nuevoProducto.inventarioid" placeholder="Id invetario" required />
+                <input v-model="nuevoProducto.implementos" placeholder="Id invetario" required />
                 <input v-model="nuevoProducto.nombre" placeholder="Nombre del Producto" required />
                 <input v-model="nuevoProducto.descripcion" placeholder="Descripción" required />
                 <input v-model="nuevoProducto.cantidad" type="number" placeholder="Cantidad" required />
-                <input v-model="nuevoProducto.ubicacion" placeholder="Ubicación" required />
-                <input v-model="nuevoProducto.administradorid" type="number" placeholder="ID Administrador" required />
-                <input v-model="nuevoProducto.entrenadorid" type="number" placeholder="ID Entrenador" required />
                 <button type="submit">Agregar</button>
               </form>
 
@@ -103,7 +108,7 @@
                 <p>Producto: {{ producto.nombre }}</p>
                 <p>Descripción: {{ producto.descripcion }}</p>
                 <p>Cantidad: {{ producto.cantidad }}</p>
-                <p>Ubicación: {{ producto.ubicacion }}</p>
+        
                 <button @click="editarProducto(producto)">Editar</button>
                 <button @click="eliminarProducto(producto)">Eliminar</button>
               </div>
@@ -114,10 +119,31 @@
                   <input v-model="editingProducto.nombre" placeholder="Nombre del Producto" required />
                   <input v-model="editingProducto.descripcion" placeholder="Descripción" required />
                   <input v-model="editingProducto.cantidad" type="number" placeholder="Cantidad" required />
-                  <input v-model="editingProducto.ubicacion" placeholder="Ubicación" required />
                   <button type="submit">Actualizar Producto</button>
                 </form>
               </template>
+              <template v-if="isEditing">
+                <h3>Editar Perfil</h3>
+                <form @submit.prevent="actualizarUsuario">
+                    <label for="nombreAdmin">Nombre:</label>
+                    <input type="text" v-model="nombreAdmin" required />
+
+                    <label for="emailAdmin">Email:</label>
+                    <input type="email" v-model="emailAdmin" required />
+
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" v-model="usuario" required />
+
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" v-model="telefonousuario" required />
+
+                    <label for="foto">Foto (URL):</label>
+                    <input type="text" v-model="fotoAdmin" />
+
+                    <button type="submit">Actualizar</button>
+                    <button type="button" @click="cancelarEdicion">Cancelar</button>
+                </form>
+            </template>
             </template>
           </div>
         </div>
@@ -129,9 +155,9 @@
           <nav class="internal-menu">
             <ul class="admin-menu">
               <li><router-link to="/admin/informacion">Información</router-link></li>
-              <li><router-link to="/admin/perfil">Perfil</router-link></li>
-              <li><router-link to="/admin/configuracion">Configuración</router-link></li>
-              <li><router-link to="/admin/profesores">Profesores</router-link></li>
+              <li><router-link to="/admin/perfil">Configurar Perfil</router-link></li>
+              <li><router-link to="/admin/configuracion">Noticia</router-link></li>
+              <li><router-link to="/admin/profesores">Agregar Profesores</router-link></li>
             </ul>
           </nav>
           <router-view></router-view>
@@ -177,6 +203,17 @@ export default {
     return {
       nombreAdmin: '',
       emailAdmin: '',
+      usuario: '',
+      rolusuario: '',
+      telefonousuario: '',
+      fotoAdmin: '',
+      isEditing: null, 
+      nombreAdmin: '',
+      emailAdmin: '',
+      usuario:'',
+      rolusuario: '',
+      telefonousuario: '',
+      fotoAdmin:'',
       menuActive: false,
       currentSection: 'deportista',
       deportistas: [],
@@ -184,7 +221,7 @@ export default {
       editingDeportista: null,
       categoriasPermitidas: ['Sub7', 'Sub9', 'Sub11', 'Sub13', 'Sub15', 'Sub17', 'Sub20', 'Elite'],
       inventario: [],
-      nuevoProducto: { nombre: '', descripcion: '', cantidad: '', ubicacion: '', administradorid: '', entrenadorid: '' },
+      nuevoProducto: { implementos: '', descripcion: '', cantidad: '', nombre: '' },
       editingProducto: null
     };
   },
@@ -197,6 +234,91 @@ export default {
     }
   },
   methods: {
+    editarUsuario() {
+        this.isEditing = true; 
+    },
+    cancelarEdicion() {
+        this.isEditing = false; 
+    },
+    async actualizarUsuario() {
+  const documento = this.Documento; // Asumiendo que tienes el documento del usuario almacenado
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/ActualizarUsuario/${documento}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        nombre: this.nombreAdmin,
+        correo_electronico: this.emailAdmin,
+        usuario: this.usuario,
+        telefono: this.telefonousuario,
+        rol: this.rolusuario, 
+        foto: this.fotoAdmin,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al actualizar el usuario');
+    }
+
+    const usuarioActualizado = await response.json();
+    console.log("Usuario actualizado:", usuarioActualizado); // Aquí verificas qué se devuelve de la API
+
+    if (usuarioActualizado) {
+      alert('Usuario actualizado con éxito');
+      this.cancelarEdicion(); // Cierra el formulario de edición
+
+      // Actualiza los datos locales si es necesario
+      this.nombreAdmin = usuarioActualizado.nombre;
+      this.emailAdmin = usuarioActualizado.correo_electronico;
+      this.usuario = usuarioActualizado.usuario;
+      this.telefonousuario = usuarioActualizado.telefono;
+      this.rolusuario = usuarioActualizado.rol;
+      this.fotoAdmin = usuarioActualizado.foto;
+
+      // ACTUALIZA localStorage con los nuevos valores
+      localStorage.setItem('nombreusuario', this.nombreAdmin);
+      localStorage.setItem('emailusuario', this.emailAdmin);
+      localStorage.setItem('usuario', this.usuario);
+      localStorage.setItem('telefonousuario', this.telefonousuario);
+      localStorage.setItem('rolusuario', this.rolusuario);
+      localStorage.setItem('fotoAdmin', this.fotoAdmin);
+    } else {
+      alert("No se pudo actualizar el usuario correctamente");
+    }
+  } catch (error) {
+    console.error('Error al actualizar el usuario:', error);
+    alert(error.message);
+  }
+},
+async eliminarUsuario() {
+   const confirmar = confirm('¿Estás seguro de que deseas eliminar este usuario?');
+
+   if (!confirmar) {
+     return; // Si el usuario no confirma, no se elimina
+   }
+
+   try {
+     const response = await fetch(`http://127.0.0.1:8000/EliminarUsuario/${this.Documento}`, {
+       method: 'DELETE',
+     });
+
+     if (!response.ok) {
+       throw new Error('Error al eliminar el usuario');
+     }
+
+     alert('Usuario eliminado con éxito');
+     
+     // Aquí puedes redirigir al usuario a otra página, o cerrar sesión, o eliminar los datos del usuario localmente
+     // Ejemplo: Redirigir a la página de login después de eliminar el usuario
+     localStorage.clear(); // Limpiar los datos almacenados
+     this.$router.push('/login'); // Redirigir a la página de login
+   } catch (error) {
+     console.error('Error al eliminar el usuario:', error);
+     alert(error.message);
+   }
+ },
     async fetchDeportistas() {
       try {
         const response = await fetch('http://127.0.0.1:8000/ConsultarJugadores');
@@ -210,7 +332,7 @@ export default {
     },
     async fetchInventario() {
       try {
-        const response = await fetch('http://127.0.0.1:8000/ConsultarInventario');
+        const response = await fetch('http://127.0.0.1:8000/consultarImplementos');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -221,7 +343,7 @@ export default {
     },
     async agregarProducto() {
   try {
-    const response = await fetch('http://127.0.0.1:8000/AgregarProducto', {
+    const response = await fetch('http://127.0.0.1:8000/insertarImplemento', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -235,7 +357,6 @@ export default {
       Swal.fire('Error', errorMessage, 'error');
       return; 
     }
-
     this.nuevoProducto = { nombre: '', descripcion: '', cantidad: '', ubicacion: '', administradorid: '', entrenadorid: '' };
     await this.fetchInventario();
     Swal.fire('Éxito', 'Producto agregado correctamente', 'success');
@@ -250,7 +371,7 @@ export default {
     },
     async actualizarProducto() {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/ActualizarProducto/${this.editingProducto.inventarioid}`, {
+        const response = await fetch(`http://127.0.0.1:8000/actualizarImplemento/${this.editingProducto.implementos}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -276,7 +397,7 @@ export default {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch(`http://127.0.0.1:8000/EliminarProducto/${producto.inventarioid}`, {
+          fetch(`http://127.0.0.1:8000/eliminarImplemento/${producto.implementos}`, {
             method: 'DELETE'
           })
           .then(response => {
@@ -294,27 +415,76 @@ export default {
         }
       });
     },
-    editarDeportista(deportista) {
-      this.editingDeportista = { ...deportista };
-    },
-    async actualizarDeportista() {
-      try {
-        const response = await fetch(`http://127.0.0.1:8000/ActualizarDeportista/${this.editingDeportista.documento}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.editingDeportista)
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        this.editingDeportista = null;
-        await this.fetchDeportistas();
-      } catch (error) {
-        console.error('Error al actualizar deportista:', error);
+async eliminarUsuario() {
+  const confirmar = confirm('¿Estás seguro de que deseas eliminar este usuario?');
+
+  if (!confirmar) {
+    return; // Si el usuario no confirma, no se elimina
+  }
+
+  // Paso 1: Verificar si el usuario tiene implementos asociados a su documento
+  try {
+    // Hacer una consulta para obtener los implementos asociados al usuario
+    const response = await fetch(`http://127.0.0.1:8000/consultarImplementos/${this.Documento}`);
+    
+    if (!response.ok) {
+      throw new Error('Error al consultar los implementos');
+    }
+
+    const implementos = await response.json();
+
+    // Si el usuario tiene implementos asociados
+    if (implementos.length > 0) {
+      // Paso 2: Mostrar un mensaje con la opción de editar el documento de los implementos
+      const result = await Swal.fire({
+        title: 'El usuario tiene implementos asociados',
+        text: '¿Deseas editar el documento de los implementos antes de eliminar el usuario?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Editar Implementos',
+        cancelButtonText: 'Eliminar Usuario',
+      });
+
+      if (result.isConfirmed) {
+        // Redirigir a una sección o abrir un formulario para editar los implementos
+        this.editarImplementos(implementos);
+        return; // No eliminamos el usuario, solo se editan los implementos
       }
-    },
+    }
+
+    // Si no hay implementos asociados o si el usuario decide eliminar el usuario sin editar los implementos
+    const responseEliminar = await fetch(`http://127.0.0.1:8000/EliminarUsuario/${this.Documento}`, {
+      method: 'DELETE',
+    });
+
+    if (!responseEliminar.ok) {
+      throw new Error('Error al eliminar el usuario');
+    }
+
+    alert('Usuario eliminado con éxito');
+
+    // Limpiar los datos de localStorage y redirigir al login
+    localStorage.clear();
+    this.$router.push('/login'); // Redirigir a la página de login
+
+  } catch (error) {
+    console.error('Error al eliminar el usuario:', error);
+    alert(error.message);
+  }
+},
+
+// Método para editar los implementos del usuario
+editarImplementos(implementos) {
+  // Aquí puedes abrir un formulario o hacer algo con los implementos
+  // Para editar los documentos o cualquier otra acción relacionada con los implementos
+  console.log('Editar implementos asociados:', implementos);
+  
+  // Por ejemplo, podrías navegar a una nueva ruta para editar los implementos
+  // this.$router.push({ name: 'editarImplementos', params: { implementos: implementos } });
+
+  // O abrir un formulario dentro de tu componente para editar los implementos
+  this.editingImplementos = implementos;
+},
     eliminarDeportista(deportista) {
       Swal.fire({
         title: '¿Estás seguro?',
@@ -325,7 +495,7 @@ export default {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch(`http://127.0.0.1:8000/EliminarDeportista/${deportista.documento}`, {
+          fetch(`http://127.0.0.1:8000/EliminarJ/${deportista.documento}`, {
             method: 'DELETE'
           })
           .then(response => {
@@ -367,8 +537,14 @@ export default {
   mounted() {
     this.fetchDeportistas();
     this.fetchInventario();
-    this.nombreAdmin = localStorage.getItem('nombreAdmin') || 'Nombre no disponible';
-    this.emailAdmin = localStorage.getItem('emailAdmin') || 'Email no disponible';
+    this.nombreAdmin = localStorage.getItem('nombreusuario') || 'Nombre no disponible';
+    this.emailAdmin = localStorage.getItem('emailusuario') || 'Email no disponible';
+    this.usuario = localStorage.getItem('usuario') || 'usuario no disponible';
+    this.rolusuario = localStorage.getItem('rolusuario') || 'rol no disponible';
+    this.telefonousuario = localStorage.getItem('telefonousuario') || 'telefono no disponible';
+    this.fotoAdmin = localStorage.getItem('fotoAdmin') || '';
+    
+    console.log('URL de la foto:', this.fotoAdmin);
   }
 };
 </script>
@@ -486,21 +662,25 @@ main {
 
 .perfil-seccion {
   margin-bottom: 1rem;
+  margin-top: 2rem;
 }
-
+.info{
+  width: 600px;
+  height: 100px;
+  margin-left: 15rem;
+  color: #ffffff;
+  font-size: 25px;
+}
 .perfil {
-  margin-bottom: 2rem;
+  margin-top: 2rem;
+  display: flex;
 }
 
-.foto-perfil {
-  background-color: grey;
-  color: #fff;
-  padding: 2rem;
-  text-align: center;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
+.foto-perfil img {
+  width: 200px; 
+  height: 200px; 
+  border-radius: 50%;
 }
-
 .contenido-principal {
   display: flex;
   flex-direction: column;

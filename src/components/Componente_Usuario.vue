@@ -2,9 +2,10 @@
   <div class="containeer">
   <div class="header-contenido ">
     <div class="header-txt ">
-      <h1 >Independiente cef</h1>
+      <h1 >Independiente C.E.F</h1>
       <p v-if="!mostrarTextoLargo">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure enim quasi delectus totam.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis dicta perferendis expedita doloremque beatae eum magnam, iusto incidunt sunt enim esse exercitationem est illum cupiditate, labore dolores adipisci amet rem.
       </p>
       <p v-if="mostrarTextoLargo">
         Numquam laborum ratione alias enim, aperiam et necessitatibus quas similique accusamus voluptatibus eligendi porro amet, odit tenetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -20,7 +21,7 @@
   </div>
 </div>
 
-<a href="dirigir con chat"></a><h2>NOTICIAS</h2>
+<a href="dirigir con chat"></a><h2>📰 NOTICIAS 📰</h2>
   <div class="noticias">
   <div class="column">
     <div class="item">
@@ -29,7 +30,7 @@
     <img class="imagendañada1" src="E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\boton 1.jpg" alt="espacio imagen">
     </div>
     <div class="item">
-      <h3>>Éxito en el Torneo Local</h3>
+      <h3>Éxito en el Torneo Local</h3>
       <p>El equipo juvenil de la academia se coronó campeón en el torneo local. Con un rendimiento excepcional, nuestros jugadores demostraron el talento y la dedicación que se cultivan en nuestra institución</p>
       <img  class="imagendañada1"src="E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\boton 1.jpg" alt="espacio imagen">
     </div>
@@ -47,41 +48,22 @@
     </div>
   </div>
 </div>
-
-  
-  <div class="slider">
-    <div class="slider-content" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
-      <img v-for="(image, index) in images" :key="index" :src="image" alt="Slider Image" />
+<div>
+    <div class="Slider" >
+      <SliderComponent />
     </div>
-    <button @click="prevImage" class="slider-button">Anterior</button>
-    <button @click="nextImage" class="slider-button">Siguiente</button>
-  </div>
-  <h2>Cumpleaños de Este Mes</h2>
-  <div class="cumpleaños">
+</div>
+<h2 class="Titulo_Cumpleaños">🎂 Cumpleaños de Este Mes 🎂</h2>
+<div class="cumpleaños">
   <div class="cumpleanos-list">
-    <div class="cumpleano-item item-large">
-      <h4>Juan Pérez</h4>
-      <p>Fecha: 5 de octubre</p>
-      <img class="imagenperfil" src="E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\perfil.jpg" alt="">
-    </div>
-    <div class="cumpleano-item item-small">
-      <h4>María López</h4>
-      <p>Fecha: 12 de octubre</p>
-      <img class="imagenperfil"  src="E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\perfil.jpg" alt="">
-    </div>
-    <div class="cumpleano-item item-small">
-      <h4>Carlos García</h4>
-      <p>Fecha: 18 de octubre</p>
-      <img class="imagenperfil"  src="E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\perfil.jpg" alt="">
-    </div>
-    <div class="cumpleano-item item-large">
-      <h4>Laura Martínez</h4>
-      <p>Fecha: 25 de octubre</p>
-      <img class="imagenperfil"  src="E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\perfil.jpg" alt="">
+    <div v-for="jugador in cumpleanos" :key="jugador.documento" class="cumpleano-item">
+      <h4>{{ jugador.nombre }}</h4>
+      <p>Fecha: {{ new Date(jugador.fecha_nacimiento).toLocaleDateString() }}</p>
+      <img class="imagenperfil" :src="jugador.foto" alt="">
     </div>
   </div>
 
-      <button @click="mostrarMapa" class="btn-mapa">Ver Ubicación del Centro</button>
+      <button @click=" mostrarMapa" class="btn-mapa">📌 Ver Ubicación del Centro 📌</button>
       
       <div v-if="mapaVisible" class="map-modal">
   <div class="map-overlay" @click="mostrarMapa"></div>
@@ -94,22 +76,24 @@
     loading="lazy"></iframe>
 </div>
 </div>
-  <div class="contenedor3">
-<div class="zoom">
-  <div class="imagen-boton1">
-      <button class="p_zoom"><router-link to="/Categoria" >CATEGORIA</router-link></button>
+<div class="contenedor3">
+  <div class="zoom">
+    <div class="imagen-boton1">
+      <button class="p_zoom"><router-link to="/Categoria"><p class="p_zoom">CATEGORIA</p></router-link></button>
     </div>
-</div>
-<div class="zoom">
-  <div class="imagen-boton2">
-    <button class="p_zoom">CONVOCATORIAS</button>
   </div>
-</div>
-<div class="zoom">
-  <div class="imagen-boton3">
-    <button class="p_zoom"><router-link to="/Personal" >PERSONAL</router-link></button>
+  <div class="zoom">
+    <div class="imagen-boton2">
+      <a href="https://www.instagram.com/clubindependiente_cef" target="_blank">
+        <button class="p_zoom">CONVOCATORIAS</button>
+      </a>
+    </div>
   </div>
-</div>
+  <div class="zoom">
+    <div class="imagen-boton3">
+      <button class="p_zoom"><router-link to="/Personal"><p class="p_zoom">PERSONAL</p></router-link></button>
+    </div>
+  </div>
 </div>
 <footer class="footer">
       <div class="footer-content">
@@ -119,8 +103,8 @@
               <a href="#" class="icon"><i class="fab fa-instagram">#</i></a>
           </div>
           <div class="contact-info">
-              <a href="mailto:info@example.com" class="info-item"><i class="fas fa-envelope"></i> info@example.com</a>
-              <a href="tel:+123456789" class="info-item"><i class="fas fa-phone"></i> +123 456 789</a>
+              <a href="mailto:info@example.com" class="info-item"><i class="fas fa-envelope"></i>Clubindependietecef@Gmail.com</a>
+              <a href="tel:+123456789" class="info-item"><i class="fas fa-phone"></i>3138683102</a>
               <p class="info-item"><i class="fas fa-map-marker-alt"></i> Calle Ejemplo 123, Ciudad</p>
           </div>
       </div>
@@ -128,37 +112,48 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import SliderComponent from '@/components/Slider.vue';
 
 const mostrarTextoLargo = ref(false);
+const mapaVisible = ref(false);
+const cumpleanos = ref([]);
 
 function toggleTexto() {
   mostrarTextoLargo.value = !mostrarTextoLargo.value;
 }
 
-const mapaVisible = ref(false);
-
 function mostrarMapa() {
   mapaVisible.value = !mapaVisible.value; 
 }
 
+const BASE_URL = 'http://localhost:8000'; // Cambia esto a la URL de tu servidor
 
-const images = ref([
-  'https://via.placeholder.com/800x400?text=Imagen+1',
-  'https://via.placeholder.com/800x400?text=Imagen+2',
-  'https://via.placeholder.com/800x400?text=Imagen+3',
-  'https://via.placeholder.com/800x400?text=Imagen+3',
-]);
+async function obtenerCumpleanos() {
+  const response = await fetch('http://127.0.0.1:8000/CumpleanosEsteMes');
+  const data = await response.json(); // Guarda la respuesta en una variable
+  console.log(data); // Imprime la respuesta completa
 
-const currentIndex = ref(0);
+  if (Array.isArray(data)) {
+    cumpleanos.value = data.map(jugador => {
+      // Concatenar la URL base con la ruta de la foto
+      jugador.foto = BASE_URL + jugador.foto;
+      return jugador;
+    });
 
-function nextImage() {
-  currentIndex.value = (currentIndex.value + 1) % images.value.length;
+    // Imprime cada jugador y su foto
+    cumpleanos.value.forEach(jugador => {
+      console.log(`Jugador: ${jugador.nombre}, Foto URL: ${jugador.foto}`);
+    });
+  } else {
+    console.error('La respuesta del servidor no es un array.');
+  }
 }
 
-function prevImage() {
-  currentIndex.value = (currentIndex.value - 1 + images.value.length) % images.value.length;
-}
+
+onMounted(() => {
+  obtenerCumpleanos();
+});
 </script>
 
 <style>
@@ -168,10 +163,11 @@ function prevImage() {
   box-sizing: border-box;
   text-decoration: none;
   list-style: none;
+  font-family: Arial, sans-serif;
 }
 
 body {
-  background: rgb(0,0,0);
+background: rgb(0,0,0);
 background: linear-gradient(180deg, rgba(0,0,0,1) 24%, rgba(233,45,45,1) 59%, rgba(0,0,0,1) 79%);
 }
 
@@ -276,44 +272,15 @@ background: linear-gradient(180deg, rgba(0,0,0,1) 24%, rgba(233,45,45,1) 59%, rg
   }
 }
 
+.Slider{
+  margin-left: 500px;
+}
 
 .item:hover {
   transform: scale(1.05); 
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); 
 }
 
-@keyframes slideIn {
-  0% {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideIn {
-  0% {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes scaleUp {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1.1); /* Escalar un 10% */
-    opacity: 1;
-  }
-}
 h2{
   color: rgb(255, 255, 255);
   text-align: center;
@@ -376,7 +343,9 @@ h2{
   height: 100%;
   z-index: 9999; 
 }
-
+.Titulo_Cumpleaños{
+  margin-top: 20px;
+}
 .map-overlay {
   position: absolute;
   top: 0;
@@ -393,56 +362,19 @@ h2{
   width: 100%;
   height: 100%;
 }
-.slider {
-  position: relative;
-  width: 1000px; 
-  height: 650px; 
-  margin: 20px auto; 
-  overflow: hidden;
-  padding-top: 30px;
-}
 
-.slider-content {
-  display: flex;
-  transition: transform 0.5s ease; 
-}
-
-.slider img {
-  width: 1000px;
-  height: 650px; 
-}
-
-.slider-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(255, 255, 255, 0.7);
-  border: none;
-  cursor: pointer;
-  padding: 10px 20px;
-  border-radius: 5px;
-  z-index: 10;
-}
-
-.slider-button:nth-child(2) {
-  left: 10px; 
-}
-
-.slider-button:nth-child(3) {
-  right: 10px; 
-}
 .contenedor3{
 display: flex;
 justify-content: space-around;
 width: 100%;
-padding-top: 200px;
+padding-top: 100px;
 margin-left: 300px;
 padding-bottom: 100px;
-background-color: #ffffff;
+
 
 }
 .imagen-boton1{
-background-image: url("E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\carrusel 1.jpg");
+background-image: url("E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\boton 1.jpg");
 object-fit: cover; 
 width: 250px;
 height: 250px;
@@ -452,7 +384,7 @@ border-radius: 20px;
 
 }
 .imagen-boton2{
-background-image:url("E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\carrusel 3.jpg");
+background-image:url("E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\boton 2.jpg");
 object-fit: cover; 
 width: 250px;
 height: 250px;
@@ -471,19 +403,36 @@ background-size: cover;
 border-radius: 20px;
 
 }
-.zoom{
-border-radius: 20px;
-border: none;
-transition: 1.5s ease;
- -moz-transition: 1.5s ease;
- -webkit-transition: 1.5s ease; 
- -o-transition: 1.5s ease;
+.zoom {
+    position: relative; /* Necesario para que el pseudo-elemento se posicione correctamente */
+    border-radius: 20px;
+    border: none;
+    transition: 1.5s ease;
+    overflow: hidden; /* Para ocultar el pseudo-elemento fuera del botón */
 }
-.zoom:hover{
-transform : scale(1.5);
--webkit-transform : scale(1.5); 
--o-transform : scale(1.5); 
--ms-transform : scale(1.5); 
+
+.zoom::before {
+    content: ''; /* Necesario para el pseudo-elemento */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.711); /* Color negro con transparencia */
+    opacity: 0; /* Oculto por defecto */
+    transition: opacity 0.3s ease; /* Transición suave */
+}
+
+.zoom:hover::before {
+    opacity: 1; /* Muestra la superposición al pasar el mouse */
+}
+
+.zoom:hover {
+    transform: scale(1.5);
+}
+
+.zoom:hover .p_zoom {
+    color: white; /* Cambia el color del texto a blanco al pasar el mouse */
 }
 .p_zoom {
 cursor: pointer; 
@@ -497,22 +446,22 @@ font-weight: bold;
 position: relative; 
 padding-bottom: 10px; 
 }
-.p_zoom::after {
+/* .p_zoom::after {
 content: "";
-color: #530505;
+color: #000000;
 display: block; 
 position: absolute; 
 left: 0; 
 bottom: 0;
 width: 100%;
 height: 2px; 
-background-color: rgb(49, 4, 4); 
+background-color: rgb(0, 0, 0); 
 opacity: 0; 
 transition: opacity 0.3s; 
-}
-
+} */
 .p_zoom:hover::after {
 opacity: 1; 
+background-color: #000000;
 }
 .footer {
 border-top: 1px solid #f00  ;
@@ -566,7 +515,7 @@ text-align: center;
 .contenedor3{
   align-items: center;
   width: 70%;
-  background-color: #000000;
+  background-color: #00000000;
   
 }
 </style>

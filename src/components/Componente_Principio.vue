@@ -2,7 +2,7 @@
 <header class="header">
     <div class="contenedor">
       <div class="menu">
-        <details>
+        <!-- <details>
           <summary class="boton1">
             <img class="boton-menu" src="E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\menu.png" alt="">
           </summary>
@@ -12,7 +12,7 @@
             <p class="p">Eventos</p>
             <p class="p">Personal</p>
           </div>
-        </details>
+        </details> -->
       </div>
       <p ><router-link class="p3" to="/">Inicio</router-link></p>
       <p class="p2">Noticia</p>
@@ -21,7 +21,7 @@
       </div>
       <p class="p2">Nosotros</p>
       <div class="login">
-        <button class="boton-inicio"><router-link to="/login" >Inicio Sesion  |  Inscribete</router-link></button>
+        <button class="boton-inicio"><router-link to="/login" ><P class="p_boton">Inicio Sesion  |  Inscribete</P></router-link></button>
       </div> 
     </div>
 </header>
@@ -65,6 +65,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
   .p{
+      font-size: 20px;
       cursor: pointer;
       color: #333;
   }
@@ -78,8 +79,11 @@
       width: 100px;
       height: 100px;
   }
-  
+  .p_boton{
+    color: #ffffff;
+  }
   .p2{
+    font-size: 20px;
     cursor: pointer;
     color: rgb(255, 255, 255);
     border: none;
@@ -89,6 +93,7 @@
     border: none;
   }
   .p3{
+    font-size: 20px;
     margin-left: 60px;
     cursor: pointer;
     color: rgb(255, 255, 255);

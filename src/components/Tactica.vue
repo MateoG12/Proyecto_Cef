@@ -3,7 +3,7 @@
         <div id="campo">
             <canvas
                 id="tacticaCanvas"
-                width="800"
+                width="1200"
                 height="600"
                 @mousedown="handleMouseDown"
                 @mouseup="stopDragging"
@@ -24,7 +24,8 @@ export default {
         return {
             canvas: null,
             ctx: null,
-            jugadores: [],
+            jugadoresEquipo1: [],
+            jugadoresEquipo2: [],
             flechas: [],
             isDragging: false,
             currentElemento: null,
@@ -43,26 +44,35 @@ export default {
     },
     methods: {
         cargarJugadores() {
-            const storedJugadores = JSON.parse(localStorage.getItem('jugadores'));
-            if (storedJugadores) {
-                this.jugadores = storedJugadores;
+            const storedJugadores1 = JSON.parse(localStorage.getItem('jugadoresEquipo1'));
+            const storedJugadores2 = JSON.parse(localStorage.getItem('jugadoresEquipo2'));
+            if (storedJugadores1) {
+                this.jugadoresEquipo1 = storedJugadores1;
             } else {
-                this.inicializarJugadores();
+                this.inicializarJugadores(1);
+            }
+            if (storedJugadores2) {
+                this.jugadoresEquipo2 = storedJugadores2;
+            } else {
+                this.inicializarJugadores(2);
             }
         },
-        inicializarJugadores() {
+        inicializarJugadores(equipo) {
+            const jugadores = equipo === 1 ? this.jugadoresEquipo1 : this.jugadoresEquipo2;
+            const color = equipo === 1 ? 'red' : 'blue';
+
             for (let i = 0; i < this.numJugadores; i++) {
-                this.jugadores.push({
+                jugadores.push({
                     x: Math.random() * (this.canvas.width - 40) + 20,
                     y: Math.random() * (this.canvas.height - 40) + 20,
                     radius: 20,
-                    color: i < 11 ? 'red' : 'blue',
+                    color: color,
                 });
             }
-            this.guardarJugadores();
+            this.guardarJugadores(equipo);
         },
-        guardarJugadores() {
-            localStorage.setItem('jugadores', JSON.stringify(this.jugadores));
+        guardarJugadores(equipo) {
+            localStorage.setItem(`jugadoresEquipo${equipo}`, JSON.stringify(equipo === 1 ? this.jugadoresEquipo1 : this.jugadoresEquipo2));
         },
         activarAgregarFlecha() {
             this.isAddingFlecha = !this.isAddingFlecha; // Alternar estado de agregar flecha
@@ -90,11 +100,12 @@ export default {
         stopDragging() {
             this.isDragging = false;
             this.currentElemento = null;
-            this.guardarJugadores(); // Guarda posiciones al dejar de arrastrar
+            this.guardarJugadores(1);
+            this.guardarJugadores(2);
         },
         startDragging(event) {
             const mousePos = this.getMousePos(event);
-            this.jugadores.forEach(jugador => {
+            [...this.jugadoresEquipo1, ...this.jugadoresEquipo2].forEach(jugador => {
                 if (this.isMouseOverJugador(mousePos, jugador)) {
                     this.isDragging = true;
                     this.currentElemento = jugador;
@@ -132,8 +143,16 @@ export default {
         draw() {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-            // Dibujar jugadores
-            this.jugadores.forEach(jugador => {
+            // Dibujar jugadores del equipo 1
+            this.jugadoresEquipo1.forEach(jugador => {
+                this.ctx.fillStyle = jugador.color;
+                this.ctx.beginPath();
+                this.ctx.arc(jugador.x, jugador.y, jugador.radius, 0, Math.PI * 2);
+                this.ctx.fill();
+            });
+
+            // Dibujar jugadores del equipo 2
+            this.jugadoresEquipo2.forEach(jugador => {
                 this.ctx.fillStyle = jugador.color;
                 this.ctx.beginPath();
                 this.ctx.arc(jugador.x, jugador.y, jugador.radius, 0, Math.PI * 2);
@@ -166,8 +185,8 @@ export default {
 #campo {
     position: relative;
     border: 2px solid green;
-    margin-top: 200px;
-    margin-left: 500px;
+    margin-top: 200px; /* Mantén el margen superior */
+    margin-left: 350px; /* Ajusta este valor para mover el campo a la izquierda */
     display: inline-block;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
