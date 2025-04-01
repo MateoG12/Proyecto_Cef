@@ -1,7 +1,5 @@
 <template>
   <div class="profesores-container">
-    <h1>Profesores</h1>
-    
     <form class="profesor-form" @submit.prevent="Loginentrenador" >
       <div class="form-group">
         <label for="entrenadorid">entrenadorid:</label>

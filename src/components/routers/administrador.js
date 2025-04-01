@@ -12,12 +12,24 @@ import Contenedor_Login from "../Contenedor_Login.vue";
 import Componente_Categoria from "../Componente_Categoria.vue";
 import Componente_Personal from "../Componente_Personal.vue";
 import Tactica from "../Tactica.vue";
+import Componente_Deportista from "../Componente_Deportista.vue";
 const routes=[
     {
         path:'/',
         name:'Inicio',
         component:Componente_Usuario
-    }
+    },
+    
+    {
+        path:'/noticias',
+        name:'noticias',
+        component:Componente_Usuario
+    },
+    {
+        path:'/nosotros',
+        name:'nosotros',
+        component:Componente_Usuario
+    },
     ,{
         path:'/login',
         name:'login',
@@ -53,6 +65,11 @@ const routes=[
         path:'/Slider',
         name:'Slider',
         component:Slider
+    },
+    {
+        path:'/Deportista',
+        name:'Deportista',
+        component:Componente_Deportista
     }
 
             

@@ -1,9 +1,9 @@
 <template>
   <body class="body2">
     <div class="color">
-      <div class="container">
+      <div class="containerlogin">
         <h1>{{ formState === 'login' ? 'Login' : (formState === 'verify' ? 'Verificación' : (formState === 'register' ? 'Registro' : 'Registro Usuario')) }}</h1>
-        <img class="img" src="E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\WhatsApp_Image_2024-08-23_at_9.04.20_AM-removebg-preview.png" alt="Logo">
+        <img class="img" src="E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\proyectopython\src\components\icons\WhatsApp_Image_2024-08-23_at_9.04.20_AM-removebg-preview.png                        " alt="Logo">
         <h1 v-if="!showForm">Selecciona tu rol</h1>
         
         <div class="role-selection" v-if="!showForm">
@@ -56,12 +56,16 @@
           
           <!-- Formulario de Registro Deportista -->
           <form v-if="formState === 'register'" class="form_registro" @submit.prevent="loginUsuario">
+            <!-- <div class="logo-titulo">
+            <h1> Registro Deportista</h1>
+            <img class="img" src="E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\WhatsApp_Image_2024-08-23_at_9.04.20_AM-removebg-preview.png" alt="Logo">
+            </div> -->
             <label class="letra">Documento</label>
             <input type="text" v-model="documento" class="input" required>
             <label class="letra">Usuario</label>
             <input type="text" v-model="usuario" class="input" required>
             <label class="letra">Contraseña</label>
-            <input type="password" v-model="password" required>
+            <input type="password" v-model="password" class="input" required>
             <label class="letra">Nombre</label>
             <input type="text" v-model="nombre" class="input" required>
             <label class="letra">Apellidos</label>
@@ -92,7 +96,11 @@
             </div>
           </form>
           <!-- Formulario de Registro Usuario -->
-          <form v-if="formState === 'register_usuario'" class="form_registro" @submit.prevent="registerUsuario">
+          <form v-if="formState === 'register_usuario'" class="form_registro1" @submit.prevent="registerUsuario">
+            <!-- <div class="logo-titulo">
+            <h1> Registro Usuario</h1>
+            <img class="img" src="E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\WhatsApp_Image_2024-08-23_at_9.04.20_AM-removebg-preview.png" alt="Logo">
+            </div> -->
             <label class="letra">Documento</label>
             <input type="text" v-model="Documento" class="input" required>
             <label class="letra">Correo Electrónico</label>
@@ -100,7 +108,7 @@
             <label class="letra">Nombre</label>
             <input type="text" v-model="nombre" class="input" required>
             <label class="letra">Contraseña</label>
-            <input type="password" v-model="password" required>
+            <input type="password" v-model="password" class="input" required>
             <label class="letra">Usuario</label>
             <input type="text" v-model="usuario" class="input" required>
             <label class="letra">Teléfono</label>
@@ -109,8 +117,8 @@
             <input type="text" v-model="rol" class="input" required>
             <label for="file" class="letra">Foto</label>
             <input type="file" @change="onFileChangeruser" class="input" id="file" required>
-            <label class="letra">Inscripción Documento</label>
-            <input type="text" v-model="inscripcion_documento" class="input" id="file_inscripcion" >
+            <!-- <label class="letra">Inscripción Documento</label>
+            <input type="text" v-model="inscripcion_documento" class="input" id="file_inscripcion" > -->
             <div class="button-group">
               <button type="submit">Registrar</button>
               <button type="button" @click="cambioForm">Iniciar Sesión</button>
@@ -124,7 +132,8 @@
     </div>
   </body>
 </template>
-<script setup>
+
+<!----><script setup>
 import Swal from 'sweetalert2'
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
@@ -183,7 +192,18 @@ const cambioForm = async () => {
       break;
   }
 };
-
+const calcularEdad = () => {
+      if (fecha_nacimiento.value) {
+        const birthDate = new Date(fecha_nacimiento.value);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        edad.value = age;
+      }
+    };
 const isPasswordValid = (password) => {
   const minLength = 8;
   const hasUpperCase = /[A-Z]/.test(password);
@@ -216,17 +236,29 @@ const loginUsuario = async () => {
         const rolUsuario = response.data.datos.rol;
 
         if (rolSeleccionado.value === 'deportista') {
-          localStorage.setItem('nombreDeportista', response.data.datos.nombre);
-          localStorage.setItem('emailDeportista', response.data.datos.email);
+          const datosDeportista = response.data.datos; 
+          localStorage.setItem('documento', datosDeportista.documento);
+          localStorage.setItem('nombreDeportista', datosDeportista.nombre);
+          localStorage.setItem('apellidosDeportista', datosDeportista.apellidos); // Asegúrate de que este campo exista
+          localStorage.setItem('edadDeportista', datosDeportista.edad); // Asegúrate de que este campo exista
+          localStorage.setItem('fechaNacimientoDeportista', datosDeportista.fecha_nacimiento); // Asegúrate de que este campo exista
+          localStorage.setItem('epsDeportista', datosDeportista.eps); // Asegúrate de que este campo exista
+          localStorage.setItem('telefonoDeportista', datosDeportista.telefono);
+          localStorage.setItem('emailDeportista', datosDeportista.email);
+          localStorage.setItem('usuarioDeportista', datosDeportista.usuario);
+          localStorage.setItem('fotoDeportista', `http://localhost:8000${datosDeportista.foto}`);
+          localStorage.setItem('nombreAcudienteDeportista', datosDeportista.nombre_acudiente); // Asegúrate de que este campo exista
+          localStorage.setItem('telefonoAcudienteDeportista', datosDeportista.telefono_acudiente); // Asegúrate de que este campo exista
+          localStorage.setItem('emailAcudienteDeportista', datosDeportista.email_acudiente); // Asegúrate de que este campo exista
+          localStorage.setItem('categoriaDeportista', datosDeportista.categoria); // Asegúrate de que este campo exista
           Swal.fire({
             icon: 'success',
             title: 'Inicio de Sesión',
             text: 'Inicio de sesión exitoso'
           });
-          router.push('/');
+          router.push('/Deportista');
           return;
         }
-
         if (rolSeleccionado.value === 'usuario') {
           // Almacena los datos del usuario
           localStorage.setItem('Documento', response.data.datos.Documento);
@@ -388,9 +420,9 @@ const registerUsuario = async () => {
   for (let [key, value] of formData.entries()) {
     console.log(key, value);
   }
-
+  const BASE_URL = 'http://localhost:8000';
   try {
-    const response = await axios.post("http://localhost:8080/Usuario", formData, {
+    const response = await axios.post("http://localhost:8000/InsertarUsuario", formData, {
       headers: { "Content-Type": "multipart/form-data" }
     });
 
@@ -425,288 +457,332 @@ const registerUsuario = async () => {
 
   
 <style>
+
 .body2 {
-  font-family: Arial, sans-serif;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  box-sizing: border-box;
-  background: 
-    linear-gradient(rgba(0, 0, 0, 0.178), rgba(0, 0, 0, 0.281)),
-    url('E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\Proyecto\src\components\icons\5621625.jpg');
-}
-
-.container {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.541);
-  width: 300px;
-  text-align: center;
-  position: relative;
-  overflow: hidden; /* Oculta cualquier desbordamiento en el contenedor principal */
-}
-.role-selection{
-  height: auto;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to top left, #000000, #6b0101);
+    margin: -10px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #f1f1f1;
+    animation: fadeIn 0.5s ease-out; 
+    height: 2600px;
+  }
   
-}
-.input2 {
-  margin-right: -5px;
-  width: 250px;
-  margin-top: 10px;
-}
-.input {
-  margin-right: -5px;
-  width: 250px;
-}
-
-.letra {
-  color: #fffbfb;
-}
-
-nav {
-  margin: 20px 0;
-}
-
-nav a {
-  color: #ffffff;
-  text-decoration: none;
-}
-
-nav a:hover {
-  text-decoration: underline;
-}
-
-h1 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: #ffffff;
-}
-
-.form-wrapper {
-  position: relative;
-  height: 200px; /* Ajusta la altura del contenedor del formulario según sea necesario */
-}
-
-.form {
-  position: absolute;
-  width: 100%;
-  transition: transform 0.3s ease;
-}
-
-.form_registro {
-  display: flex;
-  flex-direction: column; /* Disposición en columna */
-  width: 100%;
-  height: 100%; /* Utiliza toda la altura del contenedor */
-  overflow-y: auto; /* Permite el desplazamiento vertical si el contenido excede la altura */
-  padding: 10px;
-}
-/* Estilo del scrollbar */
-.form_registro::-webkit-scrollbar {
-  width: 9px; /* Ancho del scrollbar */
-}
-
-.form_registro::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0); /* Color del track (área del scrollbar sin usar) */
-}
-
-.form_registro::-webkit-scrollbar-thumb {
-  background: #ffffff; /* Color del thumb (parte que se desplaza) */
-  border-radius: 10px; /* Bordes redondeados del thumb */
-}
-
-.form_registro::-webkit-scrollbar-thumb:hover {
-  background: #ff0000; /* Color del thumb cuando se pasa el cursor sobre él */
-}
-.form_registro label {
-  margin-bottom: 5px;
-}
-
-.form_registro input {
-  width: calc(100% - 30px); /* Ajusta el ancho para el espaciado interno */
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.form_registro .button-group {
-  display: flex;
-  justify-content: space-between;
-}
-input {
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.button-group {
-  display: flex;
-  justify-content: space-between;
-}
-
-button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 18px;
-}
-
-button[type="submit"] {
-  background-color: #ff0000;
-  color: #fff;
-}
-
-button[type="button"] {
-  background-color: #000000;
-  color: #fff;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-.img {
-  width: 120px;
-  height: 120px;
-  margin: 20px 0;
-}
-
-.header {
-  align-items: center;
-  padding: 0 20px;
-  box-shadow: 0 2px 5px rgba(255, 6, 6, 0.5);
-  position: fixed; 
-  top: 0; 
-  color: #ffffff;
-  background-color: rgb(0, 0, 0);
-  width: 100%;
-  height: 120px;
-  margin: -10px;   
-  z-index: 1000;
-}
-
-.menu {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.boton-menu {
-  width: 50px;
-  height: 50px;
-}
-
-.boton1 {
-  background: transparent;
-  color: rgba(255, 255, 255, 0);
-  font-size: 16px;
-  cursor: pointer;
-  padding: 30px 50px;
-}
-
-.acordion1 {
-  background-color: white;
-  padding: 10px 20px;
-  border: 1px solid #000000;
-  margin: -20px 10px 10px 30px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.p {
-  cursor: pointer;
-  color: #333;
-}
-
-.contenedor {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-}
-
-.img {
-  width: 100px;
-  height: 100px;
-}
-
-.p2 {
-  cursor: pointer;
-  color: rgb(255, 255, 255);
-  border: none;
-}
-
-.p2::before {
-  border-bottom: #ffffff;
-  border: none;
-}
-
-.p3 {
-  margin-left: 60px;
-  cursor: pointer;
-  color: rgb(255, 255, 255);
-}
-
-.boton-inicio {
-  background: #ab1a1a; 
-  color: #fff; 
-  border: none; 
-  position: relative; 
-  height: 50px;
-  padding: 5px 10px; 
-  cursor: pointer; 
-  transition: 800ms ease all; 
-  outline: none; 
-  text-align: center; 
-  display: inline-block;
-}
-
-.boton-inicio:hover {
-  background: #000000; 
-  color: #ffffff; 
-}
-
-.boton-inicio::before, .boton-inicio::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 2px;
-  width: 0;
-  background: #ab1a1a; 
-  transition: 400ms ease all;
-}
-
-.boton-inicio::after {
-  right: inherit;
-  top: inherit;
-  left: 0;
-  bottom: 0;
-}
-
-.boton-inicio:hover::before, .boton-inicio:hover::after {
-  width: 100%; 
-  transition: 800ms ease all; 
-}
-
-@media (max-width: 600px) {
-  .container {
-    width: 90%;
-    padding: 10px;
+  .color {
+    width: 100%;
+    max-width: 800px; 
+    background-color: #2c2c2c; 
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: slideUp 0.5s ease-out forwards; 
   }
-
-  .button-group {
+  
+  h1 {
+    font-size: 30px; 
+    color: #f1f1f1;
+    margin-bottom: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #e53935; 
+    animation: fadeIn 0.5s ease-out 0.3s forwards;
+  }
+  .img {
+    width: 120px;
+    height: auto;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    animation: fadeIn 0.5s ease-out 0.5s forwards;
+  }
+  
+  .role-selection button {
+    background-color: #e53935; 
+    color: white;
+    border: none;
+    padding: 15px 30px; 
+    margin: 15px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out 0.7s forwards;
+  }
+  
+  .role-selection button:hover {
+    background-color: #c62828; 
+  }
+  
+  .form, .form_registro {
+    display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    margin-top: 30px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out 1s forwards;
+  }
+  
+  .form label,
+  .form_registro label {
+    font-size: 16px; 
+    font-weight: bold;
+    color: #f1f1f1;
+    margin: 12px 0;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: #424242; 
+    color: #f1f1f1;
+    transition: border 0.3s ease;
+  }
+  .input [type="password"] {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: #424242; 
+    color: #f1f1f1;
+    transition: border 0.3s ease;
+  }
+  
+  .input:focus {
+    border-color: #e53935;
+    outline: none;
+  }
+  
+  .input[type="file"] {
+    padding: 12px;
+    background-color: #424242;
+  }
+  
+  
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .button-group button {
+    background-color: #e53935; 
+    color: white;
+    border: none;
+    padding: 15px 30px; 
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out 1.3s forwards;
+  }
+  
+  .button-group button:hover {
+    background-color: #c62828; 
+  }
+  
+  .button-group button[type="button"] {
+    background-color: #424242; 
+  }
+  
+  .button-group button[type="button"]:hover {
+    background-color: #333; 
+  }
+  
+  
+  nav {
+    margin-top: 30px;
+  }
+  
+  nav a {
+    color: #e53935; 
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
+    animation: fadeIn 0.5s ease-out 1.5s forwards;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+    color: #c62828; 
+  }
+  
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="date"] {
+    background-color: #424242; 
+  }
+  
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  input[type="number"]:focus,
+  input[type="date"]:focus {
+    background-color: #333;
+    box-shadow: 0 0 5px rgba(229, 57, 53, 0.7); 
+    transition: all 0.3s ease;
+  }
+  
+  
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @media (max-width: 1100px) {
+    .body2 {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to top left, #000000, #6b0101);
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 350vh;
+    color: #f1f1f1;
+    animation: fadeIn 0.5s ease-out; 
+  }
+  
+    .color {
+    margin-top: -250px;
+    width: 100%;
+    max-width: 800px; 
+    background-color: #2c2c2c; 
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: slideUp 0.5s ease-out forwards; 
+  }
+  
+    h1 {
+      font-size: 26px;
+    }
+  
+    .button-group button {
+      width: 48%;
+      margin-bottom: 10px;
+      font-size: 14px;
+      padding: 12px 24px;
+    }
+  
+    .button-group button[type="button"] {
+      width: 48%;
+    }
+  
+    .form label,
+    .form_registro label {
+      font-size: 14px;
+    }
+  
+    .input {
+      font-size: 14px;
+      padding: 12px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .color {
+      padding: 25px;
+    }
+  
+    h1 {
+      font-size: 26px;
+    }
+  
+    .button-group button {
+      width: 48%;
+      margin-bottom: 10px;
+      font-size: 14px;
+      padding: 12px 24px;
+    }
+  
+    .button-group button[type="button"] {
+      width: 48%;
+    }
+  
+    .form label,
+    .form_registro label {
+      font-size: 14px;
+    }
+  
+    .input {
+      font-size: 14px;
+      padding: 12px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .color {
+      padding: 15px;
+    }
+  
+    h1 {
+      font-size: 22px;
+    }
+  
+    .button-group button {
+      width: 100%;
+      margin-bottom: 10px;
+      font-size: 14px;
+      padding: 12px;
+    }
+  
+    .form label,
+    .form_registro label {
+      font-size: 12px;
+    }
+  
+    .input {
+      font-size: 12px;
+      padding: 10px;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .input {
+      padding: 10px;
+      font-size: 12px;
+    }
+  
+    .button-group button {
+      padding: 10px;
+      font-size: 12px;
+    }
   }
 
-  .button-group button {
-    margin-bottom: 10px;
-  }
-}
 </style>
 

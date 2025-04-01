@@ -3,8 +3,8 @@
         <div id="campo">
             <canvas
                 id="tacticaCanvas"
-                width="1200"
-                height="600"
+                width="1000"
+                height="500"
                 @mousedown="handleMouseDown"
                 @mouseup="stopDragging"
                 @mousemove="moveElemento"
@@ -185,8 +185,7 @@ export default {
 #campo {
     position: relative;
     border: 2px solid green;
-    margin-top: 200px; /* Mantén el margen superior */
-    margin-left: 350px; /* Ajusta este valor para mover el campo a la izquierda */
+    margin-top: 100px; margin-left: 150px; /* Ajusta este valor para mover el campo a la izquierda */
     display: inline-block;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;

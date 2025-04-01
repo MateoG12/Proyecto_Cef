@@ -47,19 +47,19 @@ export default {
 }
 .body_categoria {
   font-family: Arial, sans-serif;
-  background-color: #000; /* Fondo oscuro */
-  color: #fff; /* Texto claro */
+  background-color: #000; 
+  color: #fff;
   margin: -8px;
   padding: 20px;
 }
 
 h2 {
-  color: red; /* Color rojo para los títulos */
+  color: red; 
 }
 
 .category {
-  background-color: #222; /* Fondo más oscuro para las categorías */
-  border: 1px solid #ccc; /* Borde claro */
+  background-color: #222; 
+  border: 1px solid #ccc; 
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
   margin-bottom: 20px;
@@ -69,9 +69,9 @@ h2 {
 .player {
   margin: 5px 0;
   padding: 10px;
-  background-color: #333; /* Fondo oscuro para los jugadores */
-  border: 1px solid #444; /* Borde ligeramente más claro */
+  background-color: #333; 
+  border: 1px solid #444; 
   border-radius: 3px;
-  color: #fff; /* Texto claro para los jugadores */
+  color: #fff; 
 }
 </style>
