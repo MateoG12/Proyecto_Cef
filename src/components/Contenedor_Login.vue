@@ -241,7 +241,7 @@ const selectRole = async (role) => {
 
 const handleSubmit = async () => {
   try {
-    const response = await axios.post('http://127.0.0.1:8000/verify_code', {
+    const response = await axios.post('http://127.0.0.1:8000/verify_code2', {
       code: code.value
     })
     
