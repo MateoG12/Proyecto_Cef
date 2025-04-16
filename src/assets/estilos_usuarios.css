@@ -1,1016 +1,965 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    list-style: none;
-    font-family: Arial, sans-serif;
-  }
-  .imagenperfil {
-    width: 250px;
-    height: 200px;
-    margin: 10px;
-  }
-  .cumpleaños-titulo{
-    margin-left: 100px;
-    margin-top:10px ;
-  }
-  .body {
-  background: rgb(255, 255, 255);
-  background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.815) 50%, rgba(0, 0, 0, 1) 100%);
-  margin: -10px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  font-family: Arial, sans-serif;
+}
+.Titulo_Cumpleaños2{
+  margin-top: 100px;
+  margin-bottom: -150PX;
+  font-size: 50px;
+}
+.mensaje-no-cumple {
+  border: 2px solid #fff;
+  background-color: #000;
+  color: #fff;
+  padding: 20px;
+  margin: 20px auto;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 12px;
+  max-width: 500px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
 
-  
+.imagenperfil {
+  width: 250px;
+  height: 200px;
+  margin: 10px;
+}
+.cumpleaños-titulo{
+  margin-left: 100px;
+  margin-top:10px ;
+}
 
-  }
-  .header-contenido {
-    position: relative;
-    margin: 0 auto;
-    padding: 100px 0;
-    display: flex;
-    height: 900px;
-  
-    align-items: center;
-    justify-content: center; 
-    color: white;
-  }
-  
-  
-  .header-txt {
-    width: 50%;
-    z-index: 2;
-    text-align: center;
+.body {
+background: rgb(255, 255, 255);
+background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.815) 50%, rgba(0, 0, 0, 1) 100%);
+margin: -10px;
+
+
+
+}
+.header-contenido {
+  position: relative;
+  margin: 0 auto;
+  padding: 100px 0;
+  display: flex;
+  height: 900px;
+
+  align-items: center;
+  justify-content: center; 
+  color: white;
+}
+
+
+.header-txt {
+  width: 55%;
+  z-index: 2;
+  text-align: center;
+  opacity: 0;
+  animation: fadeInUp 2s ease-out forwards;
+}
+.texto-centro {
+    text-align: center; 
+    margin: 0 auto;   
+    width: 80%;       
+    line-height: 1.6;   
+}
+
+@keyframes fadeInUp {
+  0% {
     opacity: 0;
-    animation: fadeInUp 2s ease-out forwards;
+    transform: translateY(50px);
   }
-  .texto-centro {
-      text-align: center; 
-      margin: 0 auto;   
-      width: 80%;       
-      line-height: 1.6;   
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
+
+
+.header-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 900px;
+  width: 100%;
+  z-index: 1;
+  opacity: 0.7;
+  object-fit: cover;
+}
+
+
+.header-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.header-txt h1 {
+  font-size: 70px;
+  line-height: 150px;
+  color: rgb(148, 9, 9);
+  margin-bottom: 25px;
+  animation: fadeInUp 2s ease-out forwards;
+}
+
+.header-txt p {
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  margin-bottom: 35px;
+  animation: fadeInUp 2s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+
+.btn-1 {
+  display: inline-block;
+  padding: 13px 30px;
+  background-color: rgb(177, 3, 3);
+  color: rgb(29, 84, 133);
+  border-radius: 25px;
+  font-size: 18px;
+  color: black;
+  transition: background-color 0.3s ease, transform 0.3s ease;
   
-  @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(50px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  
-  .header-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 900px;
-    width: 100%;
-    z-index: 1;
-    opacity: 0.7;
-    object-fit: cover;
-  }
-  
-  
-  .header-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  
-  .header-txt h1 {
-    font-size: 70px;
-    line-height: 150px;
-    color: rgb(148, 9, 9);
-    margin-bottom: 25px;
-    animation: fadeInUp 2s ease-out forwards;
-  }
-  
-  .header-txt p {
-    font-size: 18px;
-    color: rgb(255, 255, 255);
-    margin-bottom: 35px;
-    animation: fadeInUp 2s ease-out forwards;
-    animation-delay: 0.5s;
-  }
-  
-  
-  .btn-1 {
-    display: inline-block;
-    padding: 13px 30px;
-    background-color: rgb(177, 3, 3);
-    color: rgb(29, 84, 133);
-    border-radius: 25px;
-    font-size: 18px;
-    color: black;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    
-  
+
+  opacity: 0;
+  transform: translateY(20px);
+  animation: buttonFadeIn 1s ease-out forwards 1.5s;
+}
+
+
+@keyframes buttonFadeIn {
+  0% {
     opacity: 0;
     transform: translateY(20px);
-    animation: buttonFadeIn 1s ease-out forwards 1.5s;
   }
-  
-  
-  @keyframes buttonFadeIn {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .btn-1:hover {
-    transform: scale(1.1); 
-    background-color: rgb(255, 85, 85); 
-    color: white; 
+}
+
+.btn-1:hover {
+  transform: scale(1.1); 
+  background-color: rgb(255, 85, 85); 
+  color: white; 
+}
+
+.btn-activo {
+  background-color: rgb(255, 255, 255);
+  transform: scale(1.1);
+  color: black;
+}
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+  .header-contenido {
+    height: 700px;  /* Reducir altura */
+    padding: 50px 20px;
   }
-  
-  .btn-activo {
-    background-color: rgb(255, 255, 255);
-    transform: scale(1.1);
-    color: black;
+
+  .header-txt {
+    width: 80%;  /* Aumentar el ancho en pantallas más pequeñas */
   }
-  /* Responsividad para pantallas pequeñas */
-  @media (max-width: 768px) {
-    .header-contenido {
-      height: 700px;  /* Reducir altura */
-      padding: 50px 20px;
-    }
-  
-    .header-txt {
-      width: 80%;  /* Aumentar el ancho en pantallas más pequeñas */
-    }
-  
-    .header-txt h1 {
-      font-size: 50px;  /* Reducir el tamaño del título */
-      line-height: 120px;
-    }
-  
-    .header-txt p {
-      font-size: 16px;  /* Reducir tamaño del texto */
-    }
-  
-    .btn-1 {
-      font-size: 16px;  /* Reducir tamaño del botón */
-      padding: 10px 25px;
-    }
-  
-    .header-img {
-      height: 600px;  /* Reducir la altura de la imagen */
-    }
+
+  .header-txt h1 {
+    font-size: 50px;  /* Reducir el tamaño del título */
+    line-height: 120px;
   }
-  
-  /* Responsividad para dispositivos muy pequeños (móviles) */
-  @media (max-width: 480px) {
-    .header-contenido {
-      height: 500px;  /* Reducir aún más la altura */
-      padding: 30px 15px;
-    }
-  
-    .header-txt {
-      width: 90%;  /* Ajustar el ancho */
-    }
-  
-    .header-txt h1 {
-      font-size: 36px;  /* Reducir aún más el tamaño */
-      line-height: 100px;
-    }
-  
-    .header-txt p {
-      font-size: 14px;
-    }
-  
-    .btn-1 {
-      font-size: 14px;
-      padding: 8px 20px;
-    }
-  
-    .header-img {
-      height: 400px;  /* Reducir altura de la imagen */
-    }
+
+  .header-txt p {
+    font-size: 16px;  /* Reducir tamaño del texto */
   }
-  .noticias {
-      display: flex;               
-      justify-content: center;     
-      align-items: center;         
-      flex-wrap: wrap;            
-      width: 100%;                
-      height: 100vh;              
-      padding: 20px;
-      box-sizing: border-box;      
-      position: relative;          
+
+  .btn-1 {
+    font-size: 16px;  /* Reducir tamaño del botón */
+    padding: 10px 25px;
   }
-  .noticias-contenedor-blanco {
-      position: absolute;
-      top: 50%;                    
-      left: 50%;                   
-      transform: translate(-50%, -50%); 
-      background: linear-gradient(to top left, #000000, #8B0000);
-      /* Degradado sofisticado */
-      width: 80%;                   
-      height: 50%;                  
-      z-index: -1;                 
-      border-radius: 30px;         
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 15px rgba(0, 0, 0, 0.1); 
-      padding: 30px;              
-      overflow: hidden;           
-      transition: transform 0.3s ease, box-shadow 0.3s ease; 
+
+  .header-img {
+    height: 600px;  /* Reducir la altura de la imagen */
   }
-  
-  
-  .noticias-contenedor-blanco:hover {
-      transform: translate(-50%, -50%) scale(1.05); 
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 8px 20px rgba(0, 0, 0, 0.15); 
+}
+
+/* Responsividad para dispositivos muy pequeños (móviles) */
+@media (max-width: 480px) {
+  .header-contenido {
+    height: 500px;  /* Reducir aún más la altura */
+    padding: 30px 15px;
   }
-  
-  
-  .card {
-      position: relative;
-      display: flex;
-      flex-direction: column;     
-      justify-content: flex-end;   
-      align-items: center;         
-      height: 350px;              
-      width: 22%;                  
-      border-radius: 15px;
-      overflow: hidden;           
-      background-color: yellow;
-      margin: 10px;                
-      transition: all 0.5s;
-      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+
+  .header-txt {
+    width: 90%;  /* Ajustar el ancho */
   }
-  
-  .imagen-principal {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;          
-      position: absolute;          
-      top: 0;
-      left: 0;
+
+  .header-txt h1 {
+    font-size: 36px;  /* Reducir aún más el tamaño */
+    line-height: 100px;
   }
-  
-  
-  .card:hover {
-      transform: translateY(-10px); 
-  }
-  
-  
-  .texto-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;   
-      align-items: center;        
-      color: white;
-      text-align: center;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.4); 
-      box-sizing: border-box;      
-      opacity: 0;
-      transition: opacity 0.5s ease;
-  }
-  
-  
-  .card:hover .texto-overlay {
-      opacity: 1;
-  }
-  
-  
-  .texto-pequeno {
-      font-size: 14px;
-      background-color: rgba(255, 255, 255, 0.6); 
-      padding: 5px 10px;
-      border-radius: 5px;
-      margin-bottom: 10px;
-      font-weight: bold;
-  }
-  
-  
-  .card .info h1 {
-      color: rgb(209, 209, 197);
-      font-size: 24px;
-  }
-  
-  
-  .card .info p {
-      font-size: 16px;
-      color: rgb(197, 214, 214);
-      margin-bottom: 20px;
-  }
-  
-  
-  .card .info a {
-      background-color: rgba(47, 47, 185, 0.315);
-      padding: 10px;
-      border-radius: 25px;
-      text-decoration: none;
-      color: black;
-      transition: background-color 0.3s ease;
-  }
-  
-  .card .info a:hover {
-      background-color: white;
-  }
-  
-  @media (max-width: 768px) {
-      .card {
-          width: 45%; 
-      }
-  }
-  
-  @media (max-width: 480px) {
-      .card {
-          width: 100%;
-      }    
-  }
-  
-  
-  @keyframes fadeIn {
-    to {
-      opacity: 1; 
-      transform: translateY(1); 
-    }
-  }
-  
-  @media (max-width: 768px) {
-      .noticias {
-          justify-content: flex-start; /* Ajustamos el contenedor para empezar a alinear desde el inicio */
-          padding: 10px;
-          box-sizing: border-box; 
-          overflow-x: hidden; /* Aseguramos que no haya desbordamiento */
-      }
-  
-      .card {
-          width: 45%; /* Las tarjetas ocupan el 45% del contenedor */
-          margin: 10px; /* Espacio entre las tarjetas */
-      }
-  }
-  
-  @media (max-width: 480px) {
-      .noticias {
-          padding: 10px; /* Reduce el padding en pantallas pequeñas */
-      }
-  
-      .card {
-          width: 100%; /* Las tarjetas ocupan el 100% del contenedor */
-          margin: 10px 0; /* Añadimos un poco de margen entre las tarjetas */
-      }
-  }
-  /* Estilo Principal de la Sección */
-  .informacion-slider {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0;
-      box-sizing: border-box;
-      height: 55vh;
-      background: linear-gradient(to top left, #000000, #6b0101);
-      position: relative;
-      overflow: hidden;
-  }
-  
-  /* Contenedor de la Información */
-  .informacionslider {
-      width: 60%;
-      text-align: left;
-      padding: 20px;
-      box-sizing: border-box;
-      z-index: 2;
-  }
-  
-  /* Títulos de la Información */
-  .informacionslider h2 {
-      font-size: 40px;
-      color: #ffffff;
-      margin-bottom: 15px;
-      font-weight: 700;
-  }
-  
-  /* Párrafos de la Información */
-  .informacionslider p {
-      font-size: 18px;
-      color: #ffffff;
-      line-height: 1.8;
-  }
-  
-  /* Estilo para el Slider */
-  .Slider {
-      width: 55%;
-      height: 80%;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      position: relative;
-      z-index: 1;
-  }
-  
-  /* Efecto Hover para los Items */
-  .item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Estilo para los Títulos Generales */
-  h2 {
-      color: rgb(255, 255, 255);
-      text-align: center;
-      font-size: 40px;
-      font-weight: bold;
-  }
-  .cumpleaños {
-    padding: 60px 30px;
-    background: linear-gradient(to top left, #000000, #6b0101); /* Fondo suave y limpio */
-    text-align: center;
-    width: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  /* Efecto para cumpleaños hoy */
-  .cumpleano-hoy {
-    background-color: #22020f; 
-    border: 2px solid #f48fb1; 
-    transform: scale(1.05);
-    animation: cumpleanosAnimation 1s ease-out;
-  }
-  
-  @keyframes cumpleanosAnimation {
-    0% {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-  
-  .cumpleanos-list {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-    gap: 25px; 
-  }
-  
-  .cumpleano-item {
-    background-color: #f44336; 
-    color: #ffffff; 
-    border-radius: 12px;
-    width: 280px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
-    transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
-    text-align: left;
-    font-size: 16px;
-  }
-  
-  .cumpleano-item:hover {
-    transform: scale(1.05); 
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); 
-  }
-  
-  
-  .cumpleano-item h4 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    color: #ffffff;
-  }
-  
-  .cumpleano-item p {
+
+  .header-txt p {
     font-size: 14px;
-    color: #dcdcdc; 
-    margin-bottom: 15px;
   }
-  
-  .item-large {
-    height: 250px; 
+
+  .btn-1 {
+    font-size: 14px;
+    padding: 8px 20px;
   }
-  
-  .item-small {
-    height: 200px; 
+
+  .header-img {
+    height: 400px;  /* Reducir altura de la imagen */
   }
-  .informacion-video {
-      display: flex;
-      flex-direction: column;
-      align-items: center;    
-      justify-content: center;
-      height: 80vh;         
-      padding: 20px;
-      box-sizing: border-box;
-  }
-  
-  .video-container {
-      
-      width: 100%;           
-      max-width: 1000px;      
-      margin-bottom: 20px;    
-      display: flex;
-      justify-content: center; 
-  }
-  
-  .video {
-      width: 100%;           
-      height: auto;          
-  }
-  
-  .texto-container {
-      text-align: center;     
-      max-width: 800px;      
-      width: 100%;           
-  }
-  
-  .texto {
-      font-size: 18px;        
-      color: #ffffff;            
-      margin: 0;
-      padding: 10px;
-  }
-  @media (max-width: 768px) {
-    /* Sección de cumpleaños */
-    .cumpleanos-list {
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-    }
-  
-    /* Video y texto */
-    .informacion-video {
-      height: auto;
-      padding: 10px;
-    }
-  
-    .video-container {
-      width: 80%;
-    }
-  
-    .texto-container {
-      max-width: 100%;
-    }
-  }
-  @media (max-width: 1100px) {
-    /* Sección de cumpleaños */
-    /* .cumpleanos-list {
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-    } */
-  
-    /* Video y texto */
-    .informacion-video {
-      height: auto;
-      padding: 10px;
-    }
-  
-    .video-container {
-      padding-top: 100px;
-      width: 90%;
-    }
-  
-    .texto-container {
-      max-width: 100%;
-    }
-  }
-  .contenedorlocalidad {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;  
-    margin: 50px auto; 
-    background: linear-gradient(to top left, #000000, #6b0101); 
-    padding: 20px;
-    border-radius: 10px; 
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); 
-  }
-  
-  .contenedor-info {
-    color: white;
-    flex: 1; 
-    margin-right: 20px; 
-  }
-  
-  .contenedor-info h2 {
-    font-size: 28px;
-    margin-bottom: 10px;
-    font-weight: 600;
-    color: #f44336; 
-  }
-  
-  .contenedor-info p {
-    font-size: 16px;
-    margin-bottom: 20px;
-    color: #dcdcdc; 
-  }
-  
-  .btn-mapa {
+}
+.noticias {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  background: linear-gradient(to top left, #000000, #8b000088); 
+}
+
+.noticias-contenedor-blanco {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(to top left, #2f2f2f, #9c0000);
+  width: 80%;
+  height: 50%;
+  z-index: -1;
+  border-radius: 30px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.noticias-contenedor-blanco:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+.card {
     position: relative;
-    background-color: #d32f2f;
-    color: white;
-    padding: 12px 25px;  
-    border: none;
-    border-radius: 30px;
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.3s ease; /* Animación suave de color, sombra y transform */
     display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .btn-mapa:hover {
-    background-color: #b71c1c; 
-    color: #ffffff;
-    transform: translateY(-5px); 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
-  }
-  @media (max-width: 768px) {
-    /* El contenedor de información y el botón se apilan verticalmente en pantallas pequeñas */
-    .contenedorlocalidad {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .contenedor-info {
-      max-width: 100%; /* El contenedor de información ocupa todo el ancho */
-      margin-right: 0;
-      text-align: center; /* Centra el texto */
-    }
-  
-    .btn-mapa {
-      margin-top: 20px; /* Espaciado entre la información y el botón */
-    }
-  }
-  .contenedor-imagen {
-    flex: 0.4; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .contenedor-imagen img {
-    width: 200px; 
-    height: auto;
-    border-radius: 10px; 
-  }
-  
-  @media (max-width: 768px) {
-    .contenedor-imagen {
-      flex: 0.5; /* El contenedor ocupa un 50% del ancho */
-      padding: 5px;
-    }
-  
-    .contenedor-imagen img {
-      width: 100%; /* La imagen sigue ocupando el 100% del contenedor */
-      max-width: 400px; /* Limita el tamaño máximo a 400px */
-    }
-  }
-  
-  /* Responsividad para pantallas más pequeñas (hasta 480px de ancho) */
-  @media (max-width: 480px) {
-    .contenedor-imagen {
-      flex: 0.8; /* El contenedor ocupa el 80% del ancho */
-      padding: 5px;
-    }
-  
-    .contenedor-imagen img {
-      width: 100%; /* La imagen ocupa el 100% del contenedor */
-      max-width: 350px; /* Limita el tamaño máximo a 350px */
-    }
-  }
-  .map-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #ffffff;
+    flex-direction: column;     
+    justify-content: flex-end;   
+    align-items: center;         
+    height: 60%;              
+    width: 22%;                  
+    border-radius: 15px;
+    overflow: hidden;           
+    background-color: yellow;
+    margin: 10px;                
+    transition: all 0.5s;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.imagen-principal {
     width: 100%;
     height: 100%;
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .map-overlay {
+    object-fit: cover;          
+    position: absolute;          
+    top: 0;
+    left: 0;
+}
+
+
+.card:hover {
+    transform: translateY(-10px); 
+}
+
+
+.texto-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;   
+    align-items: center;        
+    color: white;
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.4); 
+    box-sizing: border-box;      
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+
+.card:hover .texto-overlay {
+    opacity: 1;
+}
+
+
+.texto-pequeno {
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.6); 
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+
+.card .info h1 {
+    color: rgb(209, 209, 197);
+    font-size: 24px;
+}
+
+
+.card .info p {
+    font-size: 16px;
+    color: rgb(197, 214, 214);
+    margin-bottom: 20px;
+}
+
+
+.card .info a {
+    background-color: rgba(47, 47, 185, 0.315);
+    padding: 10px;
+    border-radius: 25px;
+    text-decoration: none;
+    color: black;
+    transition: background-color 0.3s ease;
+}
+
+.card .info a:hover {
+    background-color: white;
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: 45%; 
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 100%;
+    }    
+}
+
+
+@keyframes fadeIn {
+  to {
+    opacity: 1; 
+    transform: translateY(1); 
   }
-  
-  .map-modal iframe {
-    position: relative;
+}
+
+@media (max-width: 768px) {
+    .noticias {
+        justify-content: flex-start; /* Ajustamos el contenedor para empezar a alinear desde el inicio */
+        padding: 10px;
+        box-sizing: border-box; 
+        overflow-x: hidden; /* Aseguramos que no haya desbordamiento */
+    }
+
+    .card {
+        width: 45%; /* Las tarjetas ocupan el 45% del contenedor */
+        margin: 10px; /* Espacio entre las tarjetas */
+    }
+}
+
+@media (max-width: 480px) {
+    .noticias {
+        padding: 10px; /* Reduce el padding en pantallas pequeñas */
+    }
+
+    .card {
+        width: 100%; /* Las tarjetas ocupan el 100% del contenedor */
+        margin: 10px 0; /* Añadimos un poco de margen entre las tarjetas */
+    }
+}
+/* Estilo Principal de la Sección */
+.informacion-slider {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  box-sizing: border-box;
+  height: 45vh;
+  background: linear-gradient(to top left, #1a1a1a, #5a0a0a);
+  border-radius: 16px;
+  margin: 40px auto;
+  max-width: 1200px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(30px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+
+.informacionslider {
+  width: 50%;
+  text-align: left;
+  padding: 20px 30px;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+/* Títulos de la Información */
+.informacionslider h2 {
+  font-size: 36px;
+  color: #ffffff;
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Párrafos de la Información */
+.informacionslider p {
+  font-size: 17px;
+  color: #e0e0e0;
+  line-height: 1.6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Estilo para el Slider */
+.Slider {
+  width: 45%;
+  height: 75%;
+  border-radius: 12px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.5s ease;
+}
+
+/* Efecto Hover para los Items */
+.item {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+}
+
+.item:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .informacion-slider {
+      flex-direction: column;
+      height: auto;
+      padding: 30px 20px;
+  }
+
+  .informacionslider,
+  .Slider {
+      width: 100%;
+      padding: 10px;
+      height: auto;
+  }
+
+  .informacionslider h2 {
+      font-size: 28px;
+  }
+
+  .informacionslider p {
+      font-size: 16px;
+  }
+}
+/* Estilo para los Títulos Generales */
+h2 {
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+.cumpleaños {
+  padding: 60px 30px;
+  background: linear-gradient(to top left, #000000, #6b0101); /* Fondo suave y limpio */
+  text-align: center;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Efecto para cumpleaños hoy */
+.cumpleano-hoy {
+  background-color: #22020f; 
+  border: 2px solid #f48fb1; 
+  transform: scale(1.05);
+  animation: cumpleanosAnimation 1s ease-out;
+}
+
+@keyframes cumpleanosAnimation {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.cumpleanos-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  gap: 25px; 
+}
+
+.cumpleano-item {
+  background-color: #f44336; 
+  color: #ffffff; 
+  border-radius: 12px;
+  width: 280px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+  transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+  font-size: 16px;
+}
+
+.cumpleano-item:hover {
+  transform: scale(1.05); 
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); 
+}
+
+
+.cumpleano-item h4 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+}
+
+.cumpleano-item p {
+  font-size: 14px;
+  color: #dcdcdc; 
+  margin-bottom: 15px;
+}
+
+.item-large {
+  height: 250px; 
+}
+
+.item-small {
+  height: 200px; 
+}
+.informacion-video {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    justify-content: center;
+    height: 80vh;         
+    padding: 20px;
+    padding-top: 30px;
+    box-sizing: border-box;
+}
+
+.video-container {
+    
+    width: 100%;           
+    max-width: 1000px;      
+    margin-bottom: 20px;    
+    display: flex;
+    justify-content: center; 
+}
+
+.video {
+    width: 100%;           
+    height: auto;          
+}
+
+.texto-container {
+    text-align: center;     
+    max-width: 800px;      
+    width: 100%;           
+}
+
+.texto {
+    font-size: 18px;        
+    color: #ffffff;            
+    margin: 0;
+    padding: 10px;
+}
+@media (max-width: 768px) {
+  /* Sección de cumpleaños */
+  .cumpleanos-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  /* Video y texto */
+  .informacion-video {
+    height: auto;
+    padding: 10px;
+  }
+
+  .video-container {
+    width: 80%;
+  }
+
+  .texto-container {
+    max-width: 100%;
+  }
+}
+@media (max-width: 1100px) {
+  /* Sección de cumpleaños */
+  /* .cumpleanos-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  } */
+
+  /* Video y texto */
+  .informacion-video {
+    height: auto;
+    padding: 10px;
+  }
+
+  .video-container {
+    padding-top: 100px;
     width: 90%;
-    height: 90%;
-    border-radius: 15px;
-    border: none;
-    z-index: 2;
   }
+
+  .texto-container {
+    max-width: 100%;
+  }
+}
+.contenedor3partes {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  gap: 40px;
+  padding: 40px;
+  background-color: #000000;
+  min-height: 100vh;
+  flex-wrap: wrap;
+}
+
+
+.cartas-izquierda {
+  width: 45%;
+}
+
+.Titulo_Cumpleaños {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: bold;
+}
+
+.contenedor3 {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   
+}
+
+.zoom {
+  transition: transform 0.3s ease;
+}
+
+.zoom:hover {
+  transform: scale(1.05);
+}
+
+.p_zoom {
+  padding: 12px 20px;
+  background-color: #8a0000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.p_zoom:hover {
+  background-color: #a30000;
+}
+
+/* Derecha: Información + Mapa/Imagen */
+.contenedorlocalidad {
+  width: 60%;
+  background: #f1090948;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(104, 4, 4, 0.822);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contenedor-info h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.contenedor-info p {
+  font-size: 20px;
+  line-height: 1.6;
+  color: #ffffff;
+}
+
+.btn-mapa {
+  background-color: #8a0000;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-left: 500px;
+  font-size: 20px;
+}
+
+.btn-mapa:hover {
+  background-color: #b30000;
+}
+
+.contenedor-imagen img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Modal mapa */
+.map-modal {
+  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.map-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  
+}
+
+.map-modal iframe {
+  width: 80%;
+  height: 80%;
+  border: none;
+  z-index: 101;
+  border-radius: 12px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .contenedor3partes {
+    flex-direction: column;
+  }
+
+  .cartas-izquierda,
+  .contenedorlocalidad {
+    width: 100%;
+  }
+
+  .contenedor3 {
+    flex-direction: column;
+  }
+}
+
+.footer-card {
+  background: #111;
+  color: white;
+  padding: 40px 0;
+  text-align: center;
+  position: relative;
+}
+
+.footer-content {
+  background: #000;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(255, 0, 0, 0.1);
+  border: 1px solid #333;
+}
+
+.social-icons {
+  margin-bottom: 25px;
+}
+
+.social-icons .icon {
+  background: rgba(255, 0, 0, 0.1);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+  transition: all 0.3s;
+}
+
+.social-icons .icon:hover {
+  background: rgba(255, 0, 0, 0.3);
+  transform: scale(1.1);
+  color: #ff0000;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-item {
+  color: #ddd;
+  font-size: 15px;
+  transition: all 0.3s;
+}
+
+.info-item:hover {
+  color: #ff0000;
+}
+
+.info-item i {
+  margin-right: 10px;
+  color: #ff0000;
+}
+
+
+@media (max-width: 481px) {
+  .footer-content {
+    flex-direction: column; /* Apilar los elementos en pantallas pequeñas */
+  }
+
   .contenedor3 {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
     width: 100%;
-    padding: 80px 50px;
+    padding: 40px 20px; 
     margin: 0 auto;
-    max-width: 1300px;  
+    max-width: 100%; 
     gap: 20px;
     text-align: center;
   }
-  
-  
+
   .zoom {
-    position: relative;
-    width: 250px;
-    height: 250px;
-    border-radius: 20px;
-    overflow: hidden; 
-    transition: transform 0.3s ease, box-shadow 0.3s ease; 
-    cursor: pointer;
-    display: flex;
-    align-items: center;  
-    justify-content: center;  
+    width: 200px;
+    height: 200px; 
   }
-  
-  .zoom:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+
+  .contenedor-imagen img {
+    width: 150px; 
   }
-  
-  .imagen-boton1, .imagen-boton2, .imagen-boton3 {
-    background-image: url("E:/SENA/.QUINTO TRIMESTRE/Nur Derly/VueJS frame/proyectopython/src/components/icons/boton 1.jpg");
-    background-position: center;
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-    transition: all 0.5s ease; 
-  }
-  
-  
-  .p_zoom {
-    font-family: 'Montserrat', sans-serif; 
-    font-size: 22px;
-    font-weight: 600;
-    color: #ffffff; 
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-align: center;
-    position: relative; 
-    z-index: 2;
-    padding: 10px 25px;
-    opacity: 0;  
-    transition: opacity 0.3s ease; 
-  }
-  
-  
-  .zoom:hover .p_zoom {
-    opacity: 1;  
-  }
-  
-  
-  a, .router-link-active {
-    text-decoration: none; 
-  }
-  
-  
-  button.p_zoom {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 10px 25px;
-    color: #ffffff;
-    border-radius: 30px;
-    font-size: 18px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    background: linear-gradient(45deg, #e91e63, #f44336); 
-    transition: all 0.3s ease;
-    position: relative;
-    z-index: 2; 
-  }
-  
-  /* Efecto hover del botón */
-  button.p_zoom:hover {
-    background-color: #b71c1c;  
-    transform: translateY(-5px); 
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
-  }
-  
-  
-  .p_zoom::after {
-    content: '';  
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;  
-    opacity: 0;  
-    transition: opacity 0.3s ease; 
-    border-radius: 30px;  
-    z-index: 1;
-  }
-  
-  
-  .p_zoom:hover::after {
-    opacity: 0.7;  
-  }
-  .footer {
-    background: linear-gradient(135deg, #000000, #333333); 
-    color: #ffffff; 
-    padding: 20px 0;  
-    text-align: center;
-    border-top: 2px solid #ff0000; 
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3); 
-  }
-  
-  .footer-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: linear-gradient(to top left, #000000, #6b0101);
-    justify-content: center;
-  }
-  
-  .social-icons {
-    margin-bottom: 10px; /* Menos espacio entre los iconos */
-  }
-  
-  .social-icons .icon {
-    color: #ffffff;
-    margin: 0 12px; /* Menos margen entre iconos */
-    font-size: 22px; /* Tamaño de los iconos reducido */
-    transition: transform 0.3s ease, color 0.3s ease; /* Efectos de hover suaves */
-    text-decoration: none;
-  }
-  
-  .social-icons .icon:hover {
-    color: #ff0000; /* Cambiar color a rojo al hacer hover */
-    transform: scale(1.1); /* Aumentar tamaño ligeramente */
-  }
-  
-  .contact-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 10px; /* Menos espacio entre información de contacto */
-  }
-  
-  .info-item {
-    color: #ffffff;
-    margin: 3px 0;  /* Márgenes más pequeños */
-    font-size: 14px; /* Fuente más pequeña */
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    transition: color 0.3s ease; /* Transición suave para el texto */
-  }
-  
-  .info-item i {
-    margin-right: 8px;
-    font-size: 16px; /* Iconos más pequeños */
-  }
-  
-  .info-item:hover {
-    color: #ff0000; /* Cambio de color a rojo al hacer hover */
-  }
-  
-  .footer h2 {
-    font-size: 20px; /* Título más pequeño */
-    margin-bottom: 10px; /* Menos margen debajo del título */
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
-  }
-  
-  .footer p {
-    font-size: 12px; /* Texto más pequeño */
-    color: #bbbbbb;
-    margin-top: 5px; /* Menos margen arriba */
-  }
-  
-  @media (max-width: 481px) {
-    .footer-content {
-      flex-direction: column; /* Apilar los elementos en pantallas pequeñas */
+}
+@media (max-width: 768px) {
+    .slider-container {
+        display: flex; /* Usamos flexbox para alinear el contenido */
+        flex-direction: column; /* Los elementos dentro del contenedor se organizan en columna */
+        justify-content: flex-end; /* El slider se coloca al final del contenedor */
+        height: 100vh; /* El contenedor ocupa toda la altura de la pantalla */
+        padding: 10px;
+        box-sizing: border-box;
+        overflow: hidden; /* Prevenir desbordamiento */
+        background-color: #f0f0f0; /* Color de fondo del contenedor */
     }
-  
-    .contenedor3 {
-      display: flex;
-      flex-direction: column; 
-      justify-content: center; 
-      align-items: center; 
-      width: 100%;
-      padding: 40px 20px; 
-      margin: 0 auto;
-      max-width: 100%; 
-      gap: 20px;
-      text-align: center;
+
+    .slider {
+        display: flex; /* Mostrar el slider como un contenedor flexible */
+        justify-content: space-between; /* Alinear los items dentro del slider */
+        overflow-x: scroll; /* Permite que el slider sea desplazable */
+        padding: 10px;
+        background-color: #fff; /* Fondo blanco para el slider */
+        border-radius: 8px; /* Bordes redondeados */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para el slider */
     }
-  
-    .zoom {
-      width: 200px;
-      height: 200px; 
+
+    .slider-item {
+        min-width: 45%; /* Cada item ocupa el 45% del contenedor */
+        margin: 10px; /* Espacio entre los items */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center; /* Alinear el texto */
+        padding: 20px;
+        background-color: #2196f3; /* Color de fondo de los items del slider */
+        color: #fff; /* Color de texto blanco */
+        border-radius: 8px; /* Bordes redondeados en los items */
+        font-size: 16px; /* Tamaño de fuente */
     }
-  
-    .contenedor-imagen img {
-      width: 150px; 
+
+    .slider-navigation {
+        display: none; /* Ocultar la navegación si no es necesaria */
     }
-  }
-  @media (max-width: 768px) {
-      .slider-container {
-          display: flex; /* Usamos flexbox para alinear el contenido */
-          flex-direction: column; /* Los elementos dentro del contenedor se organizan en columna */
-          justify-content: flex-end; /* El slider se coloca al final del contenedor */
-          height: 100vh; /* El contenedor ocupa toda la altura de la pantalla */
-          padding: 10px;
-          box-sizing: border-box;
-          overflow: hidden; /* Prevenir desbordamiento */
-          background-color: #f0f0f0; /* Color de fondo del contenedor */
-      }
-  
-      .slider {
-          display: flex; /* Mostrar el slider como un contenedor flexible */
-          justify-content: space-between; /* Alinear los items dentro del slider */
-          overflow-x: scroll; /* Permite que el slider sea desplazable */
-          padding: 10px;
-          background-color: #fff; /* Fondo blanco para el slider */
-          border-radius: 8px; /* Bordes redondeados */
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para el slider */
-      }
-  
-      .slider-item {
-          min-width: 45%; /* Cada item ocupa el 45% del contenedor */
-          margin: 10px; /* Espacio entre los items */
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-align: center; /* Alinear el texto */
-          padding: 20px;
-          background-color: #2196f3; /* Color de fondo de los items del slider */
-          color: #fff; /* Color de texto blanco */
-          border-radius: 8px; /* Bordes redondeados en los items */
-          font-size: 16px; /* Tamaño de fuente */
-      }
-  
-      .slider-navigation {
-          display: none; /* Ocultar la navegación si no es necesaria */
-      }
-  }
-  
-  /* Estilo para pantallas de hasta 480px de ancho (móviles más pequeños) */
-  @media (max-width: 480px) {
-      .slider-container {
-          display: flex; /* Usamos flexbox para alinear el contenido */
-          flex-direction: column; /* Los elementos dentro del contenedor se organizan en columna */
-          justify-content: flex-end; /* El slider se coloca al final del contenedor */
-          height: 100vh; /* El contenedor ocupa toda la altura de la pantalla */
-          padding: 5px; /* Menos espacio en pantallas pequeñas */
-          box-sizing: border-box;
-          background-color: #f0f0f0; /* Fondo suave del contenedor */
-      }
-  
-      .slider {
-          display: flex; /* El slider se muestra como un contenedor flexible */
-          justify-content: space-between; /* Alineación de los items del slider */
-          overflow-x: scroll; /* Permite el desplazamiento horizontal */
-          padding: 10px;
-          background-color: #fff; /* Fondo blanco para el slider */
-          border-radius: 8px; /* Bordes redondeados */
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para el slider */
-      }
-  
-      .slider-item {
-          min-width: 100%; /* Cada item ocupa el 100% del contenedor en pantallas pequeñas */
-          margin: 10px 0; /* Espacio entre los items */
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-align: center;
-          padding: 20px;
-          background-color: #2196f3; /* Fondo azul de los items */
-          color: #fff; /* Color del texto blanco */
-          border-radius: 8px; /* Bordes redondeados en los items */
-          font-size: 14px; /* Tamaño de texto reducido para móviles */
-      }
-  
-      .slider-navigation {
-          display: block; /* Mostrar navegación, si es necesario */
-      }
-  }
+}
+
+/* Estilo para pantallas de hasta 480px de ancho (móviles más pequeños) */
+@media (max-width: 480px) {
+    .slider-container {
+        display: flex; /* Usamos flexbox para alinear el contenido */
+        flex-direction: column; /* Los elementos dentro del contenedor se organizan en columna */
+        justify-content: flex-end; /* El slider se coloca al final del contenedor */
+        height: 100vh; /* El contenedor ocupa toda la altura de la pantalla */
+        padding: 5px; /* Menos espacio en pantallas pequeñas */
+        box-sizing: border-box;
+        background-color: #f0f0f0; /* Fondo suave del contenedor */
+    }
+
+    .slider {
+        display: flex; /* El slider se muestra como un contenedor flexible */
+        justify-content: space-between; /* Alineación de los items del slider */
+        overflow-x: scroll; /* Permite el desplazamiento horizontal */
+        padding: 10px;
+        background-color: #fff; /* Fondo blanco para el slider */
+        border-radius: 8px; /* Bordes redondeados */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para el slider */
+    }
+
+    .slider-item {
+        min-width: 100%; /* Cada item ocupa el 100% del contenedor en pantallas pequeñas */
+        margin: 10px 0; /* Espacio entre los items */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        background-color: #2196f3; /* Fondo azul de los items */
+        color: #fff; /* Color del texto blanco */
+        border-radius: 8px; /* Bordes redondeados en los items */
+        font-size: 14px; /* Tamaño de texto reducido para móviles */
+    }
+
+    .slider-navigation {
+        display: block; /* Mostrar navegación, si es necesario */
+    }
+}

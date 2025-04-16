@@ -13,19 +13,23 @@
               <p>telefono: {{ telefonoDeportista }}</p>
               <button @click="editarDeportista">Editar</button>
               <button @click="eliminarDeportista">Eliminar</button>
-              <button @click="consultarDeportista(deportista)">Consultar</button>
+              <button @click="consultarDeportista">Consultar</button>
+              
+
+              
               </div>
               <div class="foto-perfil">
                 <img v-if="fotoDeportista" :src="fotoDeportista" alt="Foto de Perfil" />
                 <div v-else>No hay foto disponible</div>
               </div>
+        
             </section>
           </div>
           <div class="contenido-principal">
             <nav class="internal-menu">
               <button @click="currentSection = 'deportista'">Información del Deportista</button>
               <button @click="currentSection = 'pagos'">Pagos</button>
-              <button @click="currentSection = 'equipo'">Mi Equipo</button>
+              <button @click="cambiarASeccionEquipo">Mi Equipo</button>
               <!-- <button @click="currentSection = 'encuentros'">Mis Encuentros</button> -->
             </nav>
             <div class="seccion-actual">
@@ -81,10 +85,10 @@
               <div v-if="editingDeportista">
               <h2>Editar Deportista</h2>
               <form @submit.prevent="actualizarDeportista">
-                <input v-model="editingDeportista.nombre" placeholder="Nombre" required />
-                <input v-model="editingDeportista.apellidos" placeholder="Apellidos" required />
-                <input v-model="editingDeportista.edad" type="number" placeholder="Edad" required />
-                <input v-model="editingDeportista.fecha_nacimiento" type="date" placeholder="Fecha de Nacimiento" required />
+                <!-- <input v-model="editingDeportista.nombre" placeholder="Nombre" required />
+                <input v-model="editingDeportista.apellidos" placeholder="Apellidos" required /> -->
+                <!-- <input v-model="editingDeportista.edad" type="number" placeholder="Edad" required /> -->
+                <!-- <input v-model="editingDeportista.fecha_nacimiento" type="date" placeholder="Fecha de Nacimiento" required /> -->
                 <input v-model="editingDeportista.eps" placeholder="EPS" required />
                 <input v-model="editingDeportista.telefono" placeholder="Teléfono" required />
                 <input v-model="editingDeportista.email" type="email" placeholder="Email" required />
@@ -168,27 +172,42 @@
         </div>
       </main>
   
-      <footer class="footer">
-        <div class="footer-content">
-          <div class="social-icons">
-            <a href="#" class="icon"><i class="fab fa-facebook-f">#</i></a>
-            <a href="#" class="icon"><i class="fab fa-twitter">#</i></a>
-            <a href="#" class="icon"><i class="fab fa-instagram">#</i></a>
-          </div>
-          <div class="contact-info">
-            <a href="mailto:info@example.com" class="info-item"><i class="fas fa-envelope"></i> Clubindependietecef@Gmail.com</a>
-            <a href="tel:+123456789" class="info-item"><i class="fas fa-phone"></i> 3138683102</a>
-            <p class="info-item"><i class="fas fa-map-marker-alt"></i> Calle Ejemplo 123, Ciudad</p>
-          </div>
+      <footer class="footer-card">
+    <div class="footer-content">
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank" class="icon">
+                <img src="./icons/icons8-facebook-nuevo-40.png" alt="Facebook">
+            </a>
+            <a href="https://instagram.com" target="_blank" class="icon">
+                <img src="./icons/icons8-instagram-48.png" alt="Instagram">
+            </a>
+            <a href="https://twitter.com" target="_blank" class="icon">
+                <img src="./icons/icons8-twitter-48.png" alt="Twitter">
+            </a>
         </div>
-      </footer>
+        <div class="contact-info">
+            <a href="mailto:Clubindependietecef@Gmail.com" class="info-item">
+                <i class="fas fa-envelope"></i> Clubindependietecef@Gmail.com
+            </a>
+            <a href="tel:3138683102" class="info-item">
+                <i class="fas fa-phone"></i> 3138683102
+            </a>
+            <p class="info-item">
+                <i class="fas fa-map-marker-alt"></i> Villa de sol , Funza Cundinamarca
+            </p>
+        </div>
+    </div>
+</footer>
     </div>
   </div>
   </template>
   
-  <script>
+  <script >
+  import { ref, computed } from 'vue';
+  import { useRouter } from 'vue-router';
   import Swal from 'sweetalert2';
   import axios from 'axios'; 
+  const router = useRouter();
   
   export default {
     data() {
@@ -244,6 +263,24 @@
       
     },
     methods: {
+      cerrarSesion() {
+      // Limpiar localStorage
+      localStorage.clear();
+      
+      // Redirigir a la página principal
+      this.$router.push('/');
+      
+      // Opcional: Mostrar confirmación
+      Swal.fire({
+        icon: 'success',
+        title: 'Sesión cerrada',
+        text: 'Has cerrado sesión correctamente'
+      });
+    },
+      cambiarASeccionEquipo() {
+    this.currentSection = 'equipo';
+    this.obtenerMiEquipo(true);  // Pasa true para mostrar alertas si no hay equipo
+  },
       obtenerFechaHoy() {
         const today = new Date();
         return today.toISOString().split('T')[0]; // Formato YYYY-MM-DD
@@ -264,7 +301,106 @@
         }
       });
     },
-    
+    async actualizarDeportista() {
+  try {
+    // Crear objeto solo con los campos editables
+    const datosActualizados = {
+      eps: this.editingDeportista.eps,
+      telefono: this.editingDeportista.telefono,
+      email: this.editingDeportista.email,
+      foto: this.editingDeportista.foto,
+      nombre_acudiente: this.editingDeportista.nombre_acudiente,
+      telefono_acudiente: this.editingDeportista.telefono_acudiente,
+      email_acudiente: this.editingDeportista.email_acudiente,
+      categoria: this.editingDeportista.categoria
+    };
+
+    console.log("Datos a enviar:", datosActualizados); // Para depuración
+
+    const response = await axios.put(
+      `http://127.0.0.1:8000/ActualizarJ/${this.editingDeportista.documento}`,
+      datosActualizados
+    );
+
+    if (response.status === 200) {
+      Swal.fire('Éxito', 'Datos actualizados correctamente', 'success');
+      
+      // Actualizar localStorage
+      Object.keys(datosActualizados).forEach(key => {
+        localStorage.setItem(`${key}Deportista`, datosActualizados[key]);
+      });
+      
+      this.cargarDatosDeportista();
+      this.editingDeportista = null;
+    }
+  } catch (error) {
+    console.error('Error al actualizar:', error.response?.data || error.message);
+    Swal.fire('Error', error.response?.data?.detail || 'No se pudieron actualizar los datos', 'error');
+  }
+},
+async consultarDeportista() {
+  try {
+    // 1. Obtener todos los datos del localStorage
+    const datosDeportista = {
+      documento: localStorage.getItem('documento'),
+      nombre: localStorage.getItem('nombreDeportista'),
+      apellidos: localStorage.getItem('apellidosDeportista'),
+      edad: localStorage.getItem('edadDeportista'),
+      fecha_nacimiento: localStorage.getItem('fechaNacimientoDeportista'),
+      eps: localStorage.getItem('epsDeportista'),
+      telefono: localStorage.getItem('telefonoDeportista'),
+      email: localStorage.getItem('emailDeportista'),
+      foto: localStorage.getItem('fotoDeportista'),
+      nombre_acudiente: localStorage.getItem('nombreAcudienteDeportista'),
+      telefono_acudiente: localStorage.getItem('telefonoAcudienteDeportista'),
+      email_acudiente: localStorage.getItem('emailAcudienteDeportista'),
+      categoria: localStorage.getItem('categoriaDeportista')
+    };
+
+    // 2. Verificar que exista el documento
+    if (!datosDeportista.documento) {
+      Swal.fire('Error', 'No se encontraron tus datos en el sistema', 'error');
+      return;
+    }
+
+    // 3. Mostrar todos los datos en un modal organizado
+    Swal.fire({
+      title: 'Mi Información Completa',
+      html: `
+        <div style="text-align: left;">
+          <h3>Datos Personales</h3>
+          <p><strong>Nombre:</strong> ${datosDeportista.nombre || 'No disponible'}</p>
+          <p><strong>Apellidos:</strong> ${datosDeportista.apellidos || 'No disponible'}</p>
+          <p><strong>Documento:</strong> ${datosDeportista.documento || 'No disponible'}</p>
+          <p><strong>Edad:</strong> ${datosDeportista.edad || 'No disponible'}</p>
+          <p><strong>Fecha Nacimiento:</strong> ${datosDeportista.fecha_nacimiento || 'No disponible'}</p>
+          
+          <h3>Contacto</h3>
+          <p><strong>EPS:</strong> ${datosDeportista.eps || 'No disponible'}</p>
+          <p><strong>Teléfono:</strong> ${datosDeportista.telefono || 'No disponible'}</p>
+          <p><strong>Email:</strong> ${datosDeportista.email || 'No disponible'}</p>
+          
+          <h3>Datos del Acudiente</h3>
+          <p><strong>Nombre Acudiente:</strong> ${datosDeportista.nombre_acudiente || 'No disponible'}</p>
+          <p><strong>Teléfono Acudiente:</strong> ${datosDeportista.telefono_acudiente || 'No disponible'}</p>
+          <p><strong>Email Acudiente:</strong> ${datosDeportista.email_acudiente || 'No disponible'}</p>
+          
+          <h3>Información Deportiva</h3>
+          <p><strong>Categoría:</strong> ${datosDeportista.categoria || 'No disponible'}</p>
+        </div>
+      `,
+      width: '700px',
+      confirmButtonText: 'Cerrar',
+      background: '#1e1e1e',
+      color: '#ffffff',
+      showCloseButton: true
+    });
+
+  } catch (error) {
+    console.error('Error al consultar datos:', error);
+    Swal.fire('Error', 'No se pudieron cargar tus datos completos', 'error');
+  }
+},
       async agregarPago() {
 
         // Crear el objeto del pago
@@ -378,7 +514,6 @@
   }
 },
 async eliminarDeportista() {
-
   // Verificar que el documento esté disponible
   if (!this.documento) {
     console.error('No se pudo encontrar el documento del usuario');
@@ -386,23 +521,45 @@ async eliminarDeportista() {
   }
 
   try {
-    // Hacer la solicitud DELETE con el documento del usuario logueado
-    const response = await fetch(`http://127.0.0.1:8000/EliminarJ/${this.documento}`, {
-      method: 'DELETE',
+    // Confirmar antes de eliminar
+    const confirmacion = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¡Esta acción no se puede deshacer! Se eliminarán todos tus datos permanentemente.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
     });
 
-    if (!response.ok) {
-      throw new Error('Error al eliminar el deportista');
+    if (confirmacion.isConfirmed) {
+      const response = await fetch(`http://127.0.0.1:8000/EliminarJ/${this.documento}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al eliminar el deportista');
+      }
+
+      const result = await response.json();
+      
+      // 1. Limpiar localStorage
+      localStorage.clear();
+      
+      // 2. Mostrar confirmación
+      await Swal.fire(
+        '¡Eliminado!',
+        'Tu cuenta ha sido eliminada correctamente.',
+        'success'
+      );
+      
+      // 3. Redirigir a la página principal
+      this.$router.push('/');
     }
-
-    const result = await response.json();
-    Swal.fire('Eliminado!', result.detail, 'success');
-
-    // Aquí puedes redirigir al usuario a otra página después de eliminarlo, por ejemplo:
-    // this.$router.push('/login'); // Redirigir a la página de login si es necesario
   } catch (error) {
     console.error('Error al eliminar deportista:', error);
-    Swal.fire('Error!', 'No se pudo eliminar el deportista.', 'error');
+    Swal.fire('Error', 'No se pudo eliminar tu cuenta', 'error');
   }
 },
 
@@ -449,7 +606,7 @@ async actualizarDeportista() {
         Swal.fire('Error!', 'No se pudo actualizar el deportista.', 'error');
       }
     },
-    async obtenerMiEquipo() {
+    async obtenerMiEquipo(showAlert = false) {  // Añade parámetro showAlert
   try {
     const response = await fetch(`http://127.0.0.1:8000/consultarEquipoPorDeportista/${this.documento}`);
     if (response.ok) {
@@ -461,15 +618,39 @@ async actualizarDeportista() {
       } else {
         this.miEquipo = null;
         this.encuentrosEquipo = [];
+        if (showAlert) {  // Solo muestra alerta si showAlert es true
+          Swal.fire({
+            icon: 'info',
+            title: 'Sin equipo',
+            text: 'Actualmente no estás registrado en ningún equipo.',
+            confirmButtonText: 'Entendido'
+          });
+        }
       }
     } else {
       this.miEquipo = null;
       this.encuentrosEquipo = [];
+      if (showAlert) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Sin equipo',
+          text: 'Actualmente no estás registrado en ningún equipo.',
+          confirmButtonText: 'Entendido'
+        });
+      }
     }
   } catch (error) {
     console.error('Error al obtener equipo:', error);
     this.miEquipo = null;
     this.encuentrosEquipo = [];
+    if (showAlert) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Ocurrió un error al consultar tu equipo.',
+        confirmButtonText: 'Entendido'
+      });
+    }
   }
 },
 
@@ -536,7 +717,10 @@ async actualizarDeportista() {
     }
   
   },
+  
   mounted() {
+    
+
     this.cargarDatosDeportista();
     this.fetchDeportistas();
     this.documento = localStorage.getItem('documento') || 'documento no disponible';
@@ -544,7 +728,7 @@ async actualizarDeportista() {
     // Solo cargar equipo y encuentros si el documento es válido
     if (this.documento && this.documento !== 'documento no disponible') {
       this.consultarPagos();
-      this.obtenerMiEquipo();
+      this.obtenerMiEquipo(false);
     }
     this.cargarDatosDeportista();
     this.fetchDeportistas();
@@ -565,7 +749,9 @@ async actualizarDeportista() {
     if (this.documento && this.documento !== 'documento no disponible') {
     this.consultarPagos(); 
     }
+    
   }
+  
   };
   </script>
 <style scoped src="/src/assets/estilos_deportistas.css">

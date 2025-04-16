@@ -12,43 +12,93 @@
           <p><router-link class="p2" to="/Nosotros">Nosotros</router-link></p>
         </div>
         <div class="logo">
-          <img class="img" src="E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\proyectopython\src\components\icons\WhatsApp_Image_2024-08-23_at_9.04.20_AM-removebg-preview.png" alt="Logo">
+          <img class="img" src=".\icons\WhatsApp_Image_2024-08-23_at_9.04.20_AM-removebg-preview.png" alt="Logo">
         </div>
-        <div class="login">
-          <router-link to="/login">
-            <img class="img_boton" src="E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\proyectopython\src\components\icons\perfil.jpg" alt="Inicio Sesión | Inscríbete">
-          </router-link>
+        <div class="auth-buttons">
+          <!-- Botón de Acceso Directo al Perfil (visible CON token) -->
+          <router-link 
+            v-if="authStore.isLoggedIn" 
+            to="/acceso-directo" 
+            class="profile-access-button session-button">
+            Inicio Sesión
+            </router-link>
+          
+          <!-- Botón de Cerrar Sesión (visible CON token) -->
+          <button 
+            v-if="authStore.isLoggedIn" 
+            @click="logout" 
+            class="logout-button session-button"
+            >
+            Cerrar Sesión
+            </button>
+          
+          <!-- Botón normal de Login (visible SIN token) -->
+          <router-link 
+            v-if="!authStore.isLoggedIn" 
+            to="/login" 
+            class="login-button"
+            >
+            <img class="img_boton" src=".\icons\usuario.png" alt="Login">
+            </router-link>
         </div>
       </div>
     </header>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-const isMenuVisible = ref(false);
-function toggleMenu() {
-  isMenuVisible.value = !isMenuVisible.value;
+import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
+
+const router = useRouter();
+const authStore = useAuthStore();
+
+onMounted(() => {
+    authStore.checkLoginStatus();
+});
+
+function logout() {
+  authStore.logout();
+  router.push('/');
 }
 </script>
 
 <style>
 @keyframes backgroundAnimation {
     0% {
-        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0); 
     }
     50% {
-        background-color: #720c0c;
+        background-color: #720c0c; 
     }
     100% {
-        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 1); 
     }
 }
+.session-button {
+    background-color: #ee0404;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    margin-left: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    font-family: 'Arial', sans-serif;
+}
 
+.session-button:hover {
+    background-color: #b50303;
+    transform: scale(1.05);
+}
 .headerheader {
     width: 100%;
     height: 86px;
-    background-color: rgb(0, 0, 0);
-    animation: backgroundAnimation 5s ease-out;
+    background-color: rgba(0, 0, 0, 0); 
+    animation: backgroundAnimation 6s ease-out forwards; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px 0;
     position: fixed;

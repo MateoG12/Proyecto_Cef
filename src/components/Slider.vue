@@ -1,86 +1,92 @@
 <template>
-    <div class="slider">
-      <div class="slides" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
-        <div class="slide" v-for="(image, index) in images" :key="index">
-          <img :src="image" alt="" />
-        </div>
+  <div class="slider">
+    <div class="slides" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
+      <div class="slide" v-for="(image, index) in images" :key="index">
+        <img :src="image" alt="" />
       </div>
-      <button class="prev" @click="prevSlide">❮</button>
-      <button class="next" @click="nextSlide">❯</button>
     </div>
-  </template>
-  
-  <script>
-  import carrusel1 from '@/assets/carrusel 1.jpg';
-  import carrusel2 from '@/assets/carrusel 3.jpg';
-  import carrusel3 from '@/assets/carrusel 2.jpg';
-  import carrusel4 from '@/assets/carrusel 1.jpg';
-  import carrusel5 from '@/assets/carrusel 3.jpg';
-  import carrusel6 from '@/assets/carrusel 2.jpg';
-  
-  export default {
-    data() {
-      return {
-        currentIndex: 0,
-        images: [carrusel1, carrusel2, carrusel3,carrusel4,carrusel5,carrusel6],
-      };
+  </div>
+</template>
+
+<script>
+import carrusel1 from '@/assets/carrusel 1.jpg';
+import carrusel2 from '@/assets/carrusel 3.jpg';
+import carrusel3 from '@/assets/carrusel 2.jpg';
+import carrusel4 from '@/assets/carrusel 1.jpg';
+import carrusel5 from '@/assets/carrusel 3.jpg';
+import carrusel6 from '@/assets/carrusel 2.jpg';
+
+export default {
+  data() {
+    return {
+      currentIndex: 0,
+      images: [carrusel1, carrusel2, carrusel3, carrusel4, carrusel5, carrusel6],
+    };
+  },
+  methods: {
+    nextSlide() {
+      this.currentIndex = (this.currentIndex + 1) % this.images.length;
     },
-    methods: {
-      nextSlide() {
-        this.currentIndex = (this.currentIndex + 1) % this.images.length;
-      },
-      prevSlide() {
-        this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
-      },
-      autoSlide() {
-        setInterval(this.nextSlide, 5000); // Cambia de imagen cada 3 segundos
-      },
+    autoSlide() {
+      setInterval(this.nextSlide, 10000); 
     },
-    mounted() {
-      this.autoSlide();
-    },
-  };
-  </script>
-  
-  <style scoped>
-  .slider {
-    position: relative;
-    overflow: hidden;
-    width: 800px; /* Ajusta según sea necesario */
-    height: 500px; /* Ajusta según sea necesario */
+  },
+  mounted() {
+    this.autoSlide(); 
+  },
+};
+</script>
+
+<style scoped>
+.slider {
+  position: relative;
+  overflow: hidden;
+  width: 600px; 
+  height: 400px; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease; 
+}
+
+.slide {
+  min-width: 100%; 
+  box-sizing: border-box;
+  margin: 0 auto; 
+}
+
+img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover; 
+}
+
+button {
+  display: none; 
+}
+
+
+@keyframes slideAnimation {
+  0% {
+    transform: translateX(0);
   }
-  
-  .slides {
-    display: flex;
-    transition: transform 0.5s ease;
+  33% {
+    transform: translateX(-100%);
   }
-  
-  .slide {
-    min-width: 100%;
-    box-sizing: border-box;
+  66% {
+    transform: translateX(-200%);
   }
-  
-  img {
-    width: 100%;
-    height: auto;
+  100% {
+    transform: translateX(0);
   }
-  
-  button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.7);
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-  }
-  
-  .prev {
-    left: 10px;
-  }
-  
-  .next {
-    right: 10px;
-  }
-  </style>
-  
+}
+
+
+.slides {
+  animation: slideAnimation 12s infinite;
+}
+</style>

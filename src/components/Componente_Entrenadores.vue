@@ -31,16 +31,16 @@
               <button @click="currentSection = 'Equipos'">Equipo</button>
               <button @click="currentSection = 'agregarInscripcion'">Agregar a equipo</button>
               <button @click="currentSection = 'encuentros'">Encuentros</button>
-              <button @click="currentSection = 'Tactica'"><router-link class="link" to="/Tactica">Tactica</router-link></button>
+              <router-link class="link" to="/Tactica"><button @click="currentSection = 'Tactica'">Tactica</button></router-link>
             </nav>
             <div class="seccion-actual">
               <template v-if="currentSection === 'estadisticas'">
               <h2>Agregar Estadísticas para el Encuentro ID: {{ selectedEncuentroId }}</h2>
               <form @submit.prevent="agregarEstadistica">
-                  <div>
+                  <!-- <div>
                       <label for="asistencias">ID</label>
                       <input v-model="estadistica.id" type="number" required />
-                  </div>
+                  </div> -->
                   <div>
                       <label for="asistencias">Asistencias:</label>
                       <input v-model="estadistica.asistencias" type="number" required />
@@ -160,7 +160,7 @@
                 <p>Ubicación: {{ encuentro.ubicacion }}</p>
                 <button @click="editarEncuentro(encuentro)">Editar</button>
                 <button @click="eliminarEncuentro(encuentro)">Eliminar</button>
-                <button @click="(function() { console.log(encuentro.encuentroId); prepararAgregarEstadisticas(encuentro.encuentroId); })()">Agregar Estadísticas</button>
+                <button @click="prepararAgregarEstadisticas(encuentro.Encuentro_id)">Agregar Estadísticas</button>
               </div>
             </div>
             <div v-else>
@@ -397,20 +397,32 @@
   </div>
         </div>
       </main>
-      <footer class="footer">
-        <div class="footer-content">
-          <div class="social-icons">
-            <a href="#" class="icon"><i class="fab fa-facebook-f">#</i></a>
-            <a href="#" class="icon"><i class="fab fa-twitter">#</i></a>
-            <a href="#" class="icon"><i class="fab fa-instagram">#</i></a>
-          </div>
-          <div class="contact-info">
-            <a href="mailto:info@example.com" class="info-item"><i class="fas fa-envelope"></i> Clubindependietecef@Gmail.com</a>
-            <a href="tel:+123456789" class="info-item"><i class="fas fa-phone"></i> 3138683102</a>
-            <p class="info-item"><i class="fas fa-map-marker-alt"></i> Calle Ejemplo 123, Ciudad</p>
-          </div>
+      <footer class="footer-card">
+    <div class="footer-content">
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank" class="icon">
+                <img src="./icons/icons8-facebook-nuevo-40.png" alt="Facebook">
+            </a>
+            <a href="https://instagram.com" target="_blank" class="icon">
+                <img src="./icons/icons8-instagram-48.png" alt="Instagram">
+            </a>
+            <a href="https://twitter.com" target="_blank" class="icon">
+                <img src="./icons/icons8-twitter-48.png" alt="Twitter">
+            </a>
         </div>
-      </footer>
+        <div class="contact-info">
+            <a href="mailto:Clubindependietecef@Gmail.com" class="info-item">
+                <i class="fas fa-envelope"></i> Clubindependietecef@Gmail.com
+            </a>
+            <a href="tel:3138683102" class="info-item">
+                <i class="fas fa-phone"></i> 3138683102
+            </a>
+            <p class="info-item">
+                <i class="fas fa-map-marker-alt"></i> Villa de sol , Funza Cundinamarca
+            </p>
+        </div>
+    </div>
+</footer>
     </div>
   </div>
   </template>
@@ -538,27 +550,39 @@
       }
     },
     methods: {
-      prepararAgregarEstadisticas(encuentro_id) {
-        this.selectedEncuentroId = encuentro_id; // Guardar el ID del encuentro
-        this.currentSection = 'estadisticas'; // Cambiar la sección a estadísticas
-        this.limpiarFormularioEstadistica(); // Limpiar el formulario
-        this.consultarEstadisticas(encuentro_id);
-    },
-    async agregarEstadistica() {
-    const estadisticaData = {
-        encuentros_encuentro_id:this.selectedEncuentroId,
-        id:this.estadistica.id,
-        asistencias: this.estadistica.asistencias,
-        corners: this.estadistica.corners,
-        faltas: this.estadistica.faltas,
-        goles: this.estadistica.goles,
-        penales: this.estadistica.penales,
-        tarjetasamarillas: this.estadistica.tarjetasamarillas,
-        tarjetasrojas: this.estadistica.tarjetasrojas,
-        tirolibres: this.estadistica.tirolibres,
-    };
+      prepararAgregarEstadisticas(encuentroId) {
+    // Verifica que el ID sea válido
+    if (!encuentroId) {
+        console.error('ID de encuentro no proporcionado');
+        Swal.fire('Error', 'No se ha seleccionado un encuentro válido', 'error');
+        return;
+    }
+    
+    this.selectedEncuentroId = encuentroId;
+    this.currentSection = 'estadisticas';
+    this.limpiarFormularioEstadistica();
+    this.consultarEstadisticas(encuentroId);
+},
+async agregarEstadistica() {
     try {
-        // Cambia la URL aquí
+        if (!this.selectedEncuentroId) {
+            throw new Error('No se ha seleccionado un encuentro');
+        }
+
+        const estadisticaData = {
+            encuentros_encuentro_id: this.selectedEncuentroId,
+            asistencias: this.estadistica.asistencias,
+            corners: this.estadistica.corners,
+            faltas: this.estadistica.faltas,
+            goles: this.estadistica.goles,
+            penales: this.estadistica.penales,
+            tarjetasamarillas: this.estadistica.tarjetasamarillas,
+            tarjetasrojas: this.estadistica.tarjetasrojas,
+            tirolibres: this.estadistica.tirolibres
+        };
+
+        console.log('Enviando estadísticas:', estadisticaData);
+
         const response = await fetch(`http://127.0.0.1:8000/insertarEstadisticas/${this.selectedEncuentroId}`, {
             method: 'POST',
             headers: {
@@ -568,17 +592,23 @@
         });
 
         if (!response.ok) {
-            throw new Error('Error al agregar estadísticas');
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Error al agregar estadísticas');
         }
 
-        const nuevaEstadistica = await response.json(); // Puedes manejar la estadística agregada si es necesario
-        console.log('Estadística agregada:', nuevaEstadistica);
-
-        // Limpiar el formulario y volver a la sección de encuentros
+        const nuevaEstadistica = await response.json();
+        this.estadisticas.push(nuevaEstadistica);
+        
+        Swal.fire('Éxito', 'Estadísticas agregadas correctamente', 'success');
         this.limpiarFormularioEstadistica();
-        this.currentSection = 'encuentros';
+        
     } catch (error) {
-        console.error('Error al agregar estadísticas:', error);
+        console.error('Error al agregar estadísticas:', {
+            error: error.message,
+            selectedEncuentroId: this.selectedEncuentroId,
+            estadisticaData: this.estadistica
+        });
+        Swal.fire('Error', error.message, 'error');
     }
 },
     limpiarFormularioEstadistica() {
@@ -663,17 +693,29 @@
     Swal.fire('Error!', `No se pudieron obtener los pagos: ${error.message}`, 'error');
   }
 },
-    async consultarEstadisticas(encuentro_id) {
+async consultarEstadisticas(encuentroId) {
     try {
-        const response = await fetch(`http://127.0.0.1:8000/consultarEstadisticas/${encuentro_id}`);
-        if (!response.ok) {
-            throw new Error('Error al consultar las estadísticas');
+        if (!encuentroId) {
+            throw new Error('ID de encuentro no válido');
         }
+
+        const response = await fetch(`http://127.0.0.1:8000/consultarEstadisticas/${encuentroId}`);
+        
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.message || 'En este momento no hay estadisticas porfavor ingreselas');
+        }
+
         this.estadisticas = await response.json();
-        console.log('Estadísticas consultadas:', this.estadisticas);
+        console.log('Estadísticas cargadas:', this.estadisticas);
     } catch (error) {
-        console.error('Error al consultar estadísticas:', error);
-        Swal.fire('Error', error.message, 'error');
+        console.error('Error al consultar estadísticas:', {
+            error: error.message,
+            encuentroId,
+            stack: error.stack
+        });
+        Swal.fire('Error', `No se pudieron cargar las estadísticas: ${error.message}`, 'error');
+        this.estadisticas = []; // Limpiar estadísticas en caso de error
     }
 },
 
@@ -786,7 +828,16 @@
 
     const nuevoEncuentro = await response.json();
     this.encuentros.push(nuevoEncuentro);
-    Swal.fire('Éxito', 'Encuentro agregado correctamente', 'success');
+    Swal.fire({
+  title: 'Éxito',
+  text: 'Encuentro agregado correctamente',
+  icon: 'success',
+  confirmButtonText: 'OK'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.reload();
+  }
+});
     this.limpiarFormularioEncuentro(); // Método para limpiar el formulario
 
   } catch (error) {
@@ -806,42 +857,89 @@
       console.error('Error al consultar encuentros:', error);
     }
   },
-  editarEncuentro(encuentroId) {
-    // Lógica para editar el encuentro
-    const encuentro = this.encuentros.find(encuentro => encuentro.encuentro_id === encuentroId);
-    if (encuentro) {
-      this.encuentroEditado = { ...encuentro };  // Clonar el objeto para editarlo sin modificar el original
+// Método corregido
+editarEncuentro(encuentro) {
+  const id = encuentro.encuentro_id || encuentro.id || encuentro.Encuentro_id;
+    
+    if (!id) {
+        Swal.fire('Error', 'No se pudo identificar el ID del encuentro', 'error');
+        return;
     }
-  },
+
+    this.encuentroEditado = {
+        ...encuentro,
+        encuentro_id: id // Asegúrate de tener el ID correcto
+    };
+
+    this.isEditingEncuentro = true;
+    
+    // Asegúrate que estos campos coinciden con tu estructura de datos real
+    this.encuentro = {
+        equipo: { equipoid: encuentro.equipo_equipoid || encuentro.equipo?.equipoid },
+        torneo: { torneo_id: encuentro.torneo_torneo_id || encuentro.torneo?.torneo_id },
+        fecha: encuentro.fecha,
+        encuentroscol: encuentro.encuentroscol,
+        hora: encuentro.hora,
+        resultado: encuentro.resultado,
+        tipo: encuentro.tipo,
+        ubicacion: encuentro.ubicacion
+    };
+},
   cancelarEdicionEncuentro() {
     this.isEditingEncuentro = false; // Cambia el estado a no edición
     this.encuentroEditado = {}; // Restablece el objeto de encuentro editado
 },
-  async actualizarEncuentro() {
+async actualizarEncuentro() {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/actualizarEncuentro/${this.encuentroEditado.Encuentro_id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(this.encuentroEditado),
-      });
+        // Verifica que tenemos un ID válido
+        if (!this.encuentroEditado?.encuentro_id) {
+            throw new Error('ID de encuentro no válido');
+        }
 
-      if (!response.ok) {
-        throw new Error('Error al actualizar el encuentro');
-      }
+        const datosActualizados = {
+            equipo_equipoid: this.encuentro.equipo.equipoid,
+            torneo_torneo_id: this.encuentro.torneo.torneo_id,
+            fecha: this.encuentro.fecha,
+            encuentroscol: this.encuentro.encuentroscol,
+            hora: this.encuentro.hora,
+            resultado: this.encuentro.resultado,
+            tipo: this.encuentro.tipo,
+            ubicacion: this.encuentro.ubicacion
+        };
 
-      const encuentroActualizado = await response.json();
-      const index = this.encuentros.findIndex(encuentro => encuentro.encuentro_id === encuentroActualizado.Encuentro_id);
-      this.$set(this.encuentros, index, encuentroActualizado);
-      Swal.fire('Éxito', 'Encuentro actualizado correctamente', 'success');
-      this.cancelarEdicionEncuentro(); // Método para cancelar la edición
+        console.log('Enviando datos:', datosActualizados); // Depuración
+
+        const response = await fetch(`http://127.0.0.1:8000/actualizarEncuentro/${this.encuentroEditado.encuentro_id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(datosActualizados),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            console.error('Detalles del error:', errorData);
+            throw new Error(errorData.message || 'Error al actualizar el encuentro');
+        }
+
+        const encuentroActualizado = await response.json();
+        console.log('Respuesta del servidor:', encuentroActualizado);
+
+        // Actualiza la lista local
+        const index = this.encuentros.findIndex(e => e.encuentro_id === this.encuentroEditado.encuentro_id);
+        if (index !== -1) {
+            this.encuentros.splice(index, 1, encuentroActualizado);
+        }
+
+        Swal.fire('Éxito', 'Encuentro actualizado correctamente', 'success');
+        this.cancelarEdicionEncuentro();
 
     } catch (error) {
-      console.error('Error al actualizar el encuentro:', error);
-      Swal.fire('Error', error.message, 'error');
+        console.error('Error completo:', error);
+        Swal.fire('Error', error.message, 'error');
     }
-  },
+},
 
   async eliminarEncuentro(encuentro) {
     const confirmar = await Swal.fire({
@@ -1053,9 +1151,19 @@ async agregarInscripcion() {
     const nuevaInscripcion = await response.json();
     console.log('Inscripción agregada:', nuevaInscripcion); // Depuración: Verifica la inscripción agregada
 
-    Swal.fire('Éxito', 'Inscripción agregada correctamente', 'success');
-    this.inscripciones.push(nuevaInscripcion); 
-    this.resetInscripcionForm(); 
+    Swal.fire({
+  title: 'Éxito',
+  text: 'Inscripción agregada correctamente',
+  icon: 'success',
+  confirmButtonText: 'OK'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.reload();
+  }
+});
+
+this.inscripciones.push(nuevaInscripcion); 
+this.resetInscripcionForm();
   } catch (error) {
     console.error('Error al agregar inscripción:', error); // Depuración: Captura cualquier error no esperado
     Swal.fire('Error', error.message, 'error');
@@ -1066,16 +1174,16 @@ resetInscripcionForm() {
     this.nuevaInscripcion = { equipoid: '', documento: '' }; 
 },
 async consultarInscripcionesPorEquipo() {
-    try {
-        const response = await fetch(`http://127.0.0.1:8000/consultarEquipoInscripcion/${this.selectedEquipoId}`);
-        if (!response.ok) {
-            throw new Error('Error al consultar las inscripciones');
-        }
-        this.inscripciones = await response.json();
-    } catch (error) {
-        console.error('Error al consultar inscripciones:', error);
-        Swal.fire('Error', error.message, 'error');
-    }
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/consultarEquipoInscripcion/${this.selectedEquipoId}`);
+    if (!response.ok) throw new Error('Error al cargar inscripciones');
+    
+    const data = await response.json();
+    this.inscripciones = Array.isArray(data) ? data : []; // ✅ Fuerza a ser array
+  } catch (error) {
+    console.error("Error al cargar inscripciones:", error);
+    this.inscripciones = []; // ✅ Si falla, asigna array vacío
+  }
 },
 async eliminarInscripcion(inscripcion) {
     const confirmar = await Swal.fire({
@@ -1100,8 +1208,17 @@ async eliminarInscripcion(inscripcion) {
                 throw new Error('Error al eliminar la inscripción');
             }
 
-            Swal.fire('Eliminado!', 'La inscripción ha sido eliminada.', 'success');
-            this.inscripciones = this.inscripciones.filter(i => i.documento !== inscripcion.documento); // Actualiza la lista
+            Swal.fire({
+  title: 'Eliminado',
+  text: 'Eliminado correctamente',
+  icon: 'success',
+  confirmButtonText: 'OK'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.reload();
+  }
+});
+this.inscripciones = this.inscripciones.filter(i => i.documento !== inscripcion.documento); 
         } catch (error) {
             console.error('Error al eliminar inscripción:', error);
             Swal.fire('Error', error.message, 'error');

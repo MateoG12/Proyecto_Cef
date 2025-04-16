@@ -428,7 +428,8 @@
               <h2>Inventario</h2>
               <h3>Agregar Producto</h3>
               <form @submit.prevent="agregarProducto">
-                <input v-model="nuevoProducto.implementos" placeholder="Id invetario" required />
+                <button @click="descargarInventario(producto)">Descargar</button>
+                <!-- <input v-model="nuevoProducto.implementos" placeholder="Id invetario" required /> -->
                 <input v-model="nuevoProducto.nombre" placeholder="Nombre del Producto" required />
                 <input v-model="nuevoProducto.descripcion" placeholder="Descripción" required />
                 <input v-model="nuevoProducto.cantidad" type="number" placeholder="Cantidad" required />
@@ -436,6 +437,7 @@
               </form>
 
               <div v-for="producto in inventario" :key="producto.id" class="inventario-card">
+                <p>ID: {{ producto.implementos }}</p>
                 <p>Producto: {{ producto.nombre }}</p>
                 <p>Descripción: {{ producto.descripcion }}</p>
                 <p>Cantidad: {{ producto.cantidad }}</p>
@@ -485,7 +487,7 @@
           </div>
           <nav class="internal-menu">
             <ul class="admin-menu">
-              <li><router-link to="/admin/profesores">Agregar Profesores</router-link></li>
+              <li><router-link to="/admin/EmailVerification">Agregar verificacion</router-link></li>
             </ul>
           </nav>
           <router-view></router-view>
@@ -495,27 +497,38 @@
       </div>
     </main>
 
-    <footer class="footer">
-      <div class="footer-content">
+    <footer class="footer-card">
+    <div class="footer-content">
         <div class="social-icons">
-          <a href="#" class="icon"><i class="fab fa-facebook-f">#</i></a>
-          <a href="#" class="icon"><i class="fab fa-twitter">#</i></a>
-          <a href="#" class="icon"><i class="fab fa-instagram">#</i></a>
+            <a href="https://facebook.com" target="_blank" class="icon">
+                <img src="./icons/icons8-facebook-nuevo-40.png" alt="Facebook">
+            </a>
+            <a href="https://instagram.com" target="_blank" class="icon">
+                <img src="./icons/icons8-instagram-48.png" alt="Instagram">
+            </a>
+            <a href="https://twitter.com" target="_blank" class="icon">
+                <img src="./icons/icons8-twitter-48.png" alt="Twitter">
+            </a>
         </div>
         <div class="contact-info">
-          <a href="Clubindependietecef@Gmail.com" class="info-item"><i class="fas fa-envelope"></i> Clubindependietecef@Gmail.com</a>
-          <a href="tel:3138683102" class="info-item"><i class="fas fa-phone"></i>  3138683102</a>
-          <p class="info-item"><i class="fas fa-map-marker-alt"></i> Calle Ejemplo 123, Ciudad</p>
+            <a href="mailto:Clubindependietecef@Gmail.com" class="info-item">
+                <i class="fas fa-envelope"></i> Clubindependietecef@Gmail.com
+            </a>
+            <a href="tel:3138683102" class="info-item">
+                <i class="fas fa-phone"></i> 3138683102
+            </a>
+            <p class="info-item">
+                <i class="fas fa-map-marker-alt"></i> Villa de sol , Funza Cundinamarca
+            </p>
         </div>
-      </div>
-    </footer>
+    </div>
+</footer>
   </div>
 </div>
 </template>
-
 <script>
+import * as XLSX from 'xlsx';
 import Swal from 'sweetalert2';
-
 export default {
   data() {
     return {
@@ -628,7 +641,7 @@ export default {
       Formadepago:['Nequi','Bancolombia','PSE'],
       selectedCategory: '',
       editingDeportista: null,
-      categoriasPermitidas: ['Sub7', 'Sub9', 'Sub11', 'Sub13', 'Sub15', 'Sub17', 'Sub20', 'Elite'],
+      categoriasPermitidas: ['Sub7', 'Sub9', 'Sub 11', 'Sub13', 'Sub15', 'Sub17', 'Sub20', 'Elite'],
       categoriaadmin:['Administrador'],
       inventario: [],
       nuevoProducto: { implementos: '', descripcion: '', cantidad: '', nombre: '' },
@@ -1146,9 +1159,20 @@ async agregarInscripcion() {
     const nuevaInscripcion = await response.json();
     console.log('Inscripción agregada:', nuevaInscripcion); // Depuración: Verifica la inscripción agregada
 
-    Swal.fire('Éxito', 'Inscripción agregada correctamente', 'success');
-    this.inscripciones.push(nuevaInscripcion); 
-    this.resetInscripcionForm(); 
+    Swal.fire({
+  title: 'Éxito',
+  text: 'Inscripción agregada correctamente',
+  icon: 'success',
+  confirmButtonText: 'OK'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.reload();
+  }
+});
+
+this.inscripciones.push(nuevaInscripcion); 
+this.resetInscripcionForm();
+
   } catch (error) {
     console.error('Error al agregar inscripción:', error); // Depuración: Captura cualquier error no esperado
     Swal.fire('Error', error.message, 'error');
@@ -1216,7 +1240,7 @@ async consultarTodasLasInscripciones() {
     }
   } catch (error) {
     console.error('Error al consultar inscripciones:', error); // Depuración
-    Swal.fire('Error', error.message, 'error');
+    this.inscripciones = [];
   }
 },
 async eliminarInscripcion(inscripcion) {
@@ -1360,7 +1384,12 @@ async actualizarUsuario() {
     console.log("Usuario actualizado:", usuarioActualizado); // Aquí verificas qué se devuelve de la API
 
     if (usuarioActualizado) {
-      alert('Usuario actualizado con éxito');
+      await Swal.fire({
+      title: 'Éxito',
+      text: 'Usuario actualizado con éxito',
+      icon: 'success',
+      confirmButtonText: 'Aceptar'
+    });
       this.cancelarEdicion(); // Cierra el formulario de edición
 
       // Actualiza los datos locales si es necesario
@@ -1387,11 +1416,19 @@ async actualizarUsuario() {
   }
 },
 async eliminarUsuario() {
-  const confirmar = confirm('¿Estás seguro de que deseas eliminar este usuario?');
+  const confirmar = await Swal.fire({
+    title: '¿Estás seguro?',
+    text: '¿Estás seguro de que deseas eliminar este usuario?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar'
+  });
 
-  if (!confirmar) {
+  if (!confirmar.isConfirmed) {
     return; // Si el usuario no confirma, no se elimina
   }
+
 
   try {
     // Paso 1: Verificar si el usuario tiene implementos asociados a su documento
@@ -1444,8 +1481,11 @@ async eliminarUsuario() {
     await this. eliminarUsuarioSinImplementos();
 
   } catch (error) {
-    console.error('Error al eliminar el usuario:', error);
-    alert(error.message);
+    await Swal.fire(
+        'Eliminado!',
+        'El usuario ha sido eliminado correctamente.',
+        'success'
+      );
   }
 }
 ,
@@ -1460,15 +1500,22 @@ async eliminarUsuarioSinImplementos() {
       throw new Error('Error al eliminar el usuario');
     }
 
-    alert('Usuario eliminado con éxito');
+    await Swal.fire(
+        'Eliminado!',
+        'El usuario ha sido eliminado correctamente.',
+        'success'
+      );
 
     // Limpiar los datos de localStorage y redirigir al login
     localStorage.clear();
     this.$router.push('/login'); // Redirigir a la página de login
 
   } catch (error) {
-    console.error('Error al eliminar el usuario:', error);
-    alert(error.message);
+    await Swal.fire(
+        'No Elimiado ',
+        'El usuario no se a eliminado correctamente.',
+        'error'
+      );
   }
 }
 
@@ -1494,28 +1541,57 @@ async eliminarUsuarioSinImplementos() {
         console.error('Error al consultar inventario:', error);
       }
     },
+    async descargarInventario(){
+      try{
+        const worksheet = XLSX.utils.json_to_sheet(this.inventario);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Inventario');
+        XLSX.writeFile(workbook, 'inventario.xlsx');
+      }catch(error){
+        console.error('Error al generar el archivo Excel:', error);
+        await Swal.fire('Error', 'No se pudo generar el archivo Excel', 'error');
+      }
+    },
+    created() {
+      this.fetchInventario();
+    },
+
     async agregarProducto() {
   try {
+    // Crear un objeto plano sin el proxy de Vue
+    const productoParaEnviar = {
+      nombre: this.nuevoProducto.nombre,
+      descripcion: this.nuevoProducto.descripcion,
+      cantidad: Number(this.nuevoProducto.cantidad)
+    };
+
+    console.log("Enviando:", productoParaEnviar);
+
     const response = await fetch('http://127.0.0.1:8000/insertarImplemento', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.nuevoProducto)
+      body: JSON.stringify(productoParaEnviar) // Envía el objeto plano
     });
 
     if (!response.ok) {
       const errorData = await response.json();
       const errorMessage = errorData.detail || 'Error al agregar el producto';
-      Swal.fire('Error', errorMessage, 'error');
-      return; 
+      await Swal.fire('Error', errorMessage, 'error');
+      return;
     }
-    this.nuevoProducto = { nombre: '', descripcion: '', cantidad: '', ubicacion: '', administradorid: '', entrenadorid: '' };
+
+    // Limpiar el formulario
+    this.nuevoProducto = { nombre: '', descripcion: '', cantidad: '' };
+    
+    // Actualizar la lista
     await this.fetchInventario();
-    Swal.fire('Éxito', 'Producto agregado correctamente', 'success');
+    
+    await Swal.fire('Éxito', 'Producto agregado correctamente', 'success');
   } catch (error) {
     console.error('Error al agregar producto:', error);
-    Swal.fire('Error', 'Error en algun dato digitado, revisar y corregir', 'error');
+    await Swal.fire('Error', 'Error en algún dato digitado, revisar y corregir', 'error');
   }
 },
 
@@ -1597,11 +1673,17 @@ async eliminarUsuarioSinImplementos() {
           .then(response => {
             if (response.ok) {
               Swal.fire('Eliminado!', 'El deportista ha sido eliminado.', 'success');
-              this.fetchDeportistas(); // Refresca la lista de deportistas
+              this.fetchDeportistas(); 
+
             } else {
               Swal.fire('Error', 'Error al eliminar el deportista.', 'error');
             }
-          })
+          }).then(() =>{
+            window.location.reload();// recarga la pagina
+          }
+
+          ) 
+
           .catch(error => {
             console.error('Error:', error);
             Swal.fire('Error', 'Error al eliminar el deportista.', 'error');
@@ -1619,33 +1701,50 @@ async actualizarDeportista() {
         Swal.fire('Error', 'No se ha seleccionado un deportista para actualizar.', 'error');
         return;
     }
-
     console.log('Datos del deportista a actualizar:', this.editingDeportista);
 
     try {
-        const documento = this.editingDeportista.documento; // Access documento from editingDeportista
+        const documento = this.editingDeportista.documento; 
         const response = await fetch(`http://127.0.0.1:8000/ActualizarJ/${documento}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.editingDeportista),
+          method: 'PUT',
+          
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(this.editingDeportista),
+          
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.detail || 'Error al actualizar el deportista');
+          console.log(this.editingDeportista);
+          throw new Error('Error al actualizar deportista');
+          
         }
+        const deportistaActualizado = await response.json();
+        Swal.fire('Actualizado!', 'El deportista ha sido actualizado.', 'success');
+        
+        // Actualizar los datos en localStorage
+        localStorage.setItem('nombreDeportista', deportistaActualizado.nombre);
+        localStorage.setItem('apellidosDeportista', deportistaActualizado.apellidos);
+        localStorage.setItem('edadDeportista', deportistaActualizado.edad);
+        localStorage.setItem('fechaNacimientoDeportista', deportistaActualizado.fecha_nacimiento);
+        localStorage.setItem('epsDeportista', deportistaActualizado.eps);
+        localStorage.setItem('telefonoDeportista', deportistaActualizado.telefono);
+        localStorage.setItem('emailDeportista', deportistaActualizado.email);
+        localStorage.setItem('fotoDeportista', deportistaActualizado.foto);
+        localStorage.setItem('nombreAcudienteDeportista', deportistaActualizado.nombre_acudiente);
+        localStorage.setItem('telefonoAcudienteDeportista', deportistaActualizado.telefono_acudiente);
+        localStorage.setItem('emailAcudienteDeportista', deportistaActualizado.email_acudiente);
+        localStorage.setItem('categoriaDeportista', deportistaActualizado.categoria);
 
-        const updatedDeportista = await response.json();
-        Swal.fire('Éxito', 'Deportista actualizado correctamente', 'success');
-        this.editingDeportista = null; // Clear editing state
-        this.fetchDeportistas(); // Refresh the list of athletes
-    } catch (error) {
-        console.error('Error al actualizar el deportista:', error);
-        Swal.fire('Error', error.message, 'error');
-    }
-},
+        // Salir del modo de edición
+        this.editingDeportista = null;
+        // this.cargarDatosDeportista(); // Recargar los datos del deportista
+      } catch (error) {
+        console.error('Error al actualizar deportista:', error);
+        Swal.fire('Error!', 'No se pudo actualizar el deportista.', 'error');
+      }
+    },
     consultarDeportista(deportista) {
       const message = `
         Nombre: ${deportista.nombre}

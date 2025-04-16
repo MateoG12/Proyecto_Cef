@@ -3,7 +3,7 @@
     <div class="color">
       <div class="containerlogin">
         <h1>{{ formState === 'login' ? 'Login' : (formState === 'verify' ? 'Verificación' : (formState === 'register' ? 'Registro' : 'Registro Usuario')) }}</h1>
-        <img class="img" src="E:\SENA\.QUINTO TRIMESTRE\Nur Derly\VueJS frame\proyectopython\src\components\icons\WhatsApp_Image_2024-08-23_at_9.04.20_AM-removebg-preview.png                        " alt="Logo">
+        <img class="img" src=".\icons\WhatsApp_Image_2024-08-23_at_9.04.20_AM-removebg-preview.png " alt="Logo">
         <h1 v-if="!showForm">Selecciona tu rol</h1>
         
         <div class="role-selection" v-if="!showForm">
@@ -33,26 +33,48 @@
               <button type="button" @click="cambioForm">Regístrate </button>
             </div>
           </form>
-          
 
+    <div v-if="formState === 'verify'" class="form-wrapper">
+    <h2>Verificación de Código</h2>
+    <p>Ingresa el código de 6 dígitos que recibiste</p>
+    
+    <form @submit.prevent="handleSubmit">
+      <input 
+        v-model="code"
+        type="text" 
+        maxlength="6"
+        placeholder="123456"
+        required
+      >
+      <button type="submit">Verificar</button>
+    </form>
+    
+    <p v-if="error" class="error">{{ error }}</p>
+  </div>
+
+  <!-- Componente para enviar código (solo visible si no hay email registrado) -->
+  <EmailVerification 
+    v-if="formState === 'request_code'"
+    @code-sent="handleCodeSent"
+  />
           <!-- Formulario de Verificación -->
-          <form v-if="formState === 'verify'" class="form" @submit.prevent="loginUsuario">
+          <!-- <form v-if="formState === 'verify'" class="form" @submit.prevent="loginUsuario">
             <label class="letra">Código </label>
             <input class="input" type="text" v-model="verificationCode" required>
             <div class="button-group">
               <button type="submit">Verificar Código</button>
               <button type="button" @click="cambioForm">Iniciar Sesión</button>
             </div>
-          </form>
+          </form> -->
           <!-- Formulario de Verificación2 -->
-          <form v-if="formState === 'verify2'" class="form" @submit.prevent="loginUsuario">
+          <!-- <form v-if="formState === 'verify2'" class="form" @submit.prevent="loginUsuario">
             <label class="letra">Código </label>
             <input class="input" type="text" v-model="verificationCode" required>
             <div class="button-group">
               <button type="submit">Verificar Código</button>
               <button type="button" @click="cambioForm">Iniciar Sesión</button>
             </div>
-          </form>
+          </form> -->
           
           <!-- Formulario de Registro Deportista -->
           <form v-if="formState === 'register'" class="form_registro" @submit.prevent="loginUsuario">
@@ -73,7 +95,7 @@
             <label class="letra">Edad</label>
             <input type="number" v-model="edad" class="input" required>
             <label class="letra">Fecha de Nacimiento</label>
-            <input type="date" v-model="fecha_nacimiento" class="input" required>
+            <input type="date" v-model="fecha_nacimiento" @change="calcularEdad" class="input" required>
             <label class="letra">EPS</label>
             <input type="text" v-model="eps" class="input" required>
             <label class="letra">Teléfono</label>
@@ -133,12 +155,35 @@
   </body>
 </template>
 
-<!----><script setup>
+<script setup>
+import EmailVerification from './Subcomponetesadmin/EmailVerification.vue';
 import Swal from 'sweetalert2'
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth';
 
+onMounted(() => {
+  // Espera un breve momento para que las animaciones CSS se ejecuten
+  setTimeout(() => {
+    // Solo ejecuta el scroll si la posición actual es 0 (inicio)
+    if (window.scrollY === 0) {
+      window.scrollBy({
+        top: 750,
+        behavior: 'smooth' // Desplazamiento suave
+      });
+    }
+  }, 100); // Puedes ajustar este tiempo según tus animaciones
+});
+const props = defineProps({
+  email: String // Email pasado desde el componente padre
+})
+
+const emit = defineEmits(['verified'])
+const code = ref('')
+const error = ref('')
+const verificationEmail = ref('');
+const verificationData = ref(null);
 const categoriasPermitidas = ['Sub 7', 'Sub 9', 'Sub 11', 'Sub 13', 'Sub 15', 'Sub 17', 'Sub 20', 'Elite'];
 const roles = ["Entrenador", "Administrador"];
 const router = useRouter();
@@ -168,16 +213,48 @@ const verificationCode2 = ref('');
 const inscripcion_documento = ref('');
 const file = ref([]);
 const rolSeleccionado = ref('');
-
+const isLoading = ref(false);
 const onFileChanger = (Event) => {
   file.value = Event.target.files[0];
 };
+
 
 const selectRole = async (role) => {
   rolSeleccionado.value = role; 
   showForm.value = true;
   formState.value = 'login';
 };
+// const handleSubmit = async () => {
+//   try {
+//     const response = await axios.post('http://127.0.0.1:8000/verify_code', {
+//       code: code.value
+//     })
+    
+//     // Verificación exitosa
+//     Swal.fire('Éxito', 'Código verificado correctamente', 'success');
+//     formState.value = rolSeleccionado.value === 'deportista' ? 'register' : 'register_usuario';
+    
+//   } catch (err) {
+//     error.value = err.response?.data?.detail || 'Error verificando el código'
+//   }
+// }
+
+const handleSubmit = async () => {
+  try {
+    const response = await axios.post('http://127.0.0.1:8000/verify_code', {
+      code: code.value
+    })
+    
+    // Verificación exitosa
+    Swal.fire('Éxito', 'Código verificado correctamente', 'success');
+    formState.value = rolSeleccionado.value === 'deportista' ? 'register' : 'register_usuario';
+    
+  } catch (err) {
+    error.value = err.response?.data?.detail || 'Error verificando el código'
+  }
+}
+
+
 
 const cambioForm = async () => {
   switch (formState.value) {
@@ -220,6 +297,7 @@ const isPasswordValid = (password) => {
 };
 
 const loginUsuario = async () => {
+  const authStore = useAuthStore();
   try {
     // Verifica si el estado del formulario es 'login'
     if (formState.value === 'login') {
@@ -233,7 +311,11 @@ const loginUsuario = async () => {
 
       // Verifica si el login fue exitoso
       if (response.data.mensaje === 'Login exitoso') {
+        localStorage.setItem('auth_token', response.data.token || 'default_token');
+        
         const rolUsuario = response.data.datos.rol;
+        authStore.login(); // Actualiza el estado de autenticación
+        
 
         if (rolSeleccionado.value === 'deportista') {
           const datosDeportista = response.data.datos; 
@@ -251,6 +333,7 @@ const loginUsuario = async () => {
           localStorage.setItem('telefonoAcudienteDeportista', datosDeportista.telefono_acudiente); // Asegúrate de que este campo exista
           localStorage.setItem('emailAcudienteDeportista', datosDeportista.email_acudiente); // Asegúrate de que este campo exista
           localStorage.setItem('categoriaDeportista', datosDeportista.categoria); // Asegúrate de que este campo exista
+          authStore.login();
           Swal.fire({
             icon: 'success',
             title: 'Inicio de Sesión',
@@ -260,6 +343,7 @@ const loginUsuario = async () => {
           return;
         }
         if (rolSeleccionado.value === 'usuario') {
+          const userData = response.data.datos;
           // Almacena los datos del usuario
           localStorage.setItem('Documento', response.data.datos.Documento);
           localStorage.setItem('nombreusuario', response.data.datos.nombre);
@@ -268,13 +352,23 @@ const loginUsuario = async () => {
           localStorage.setItem('rolusuario', response.data.datos.rol);
           localStorage.setItem('telefonousuario', response.data.datos.telefono);
           localStorage.setItem('fotoAdmin', `http://localhost:8000${response.data.datos.foto}`);
-          
+          // authStore.login();
+          if (userData.rol === 'Administrador') {
+            router.push('/admin');
+          } else if (userData.rol === 'Entrenador') {
+            router.push('/Entrenador');
+          } else {
+            router.push('/'); // Redirige a inicio para otros roles
+          }
+
+
+
           Swal.fire({
             icon: 'success',
             title: 'Inicio de Sesión',
             text: 'Inicio de sesión exitoso'
           });
-          router.push(rolUsuario === 'Entrenador' ? '/Entrenador' : '/admin');
+          // router.push(rolUsuario === 'Entrenador' ? '/Entrenador' : '/admin');
           return;
         }
       } else {
@@ -354,7 +448,7 @@ const loginUsuario = async () => {
       // Reiniciar valores
       usuario.value = '';
       password.value = '';
-      router.push('/login'); // Redirige a la página de inicio de sesión
+      router.push('/'); // Redirige a la página de inicio de sesión
     }
   } catch (error) {
     console.error("Error:", error);
@@ -373,6 +467,7 @@ const onFileChangeruser = (event) => {
 
 // Registro de usuario
 const registerUsuario = async () => {
+  isLoading.value = true;
   const formData = new FormData();
 
   // Validación de contraseña
@@ -431,7 +526,6 @@ const registerUsuario = async () => {
       title: 'Registro de Usuario',
       text: 'Registro exitoso'
     });
-
     // Reiniciar valores
     Documento.value = '';
     correo_electronico.value = '';
@@ -441,8 +535,9 @@ const registerUsuario = async () => {
     usuario.value = '';
     file.value = null; 
     inscripcion_documento.value = '';
-    router.push('/login');
+    router.push('/');
   } catch (error) {
+    
     console.error("Error:", error);
     console.error("Error response:", error.response);
     Swal.fire({
@@ -454,122 +549,114 @@ const registerUsuario = async () => {
 };
 
 </script>
-
-  
 <style>
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
 .body2 {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to top left, #000000, #6b0101);
-    margin: -10px;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: #f1f1f1;
-    animation: fadeIn 0.5s ease-out; 
-    height: 2600px;
-  }
-  
-  .color {
-    width: 100%;
-    max-width: 800px; 
-    background-color: #2c2c2c; 
-    border-radius: 12px;
-    padding: 40px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    text-align: center;
-    transform: translateY(20px);
-    opacity: 0;
-    animation: slideUp 0.5s ease-out forwards; 
-  }
-  
-  h1 {
-    font-size: 30px; 
-    color: #f1f1f1;
-    margin-bottom: 30px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #e53935; 
-    animation: fadeIn 0.5s ease-out 0.3s forwards;
-  }
-  .img {
-    width: 120px;
-    height: auto;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    animation: fadeIn 0.5s ease-out 0.5s forwards;
-  }
-  
-  .role-selection button {
-    background-color: #e53935; 
-    color: white;
-    border: none;
-    padding: 15px 30px; 
-    margin: 15px;
-    cursor: pointer;
-    border-radius: 6px;
-    font-size: 18px;
-    transition: background-color 0.3s ease;
-    opacity: 0;
-    animation: fadeIn 0.5s ease-out 0.7s forwards;
-  }
-  
-  .role-selection button:hover {
-    background-color: #c62828; 
-  }
-  
-  .form, .form_registro {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 30px;
-    opacity: 0;
-    animation: fadeIn 0.5s ease-out 1s forwards;
-  }
-  
-  .form label,
-  .form_registro label {
-    font-size: 16px; 
-    font-weight: bold;
-    color: #f1f1f1;
-    margin: 12px 0;
-  }
-  
-  .input {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 16px;
-    background-color: #424242; 
-    color: #f1f1f1;
-    transition: border 0.3s ease;
-  }
-  .input [type="password"] {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 16px;
-    background-color: #424242; 
-    color: #f1f1f1;
-    transition: border 0.3s ease;
-  }
-  
-  .input:focus {
-    border-color: #e53935;
-    outline: none;
-  }
-  
-  .input[type="file"] {
-    padding: 12px;
-    background-color: #424242;
-  }
-  
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to top left, #000000, #6b0101);
+  margin: 0;
+  padding-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #f1f1f1;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.color {
+  width: 100%;
+  max-width: 1000px;
+  background-color: #2c2c2c; 
+  border-radius: 16px;
+  padding: 50px 40px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+h1 {
+  font-size: 32px;
+  color: #ff6f61;
+  margin-bottom: 30px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: fadeIn 0.8s ease-out 0.3s forwards;
+}
+
+.img {
+  width: 120px;
+  height: auto;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  animation: fadeIn 0.8s ease-out 0.5s forwards;
+}
+
+.role-selection button {
+  background-color: #ff6f61;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  margin: 15px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out 0.7s forwards;
+  box-shadow: 0 4px 12px rgba(255, 111, 97, 0.2);
+}
+
+.role-selection button:hover {
+  background-color: #e35b51;
+}
+form, .form_registro {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  margin-top: 30px;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out 1s forwards;
+}
+
+.form label, .form_registro label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ddd;
+  margin: 10px 0 4px;
+  text-align: center; 
+  width: 100%;
+}
+
+.input {
+  width: 90%; 
+  max-width: 800px;
+  padding: 10px;
+  margin-bottom: 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #2a2a2a;
+  color: #fff;
+  transition: border 0.3s ease, background 0.3s ease;
+  text-align: center; 
+}
+
+.input:focus {
+  background-color: #333;
+  outline: 2px solid #ff6f61;
+}
+
+
+.input[type="file"] {
+  padding: 10px;
+  background-color: #2a2a2a;
+  text-align: center;
+}
   
   .button-group {
     display: flex;
