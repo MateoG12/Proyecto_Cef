@@ -194,7 +194,8 @@ function mostrarMapa() {
   mapaVisible.value = !mapaVisible.value; 
 }
 
-const BASE_URL = 'http://localhost:8000'; // Cambia esto a la URL de tu servidor
+// const BASE_URL = 'http://localhost:8000';
+const BASE_URL = 'proyecto-cef-backend.railway.internal' 
 
 async function obtenerCumpleanos() {
   const response = await fetch('http://127.0.0.1:8000/CumpleanosEsteMes');
