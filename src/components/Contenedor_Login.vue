@@ -238,7 +238,10 @@ const selectRole = async (role) => {
 //     error.value = err.response?.data?.detail || 'Error verificando el código'
 //   }
 // }
-const API_URL = import.meta.env.VITE_API_URL || 'https://proyecto-cef-backend-production.up.railway.app';
+//local
+//http://127.0.0.1:8000
+//rainway
+//https://proyecto-cef-backend-production.up.railway.app
 const handleSubmit = async () => {
   try {
     const response = await axios.post('https://proyecto-cef-backend-production.up.railway.app/verify_code2', {
@@ -302,7 +305,7 @@ const loginUsuario = async () => {
     // Verifica si el estado del formulario es 'login'
     if (formState.value === 'login') {
       const loginType = rolSeleccionado.value === 'deportista' ? 'loginDeportista' : 'loginUsuario';
-      const response = await axios.post(`http://127.0.0.1:8000/${loginType}`, {
+      const response = await axios.post(`https://proyecto-cef-backend-production.up.railway.app/${loginType}`, {
         Loginusuario: usuario.value,
         password: password.value
       });
@@ -328,7 +331,7 @@ const loginUsuario = async () => {
           localStorage.setItem('telefonoDeportista', datosDeportista.telefono);
           localStorage.setItem('emailDeportista', datosDeportista.email);
           localStorage.setItem('usuarioDeportista', datosDeportista.usuario);
-          localStorage.setItem('fotoDeportista', `http://localhost:8000${datosDeportista.foto}`);
+          localStorage.setItem('fotoDeportista', `https://proyecto-cef-backend-production.up.railway.app${datosDeportista.foto}`);
           localStorage.setItem('nombreAcudienteDeportista', datosDeportista.nombre_acudiente); // Asegúrate de que este campo exista
           localStorage.setItem('telefonoAcudienteDeportista', datosDeportista.telefono_acudiente); // Asegúrate de que este campo exista
           localStorage.setItem('emailAcudienteDeportista', datosDeportista.email_acudiente); // Asegúrate de que este campo exista
@@ -351,7 +354,7 @@ const loginUsuario = async () => {
           localStorage.setItem('usuario', response.data.datos.usuario);
           localStorage.setItem('rolusuario', response.data.datos.rol);
           localStorage.setItem('telefonousuario', response.data.datos.telefono);
-          localStorage.setItem('fotoAdmin', `http://localhost:8000${response.data.datos.foto}`);
+          localStorage.setItem('fotoAdmin', `https://proyecto-cef-backend-production.up.railway.app${response.data.datos.foto}`);
           // authStore.login();
           if (userData.rol === 'Administrador') {
             router.push('/admin');
@@ -382,7 +385,7 @@ const loginUsuario = async () => {
 
     // Verificación de código
     else if (formState.value === 'verify') {
-      const response = await axios.post('http://127.0.0.1:8000/verify_code', {
+      const response = await axios.post('https://proyecto-cef-backend-production.up.railway.app/verify_code', {
         code: verificationCode.value
       });
 
@@ -435,7 +438,7 @@ const loginUsuario = async () => {
       formData.append("email_acudiente", email_acudiente.value);
       formData.append("categoria", categoria.value);
 
-      const response = await axios.post("http://localhost:8000/InsertarJ", formData, {
+      const response = await axios.post("https://proyecto-cef-backend-production.up.railway.app/InsertarJ", formData, {
         headers: { "Content-Type": "multipart/form-data" }
       });
 
@@ -515,9 +518,9 @@ const registerUsuario = async () => {
   for (let [key, value] of formData.entries()) {
     console.log(key, value);
   }
-  const BASE_URL = 'http://localhost:8000';
+  const BASE_URL = 'https://proyecto-cef-backend-production.up.railway.app';
   try {
-    const response = await axios.post("http://localhost:8000/InsertarUsuario", formData, {
+    const response = await axios.post("https://proyecto-cef-backend-production.up.railway.app/InsertarUsuario", formData, {
       headers: { "Content-Type": "multipart/form-data" }
     });
 

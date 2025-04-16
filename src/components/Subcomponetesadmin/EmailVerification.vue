@@ -35,7 +35,7 @@ const handleSubmit = async () => {
 
   isSendingCode.value = true;
   try {
-    const response = await axios.post('http://127.0.0.1:8000/request_verification', {
+    const response = await axios.post('https://proyecto-cef-backend-production.up.railway.app/request_verification', {
       email: email.value
     });
     

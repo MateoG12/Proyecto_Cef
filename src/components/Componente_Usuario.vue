@@ -198,7 +198,7 @@ function mostrarMapa() {
 const BASE_URL = 'proyecto-cef-backend.railway.internal' 
 
 async function obtenerCumpleanos() {
-  const response = await fetch('http://127.0.0.1:8000/CumpleanosEsteMes');
+  const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/CumpleanosEsteMes');
   const data = await response.json(); // Guarda la respuesta en una variable
   console.log(data);
 

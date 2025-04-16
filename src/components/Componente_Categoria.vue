@@ -25,7 +25,7 @@ export default {
 
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/ConsultarCategorias');
+        const response = await axios.get('https://proyecto-cef-backend-production.up.railway.app/ConsultarCategorias');
         console.log("Datos de categorías:", response.data); // Verifica los datos aquí
         categories.value = response.data; 
         console.log( categories.length)

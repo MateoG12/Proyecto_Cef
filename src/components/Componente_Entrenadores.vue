@@ -583,7 +583,7 @@ async agregarEstadistica() {
 
         console.log('Enviando estadísticas:', estadisticaData);
 
-        const response = await fetch(`http://127.0.0.1:8000/insertarEstadisticas/${this.selectedEncuentroId}`, {
+        const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/insertarEstadisticas/${this.selectedEncuentroId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -643,7 +643,7 @@ async agregarEstadistica() {
 
         try {
           // Hacer la solicitud POST para agregar el pago
-          const response = await fetch('http://127.0.0.1:8000/insertarPago', {
+          const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/insertarPago', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -681,7 +681,7 @@ async agregarEstadistica() {
     },
   async consultarPagos() {
   try {
-    const response = await fetch('http://127.0.0.1:8000/consultarPago');
+    const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/consultarPago');
     if (!response.ok) {
       throw new Error('Error al consultar los pagos');
     }
@@ -699,7 +699,7 @@ async consultarEstadisticas(encuentroId) {
             throw new Error('ID de encuentro no válido');
         }
 
-        const response = await fetch(`http://127.0.0.1:8000/consultarEstadisticas/${encuentroId}`);
+        const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/consultarEstadisticas/${encuentroId}`);
         
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
@@ -721,7 +721,7 @@ async consultarEstadisticas(encuentroId) {
 
     async actualizarEstadistica() {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/actualizarEstadisticas/${this.estadisticaEditada.encuentros_encuentro_id}`, {
+            const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/actualizarEstadisticas/${this.estadisticaEditada.encuentros_encuentro_id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -757,7 +757,7 @@ async consultarEstadisticas(encuentroId) {
 
         if (confirmar.isConfirmed) {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/eliminarEstadisticas/${encuentro_id}`, {
+                const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/eliminarEstadisticas/${encuentro_id}`, {
                     method: 'DELETE'
                 });
 
@@ -811,7 +811,7 @@ async consultarEstadisticas(encuentroId) {
       ubicacion: this.encuentro.ubicacion
     };
 
-    const response = await fetch('http://127.0.0.1:8000/insertarEncuentro', {
+    const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/insertarEncuentro', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -848,7 +848,7 @@ async consultarEstadisticas(encuentroId) {
 
   async fetchEncuentros() {
     try {
-      const response = await fetch('http://127.0.0.1:8000/consultarEncuentros');
+      const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/consultarEncuentros');
       if (!response.ok) {
         throw new Error('Error al obtener los encuentros');
       }
@@ -909,7 +909,7 @@ async actualizarEncuentro() {
 
         console.log('Enviando datos:', datosActualizados); // Depuración
 
-        const response = await fetch(`http://127.0.0.1:8000/actualizarEncuentro/${this.encuentroEditado.encuentro_id}`, {
+        const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/actualizarEncuentro/${this.encuentroEditado.encuentro_id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -953,7 +953,7 @@ async actualizarEncuentro() {
 
     if (confirmar.isConfirmed) {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/eliminarEncuentro/${encuentro.Encuentro_id}`, {
+        const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/eliminarEncuentro/${encuentro.Encuentro_id}`, {
           method: 'DELETE'
         });
 
@@ -995,7 +995,7 @@ async actualizarEncuentro() {
     async actualizarUsuario() {
   const documento = this.Documento;
   try {
-    const response = await fetch(`http://127.0.0.1:8000/ActualizarUsuario/${documento}`, {
+    const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/ActualizarUsuario/${documento}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -1051,10 +1051,10 @@ async actualizarEncuentro() {
 
   try {
     // Obtener los detalles del préstamo a eliminar
-    const prestamoAEliminarResponse = await fetch(`http://127.0.0.1:8000/consultarPrestamo/${this.usuarioDocumentoConsulta}/${this.implementosIdConsulta}`);
+    const prestamoAEliminarResponse = await fetch(`https://proyecto-cef-backend-production.up.railway.app/consultarPrestamo/${this.usuarioDocumentoConsulta}/${this.implementosIdConsulta}`);
     const prestamoAEliminar = await prestamoAEliminarResponse.json();
 
-    const response = await fetch(`http://127.0.0.1:8000/eliminarPrestamo/${this.usuarioDocumentoConsulta}/${this.implementosIdConsulta}`, {
+    const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/eliminarPrestamo/${this.usuarioDocumentoConsulta}/${this.implementosIdConsulta}`, {
       method: 'DELETE',
     });
 
@@ -1079,7 +1079,7 @@ async actualizarEncuentro() {
 
       async consultarPrestamo() {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/consultarPrestamo/${this.usuarioDocumentoConsulta}/${this.implementosIdConsulta}`);
+      const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/consultarPrestamo/${this.usuarioDocumentoConsulta}/${this.implementosIdConsulta}`);
       if (!response.ok) {
         throw new Error('No se pudo encontrar el préstamo.');
       }
@@ -1093,7 +1093,7 @@ async actualizarEncuentro() {
   },
   async actualizarPrestamo() {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/actualizarPrestamo/${this.usuarioDocumentoConsulta}/${this.implementosIdConsulta}`, {
+    const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/actualizarPrestamo/${this.usuarioDocumentoConsulta}/${this.implementosIdConsulta}`, {
   method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
@@ -1132,7 +1132,7 @@ async agregarInscripcion() {
 
     console.log('Datos a enviar:', datosAEnviar); // Depuración: Verifica los datos antes de enviar
 
-    const response = await fetch('http://127.0.0.1:8000/insertarEquipoInscripcion', {
+    const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/insertarEquipoInscripcion', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -1175,7 +1175,7 @@ resetInscripcionForm() {
 },
 async consultarInscripcionesPorEquipo() {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/consultarEquipoInscripcion/${this.selectedEquipoId}`);
+    const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/consultarEquipoInscripcion/${this.selectedEquipoId}`);
     if (!response.ok) throw new Error('Error al cargar inscripciones');
     
     const data = await response.json();
@@ -1196,7 +1196,7 @@ async eliminarInscripcion(inscripcion) {
     });
     if (confirmar.isConfirmed) {
         try {
-            const response = await fetch('http://127.0.0.1:8000/eliminarEquipoInscripcion', {
+            const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/eliminarEquipoInscripcion', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1241,7 +1241,7 @@ async eliminarUsuario() {
   }
 
   try {
-    const response = await fetch(`http://127.0.0.1:8000/EliminarUsuario/${this.Documento}`, {
+    const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/EliminarUsuario/${this.Documento}`, {
       method: 'DELETE',
     });
 
@@ -1262,13 +1262,13 @@ async eliminarUsuario() {
 
         if (eliminarEncuentro) {
           // Llamada a la API para eliminar el encuentro
-          const eliminarEncuentroResponse = await fetch(`http://127.0.0.1:8000/EliminarEncuentro/${this.Documento}`, {
+          const eliminarEncuentroResponse = await fetch(`https://proyecto-cef-backend-production.up.railway.app/EliminarEncuentro/${this.Documento}`, {
             method: 'DELETE',
         });
 
           if (eliminarEncuentroResponse.ok) {
             // Si el encuentro fue eliminado con éxito, intentar eliminar el usuario
-            const eliminarUsuarioResponse = await fetch(`http://127.0.0.1:8000/EliminarUsuario/${this.Documento}`, {
+            const eliminarUsuarioResponse = await fetch(`https://proyecto-cef-backend-production.up.railway.app/EliminarUsuario/${this.Documento}`, {
               method: 'DELETE',
             });
 
@@ -1323,7 +1323,7 @@ async eliminarUsuario() {
 },
  async fetchInventario() {
     try {
-      const response = await fetch('http://127.0.0.1:8000/consultarImplementos');
+      const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/consultarImplementos');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -1359,7 +1359,7 @@ async eliminarUsuario() {
         }
 
         // Realizar la solicitud HTTP para crear el préstamo
-        const response = await fetch('http://127.0.0.1:8000/insertarPrestamo', {
+        const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/insertarPrestamo', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -1390,7 +1390,7 @@ async eliminarUsuario() {
 
       async fetchDeportistas() {
         try {
-          const response = await fetch('http://127.0.0.1:8000/ConsultarJugadores');
+          const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/ConsultarJugadores');
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
@@ -1428,7 +1428,7 @@ async eliminarUsuario() {
       },
   async fetchEquipos() {
   try {
-    const response = await fetch('http://127.0.0.1:8000/consultarEquipos');
+    const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/consultarEquipos');
     if (!response.ok) {
       throw new Error('Error al consultar equipos');
     }
@@ -1439,7 +1439,7 @@ async eliminarUsuario() {
 },
 async fetchTorneos() {
     try {
-      const response = await fetch('http://127.0.0.1:8000/consultarTorneos');
+      const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/consultarTorneos');
       if (!response.ok) {
         throw new Error('Error al consultar torneos');
       }
