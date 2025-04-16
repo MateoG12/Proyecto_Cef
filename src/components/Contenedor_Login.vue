@@ -238,10 +238,10 @@ const selectRole = async (role) => {
 //     error.value = err.response?.data?.detail || 'Error verificando el código'
 //   }
 // }
-
+const API_URL = import.meta.env.VITE_API_URL || 'https://proyecto-cef-backend-production.up.railway.app';
 const handleSubmit = async () => {
   try {
-    const response = await axios.post('http://127.0.0.1:8000/verify_code2', {
+    const response = await axios.post('https://proyecto-cef-backend-production.up.railway.app/verify_code2', {
       code: code.value
     })
     
