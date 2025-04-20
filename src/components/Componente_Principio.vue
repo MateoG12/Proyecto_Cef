@@ -1,57 +1,54 @@
 <template>
     <header class="headerheader">
       <div class="contenedorheader">
-        <div class="hamburger-menu" @click="toggleMenu">
+        <div class="hamburger-menu" @click="toggleMenu" :class="{ 'active': isMenuVisible }">
           <div></div>
           <div></div>
           <div></div>
         </div>
         <div class="menuheader" :class="{ 'menu-mobile': isMenuVisible }">
-          <p><router-link class="p3" to="/">Inicio</router-link></p>
-          <p><router-link class="p2" to="/noticias">Noticias</router-link></p>
-          <p><router-link class="p2" to="/Nosotros">Nosotros</router-link></p>
+          <p><router-link class="p3" to="/" @click="closeMenu">Inicio</router-link></p>
+          <p><router-link class="p2" to="/noticias" @click="closeMenu">Noticias</router-link></p>
+          <p><router-link class="p2" to="/Nosotros" @click="closeMenu">Nosotros</router-link></p>
         </div>
         <div class="logo">
-          <img class="img" src=".\icons\WhatsApp_Image_2024-08-23_at_9.04.20_AM-removebg-preview.png" alt="Logo">
+          <img class="img1" src=".\icons\WhatsApp_Image_2024-08-23_at_9.04.20_AM-removebg-preview.png" alt="Logo">
         </div>
         <div class="auth-buttons">
-          <!-- Botón de Acceso Directo al Perfil (visible CON token) -->
           <router-link 
             v-if="authStore.isLoggedIn" 
             to="/acceso-directo" 
-            class="profile-access-button session-button">
+            class="profile-access-button session-button"
+            @click="closeMenu">
             Inicio Sesión
-            </router-link>
+          </router-link>
           
-          <!-- Botón de Cerrar Sesión (visible CON token) -->
           <button 
             v-if="authStore.isLoggedIn" 
             @click="logout" 
-            class="logout-button session-button"
-            >
+            class="logout-button session-button">
             Cerrar Sesión
-            </button>
+          </button>
           
-          <!-- Botón normal de Login (visible SIN token) -->
           <router-link 
             v-if="!authStore.isLoggedIn" 
             to="/login" 
-            class="login-button"
-            >
+            class="login-button">
             <img class="img_boton" src=".\icons\usuario.png" alt="Login">
-            </router-link>
+          </router-link>
         </div>
       </div>
     </header>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 
 const router = useRouter();
 const authStore = useAuthStore();
+const isMenuVisible = ref(false);
 
 onMounted(() => {
     authStore.checkLoginStatus();
@@ -60,6 +57,15 @@ onMounted(() => {
 function logout() {
   authStore.logout();
   router.push('/');
+  closeMenu();
+}
+
+function toggleMenu() {
+  isMenuVisible.value = !isMenuVisible.value;
+}
+
+function closeMenu() {
+  isMenuVisible.value = false;
 }
 </script>
 
@@ -75,25 +81,7 @@ function logout() {
         background-color: rgba(0, 0, 0, 1); 
     }
 }
-.session-button {
-    background-color: #ee0404;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 16px;
-    margin-left: 15px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    text-decoration: none;
-    font-family: 'Arial', sans-serif;
-}
 
-.session-button:hover {
-    background-color: #b50303;
-    transform: scale(1.05);
-}
 .headerheader {
     width: 100%;
     height: 86px;
@@ -130,7 +118,7 @@ function logout() {
     transform: translateX(-50%);
 }
 
-.logo .img {
+.logo .img1 {
     width: 90px;
     height: auto;
     margin-top: 12px;
@@ -158,11 +146,9 @@ function logout() {
     color: #ee0404;
 }
 
-.login {
+.auth-buttons {
     display: flex;
-    justify-content: center;
-    position: absolute;
-    right: 20px;
+    align-items: center;
 }
 
 .img_boton {
@@ -171,6 +157,27 @@ function logout() {
     margin-left: 20px;
 }
 
+.session-button {
+    background-color: #ee0404;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    margin-left: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    font-family: 'Arial', sans-serif;
+}
+
+.session-button:hover {
+    background-color: #b50303;
+    transform: scale(1.05);
+}
+
+/* Estilos del menú hamburguesa */
 .hamburger-menu {
     display: none;
     flex-direction: column;
@@ -187,122 +194,161 @@ function logout() {
     height: 4px;
     background-color: white;
     border-radius: 5px;
+    transition: all 0.3s ease;
 }
 
+.hamburger-menu.active div:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-menu.active div:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.active div:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Menú móvil */
 .menu-mobile {
     display: none;
     flex-direction: column;
     align-items: center;
     gap: 15px;
     position: absolute;
-    left: 20px;
-    top: 60px;
+    left: 0;
+    top: 86px;
     background-color: rgba(0, 0, 0, 0.9);
-    padding: 15px;
+    padding: 20px;
     z-index: 1000;
-    width: 250px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.hamburger-menu.active + .menu-mobile {
-    display: flex;
-}
-
-.menu-mobile .p3, .menu-mobile .p2 {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s;
-    font-size: 18px;
-    letter-spacing: 1px;
-}
-
-.menu-mobile .p3:hover, .menu-mobile .p2:hover {
-    color: #ee0404;
-}
-
+/* Media Queries */
 @media (max-width: 768px) {
     .headerheader {
-        height: 90px;
-        padding: 12px 0;
-    }
-
-    .contenedorheader {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-    }
-
-    .logo .img {
-        width: 120px;
-        margin-bottom: 15px;
+        height: 86px;
     }
 
     .menuheader {
         display: none;
     }
 
+    .menuheader.menu-mobile {
+        display: flex;
+    }
+
     .hamburger-menu {
         display: flex;
     }
 
-    .p2, .p3 {
-        font-size: 20px;
-        margin: 0 15px;
+    .logo {
+        position: static;
+        transform: none;
+        margin-right: auto;
     }
-
-    .img_boton {
-        width: 50px;
-    }
-
-    .login {
-        margin-top: 15px;
-    }
-}
-
-@media (max-width: 760px) {
-    .headerheader {
-        height: 100px;
-        padding: 15px 0;
-    }
-
-    .logo .img {
-        width: 130px;
-        margin-bottom: 20px;
-    }
-
-    .menuheader {
-        gap: 60px;
-    }
-
-    .p2, .p3 {
-        font-size: 22px;
-        margin: 0 20px;
-    }
-
-    .img_boton {
-        width: 60px;
-    }
-
-    .login {
-        margin-top: 20px;
-    }
-
-    .menu-mobile {
-        display: flex;
+    .img1{
+        margin-left: 290px;
+    } 
+    .logo {
+        margin: 0;
+        width: 80px;
     }
 
     .contenedorheader {
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
     }
 
-    .logo {
-        margin-right: 30px;
+    .auth-buttons {
+        position: absolute;
+        right: 20px;
     }
-
-    .login {
-        margin-left: 30px;
+    .session-button {
+        padding: 5px 10px;
+        font-size: 12px;
+        margin-left: 8px;
+        border-radius: 15px;
+    }
+    
+    .img_boton {
+        width: 30px;
+        margin-left: 8px;
     }
 }
+
+@media (max-width: 495px) {
+    
+    .session-button {
+        padding: 6px 12px;
+        font-size: 12px;
+        margin-left: 10px;
+    }
+
+    .img_boton {
+        width: 35px;
+        margin-left: 10px;
+    }
+    .img1{
+        margin-left: 350px;
+    } 
+    .hamburger-menu {
+        left: 15px;
+        top: 15px;
+    }
+
+    .hamburger-menu div {
+        width: 25px;
+        height: 3px;
+    }
+}
+@media (max-width: 390px) {
+    .session-button {
+        padding: 3px 8px;
+        font-size: 10px;
+        margin-left: 5px;
+        border-radius: 12px;
+        min-width: 70px; /* Ancho mínimo para mantener legibilidad */
+    }
+    
+    .img_boton {
+        width: 28px;
+        margin-left: 6px;
+    }
+    
+    /* Ajustes de logo */
+    .logo .img {
+        width: 70px;
+    }
+    
+    /* Ajustes de menú hamburguesa */
+    .hamburger-menu {
+        left: 12px;
+        top: 12px;
+    }
+    
+    .hamburger-menu div {
+        width: 22px;
+        height: 2px;
+    }
+    
+    /* Ajustes de contenedor */
+    .contenedorheader {
+        padding: 0 10px;
+    }
+    
+    /* Ajustes para cuando hay muchos botones */
+    .auth-buttons {
+        flex-wrap: wrap;
+        max-width: 110px;
+        justify-content: flex-end;
+    }
+    
+    .session-button {
+        margin-bottom: 4px;
+    }
+}
+
+
 </style>

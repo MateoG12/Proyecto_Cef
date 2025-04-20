@@ -527,6 +527,8 @@
 </div>
 </template>
 <script>
+const URL='http://127.0.0.1:8000'
+const URL2='https://proyecto-cef-backend-production.up.railway.app'
 import * as XLSX from 'xlsx';
 import Swal from 'sweetalert2';
 export default {
@@ -659,7 +661,7 @@ export default {
   methods: {
     async fetchEntrenadores() {
   try {
-    const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/usuario/porRol?rol=Entrenador'); 
+    const response = await fetch(`${URL}/usuario/porRol?rol=Entrenador`); 
     if (!response.ok) {
       throw new Error('Error al obtener los entrenadores');
     }
@@ -691,7 +693,7 @@ export default {
   
     try {
         // Cambia la URL aquí
-        const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/insertarEstadisticas/${this.selectedEncuentroId}`, {
+        const response = await fetch(`${URL}/insertarEstadisticas/${this.selectedEncuentroId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -730,7 +732,7 @@ export default {
 
     async consultarEstadisticas(encuentro_id) {
     try {
-        const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/consultarEstadisticas/${encuentro_id}`);
+        const response = await fetch(`${URL}/consultarEstadisticas/${encuentro_id}`);
         if (!response.ok) {
             throw new Error('Error al consultar las estadísticas');
         }
@@ -744,7 +746,7 @@ export default {
 
     async actualizarEstadistica() {
         try {
-            const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/actualizarEstadisticas/${this.estadisticaEditada.encuentros_encuentro_id}`, {
+            const response = await fetch(`${URL}/actualizarEstadisticas/${this.estadisticaEditada.encuentros_encuentro_id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -780,7 +782,7 @@ export default {
 
         if (confirmar.isConfirmed) {
             try {
-                const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/eliminarEstadisticas/${encuentro_id}`, {
+                const response = await fetch(`${URL}/eliminarEstadisticas/${encuentro_id}`, {
                     method: 'DELETE'
                 });
 
@@ -822,7 +824,7 @@ export default {
     },
     async agregarEncuentro() {
     try {
-      const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/insertarEncuentro', {
+      const response = await fetch(`${URL}/insertarEncuentro`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -847,7 +849,7 @@ export default {
 
   async fetchEncuentros() {
     try {
-      const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/consultarEncuentros');
+      const response = await fetch(`${URL}/consultarEncuentros`);
       if (!response.ok) {
         throw new Error('Error al obtener los encuentros');
       }
@@ -859,7 +861,7 @@ export default {
 
   async actualizarEncuentro() {
     try {
-      const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/actualizarEncuentro/${this.encuentroEditado.Encuentro_id}`, {
+      const response = await fetch(`${URL}/actualizarEncuentro/${this.encuentroEditado.Encuentro_id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -895,7 +897,7 @@ export default {
 
     if (confirmar.isConfirmed) {
       try {
-        const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/eliminarEncuentro/${encuentro.Encuentro_id}`, {
+        const response = await fetch(`${URL}/eliminarEncuentro/${encuentro.Encuentro_id}`, {
           method: 'DELETE'
         });
 
@@ -930,7 +932,7 @@ export default {
   },
     async agregarTorneo() {
   try {
-    const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/insertarTorneo', {
+    const response = await fetch(`${URL}/insertarTorneo`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -961,7 +963,7 @@ editarTorneo(torneo) {
   },
 async actualizarTorneo() {
   try {
-    const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/actualizarTorneo/${this.torneoEditado.torneo_id}`, {
+    const response = await fetch(`${URL}/actualizarTorneo/${this.torneoEditado.torneo_id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -999,7 +1001,7 @@ async eliminarTorneo(torneo) {
 
   if (confirmar.isConfirmed) {
     try {
-      const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/eliminarTorneo/${torneo.torneo_id}`, {
+      const response = await fetch(`${URL}/eliminarTorneo/${torneo.torneo_id}`, {
         method: 'DELETE'
       });
 
@@ -1018,7 +1020,7 @@ async eliminarTorneo(torneo) {
 },
 async fetchTorneos() {
   try {
-    const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/consultarTorneos');
+    const response = await fetch(`${URL}/consultarTorneos`);
     if (!response.ok) {
       throw new Error('Error al obtener los torneos');
     }
@@ -1033,7 +1035,7 @@ editarEquipo(equipo) {
 },
 async actualizarEquipo() {
   try {
-    const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/actualizarEquipo/${this.equipoEditado.equipoid}`, {
+    const response = await fetch(`${URL}/${this.equipoEditado.equipoid}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -1068,7 +1070,7 @@ async eliminarEquipo(equipo) {
 
   if (confirmar.isConfirmed) {
     try {
-      const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/eliminarEquipo/${equipo.equipoid}`, {
+      const response = await fetch(`${URL}/eliminarEquipo/${equipo.equipoid}`, {
         method: 'DELETE'
       });
 
@@ -1100,7 +1102,7 @@ async eliminarEquipo(equipo) {
   console.log("Datos a enviar:", nuevoEquipo);
 
   try {
-    const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/insertarEquipo', {
+    const response = await fetch(`${URL}/insertarEquipo`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -1140,7 +1142,7 @@ async agregarInscripcion() {
 
     console.log('Datos a enviar:', datosAEnviar); // Depuración: Verifica los datos antes de enviar
 
-    const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/insertarEquipoInscripcion', {
+    const response = await fetch(`${URL}/insertarEquipoInscripcion`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -1219,7 +1221,7 @@ async consultarTodasLasInscripciones() {
   try {
     console.log('Consultando todas las inscripciones...'); // Depuración
 
-    const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/consultarEquipoInscripcion');
+    const response = await fetch(`${URL}/consultarEquipoInscripcion`);
     
     // Verifica si la respuesta es exitosa
     if (!response.ok) {
@@ -1262,7 +1264,7 @@ async eliminarInscripcion(inscripcion) {
                 documento: inscripcion.documento // Accede directamente a documento
             };
 
-            const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/eliminarEquipoInscripcion', {
+            const response = await fetch(`${URL}/eliminarEquipoInscripcion`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1301,7 +1303,7 @@ async eliminarInscripcion(inscripcion) {
 
         try {
           // Hacer la solicitud POST para agregar el pago
-          const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/insertarPago', {
+          const response = await fetch(`${URL}/insertarPago`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -1340,7 +1342,7 @@ async eliminarInscripcion(inscripcion) {
     },
   async consultarPagos() {
   try {
-    const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/consultarPago');
+    const response = await fetch(`${URL}/consultarPago`);
     if (!response.ok) {
       throw new Error('Error al consultar los pagos');
     }
@@ -1361,7 +1363,7 @@ async eliminarInscripcion(inscripcion) {
 async actualizarUsuario() {
   const documento = this.Documento;
   try {
-    const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/ActualizarUsuario/${documento}`, {
+    const response = await fetch(`${URL}/ActualizarUsuario/${documento}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -1432,7 +1434,7 @@ async eliminarUsuario() {
 
   try {
     // Paso 1: Verificar si el usuario tiene implementos asociados a su documento
-    const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/consultarImplementos/${this.Documento}`);
+    const response = await fetch(`${URL}/consultarImplementos/${this.Documento}`);
 
     if (response.status === 404 || !response.ok) {
       // No se encuentran implementos asociados, procedemos con la eliminación del usuario
@@ -1464,7 +1466,7 @@ async eliminarUsuario() {
         // Si decide eliminar los implementos, eliminarlos
         console.log('Eliminando implementos...');
         for (const implemento of implementos) {
-          const responseEliminarImplemento = await fetch(`https://proyecto-cef-backend-production.up.railway.app/eliminarImplemento/${implemento.implementos}`, {
+          const responseEliminarImplemento = await fetch(`${URL}/eliminarImplemento/${implemento.implementos}`, {
             method: 'DELETE',
           });
 
@@ -1492,7 +1494,7 @@ async eliminarUsuario() {
 async eliminarUsuarioSinImplementos() {
   try {
     // Eliminar el usuario
-    const responseEliminar = await fetch(`https://proyecto-cef-backend-production.up.railway.app/EliminarUsuario/${this.Documento}`, {
+    const responseEliminar = await fetch(`${URL}/EliminarUsuario/${this.Documento}`, {
       method: 'DELETE',
     });
 
@@ -1521,7 +1523,7 @@ async eliminarUsuarioSinImplementos() {
 
    , async fetchDeportistas() {
       try {
-        const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/ConsultarJugadores');
+        const response = await fetch(`${URL}/ConsultarJugadores`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -1532,7 +1534,7 @@ async eliminarUsuarioSinImplementos() {
     },
     async fetchInventario() {
       try {
-        const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/consultarImplementos');
+        const response = await fetch(`${URL}/consultarImplementos`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -1567,7 +1569,7 @@ async eliminarUsuarioSinImplementos() {
 
     console.log("Enviando:", productoParaEnviar);
 
-    const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/insertarImplemento', {
+    const response = await fetch(`${URL}/insertarImplemento`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -1604,7 +1606,7 @@ async eliminarUsuarioSinImplementos() {
   },
     async actualizarEquipo() {
   try {
-    const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/actualizarEquipo/${this.equipoEditado.equipoid}`, {
+    const response = await fetch(`${URL}/actualizarEquipo/${this.equipoEditado.equipoid}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -1639,7 +1641,7 @@ async eliminarUsuarioSinImplementos() {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch(`https://proyecto-cef-backend-production.up.railway.app/eliminarImplemento/${producto.implementos}`, {
+          fetch(`${URL}/eliminarImplemento/${producto.implementos}`, {
             method: 'DELETE'
           })
           .then(response => {
@@ -1667,7 +1669,7 @@ async eliminarUsuarioSinImplementos() {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch(`https://proyecto-cef-backend-production.up.railway.app/EliminarJ/${deportista.documento}`, {
+          fetch(`${URL}/EliminarJ/${deportista.documento}`, {
             method: 'DELETE'
           })
           .then(response => {
@@ -1705,7 +1707,7 @@ async actualizarDeportista() {
 
     try {
         const documento = this.editingDeportista.documento; 
-        const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/ActualizarJ/${documento}`, {
+        const response = await fetch(`${URL}/ActualizarJ/${documento}`, {
           method: 'PUT',
           
           headers: {
@@ -1767,7 +1769,7 @@ async actualizarDeportista() {
     },
     async fetchEquipos() {
   try {
-    const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/consultarEquipos');
+    const response = await fetch(`${URL}/consultarEquipos`);
     if (!response.ok) {
       throw new Error('Error al consultar equipos');
     }
@@ -2361,6 +2363,65 @@ button:focus {
   }
   100% {
     background-color: #d32f2f;
+  }
+}
+@media (max-width: 992px) {
+  .internal-menu {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 8px;
+  }
+  
+  .internal-menu button {
+    flex: 1 1 45%;
+    margin: 0;
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .internal-menu {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px;
+  }
+  
+  .internal-menu button {
+    width: 100%;
+    margin: 0;
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+/* Pantallas muy pequeñas */
+@media (max-width: 495px) {
+  .body{
+    margin-top: 220px;
+  }
+  .internal-menu {
+    padding: 5px;
+  }
+  
+  .internal-menu button {
+    padding: 10px;
+    font-size: 13px;
+  }
+}
+
+
+@media (max-width: 390px) {
+  .body{
+    margin-top: 220px;
+  }
+  .internal-menu {
+    padding: 5px;
+  }
+  
+  .internal-menu button {
+    padding: 10px;
+    font-size: 13px;
   }
 }
 </style>

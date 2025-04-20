@@ -203,6 +203,8 @@
   </template>
   
   <script >
+  const URL2='http://127.0.0.1:8000'
+  const URL='https://proyecto-cef-backend-production.up.railway.app'
   import { ref, computed } from 'vue';
   import { useRouter } from 'vue-router';
   import Swal from 'sweetalert2';
@@ -318,7 +320,7 @@
     console.log("Datos a enviar:", datosActualizados); // Para depuración
 
     const response = await axios.put(
-      `https://proyecto-cef-backend-production.up.railway.app/ActualizarJ/${this.editingDeportista.documento}`,
+      `${URL}/ActualizarJ/${this.editingDeportista.documento}`,
       datosActualizados
     );
 
@@ -416,7 +418,7 @@ async consultarDeportista() {
 
         try {
           // Hacer la solicitud POST para agregar el pago
-          const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/insertarPago', {
+          const response = await fetch(`${URL}/insertarPago`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -460,7 +462,7 @@ async consultarDeportista() {
     return;
   }
   try {
-    const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/consultarPago/${this.documento}`);
+    const response = await fetch(`${URL}/consultarPago/${this.documento}`);
     if (!response.ok) {
       throw new Error('Error al consultar los pagos');
     }
@@ -504,7 +506,7 @@ async consultarDeportista() {
     },  
   async fetchDeportistas() {
   try {
-    const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/ConsultarJugadores');
+    const response = await fetch(`${URL}/ConsultarJugadores`);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -534,7 +536,7 @@ async eliminarDeportista() {
     });
 
     if (confirmacion.isConfirmed) {
-      const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/EliminarJ/${this.documento}`, {
+      const response = await fetch(`${URL}/EliminarJ/${this.documento}`, {
         method: 'DELETE',
       });
 
@@ -566,7 +568,7 @@ async eliminarDeportista() {
 
 async actualizarDeportista() {
       try {
-        const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/ActualizarJ/${this.editingDeportista.documento}`, {
+        const response = await fetch(`${URL}/ActualizarJ/${this.editingDeportista.documento}`, {
           method: 'PUT',
           
           headers: {
@@ -608,7 +610,7 @@ async actualizarDeportista() {
     },
     async obtenerMiEquipo(showAlert = false) {  // Añade parámetro showAlert
   try {
-    const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/consultarEquipoPorDeportista/${this.documento}`);
+    const response = await fetch(`${URL}/consultarEquipoPorDeportista/${this.documento}`);
     if (response.ok) {
       this.miEquipo = await response.json();
       if (this.miEquipo && this.miEquipo.equipoid) {
@@ -656,7 +658,7 @@ async actualizarDeportista() {
 
     async obtenerCompanerosEquipo() {
       try {
-        const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/consultarCompanerosEquipo/${this.miEquipo.equipoid}`);
+        const response = await fetch(`${URL}/consultarCompanerosEquipo/${this.miEquipo.equipoid}`);
         if (response.ok) {
           this.companerosEquipo = await response.json();
           // Filtrarme a mí mismo de la lista de compañeros
@@ -670,7 +672,7 @@ async actualizarDeportista() {
 
     async obtenerEntrenadorEquipo() {
       try {
-        const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/consultarEntrenadorEquipo/${this.miEquipo.equipoid}`);
+        const response = await fetch(`${URL}/consultarEntrenadorEquipo/${this.miEquipo.equipoid}`);
         if (response.ok) {
           this.entrenadorEquipo = await response.json();
         }
@@ -682,7 +684,7 @@ async actualizarDeportista() {
 
     async obtenerEncuentrosEquipo() {
   try {
-    const response = await fetch(`https://proyecto-cef-backend-production.up.railway.app/consultarEncuentrosEquipo/${this.miEquipo.equipoid}`);
+    const response = await fetch(`${URL}/consultarEncuentrosEquipo/${this.miEquipo.equipoid}`);
     if (response.ok) {
       const data = await response.json();
       // Mapear los datos para adaptarlos a lo que espera el frontend

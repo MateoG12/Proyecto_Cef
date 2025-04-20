@@ -18,6 +18,8 @@
 </template>
 
 <script setup>
+const URL2='http://127.0.0.1:8000'
+const URL='https://proyecto-cef-backend-production.up.railway.app'
 import { ref } from 'vue';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -35,7 +37,7 @@ const handleSubmit = async () => {
 
   isSendingCode.value = true;
   try {
-    const response = await axios.post('https://proyecto-cef-backend-production.up.railway.app/request_verification', {
+    const response = await axios.post(`${URL}/request_verification`, {
       email: email.value
     });
     

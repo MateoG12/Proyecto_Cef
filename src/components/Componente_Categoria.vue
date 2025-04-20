@@ -16,6 +16,8 @@
 </template>
 
 <script>
+const URL2='http://127.0.0.1:8000'
+const URL='https://proyecto-cef-backend-production.up.railway.app'
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
@@ -25,7 +27,7 @@ export default {
 
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('https://proyecto-cef-backend-production.up.railway.app/ConsultarCategorias');
+        const response = await axios.get(`${URL}/ConsultarCategorias`);
         console.log("Datos de categorías:", response.data); // Verifica los datos aquí
         categories.value = response.data; 
         console.log( categories.length)

@@ -179,6 +179,8 @@ Arma tu equipo, reserva y viví el partido como se debe. ¡Nos vemos en la canch
 </template>
 
 <script setup>
+const URL2='http://127.0.0.1:8000'
+const URL='https://proyecto-cef-backend-production.up.railway.app'
 import { ref, onMounted } from 'vue';
 import SliderComponent from '@/components/Slider.vue';
 
@@ -198,7 +200,7 @@ function mostrarMapa() {
 const BASE_URL = 'proyecto-cef-backend.railway.internal' 
 
 async function obtenerCumpleanos() {
-  const response = await fetch('https://proyecto-cef-backend-production.up.railway.app/CumpleanosEsteMes');
+  const response = await fetch(`${URL}/CumpleanosEsteMes`);
   const data = await response.json(); // Guarda la respuesta en una variable
   console.log(data);
 
