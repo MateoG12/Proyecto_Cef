@@ -964,3 +964,24 @@ h2 {
     }
     
 }
+@media (max-width: 393px) {
+  .p_zoom{
+    margin-left: -50px;
+    font-size: 35px;
+    height: 130px;
+    width: 330px;
+  }
+  h2 {
+    font-size: 28px !important; /* Títulos más pequeños */
+  }
+  .body {
+    background: rgb(0, 0, 0);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.815) 50%, rgba(0, 0, 0, 1) 100%);
+    margin-right:-255px ;
+    }
+  .btn-1, .btn-mapa {
+    padding: 8px 15px !important; /* Botones más compactos */
+    font-size: 14px !important;
+  }
+  
+}
