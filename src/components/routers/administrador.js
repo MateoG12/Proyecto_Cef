@@ -19,6 +19,7 @@ import Tactica from "../Tactica.vue";
 import Componente_Deportista from "../Componente_Deportista.vue";
 
 const routes = [
+    
     {
         path: '/',
         name: 'Inicio',

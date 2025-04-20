@@ -1,5 +1,4 @@
 * {
-  background-color: #000;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -970,13 +969,13 @@ h2 {
     margin-left: -50px;
     font-size: 35px;
     height: 130px;
-    width: 330px;
+    width: 30px;
   }
   h2 {
     font-size: 28px !important; /* Títulos más pequeños */
   }
   .body {
-    background: rgb(0, 0, 0);
+    background: rgb(255, 255, 255);
     background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.815) 50%, rgba(0, 0, 0, 1) 100%);
     margin-right:-255px ;
     }
