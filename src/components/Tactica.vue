@@ -37,6 +37,9 @@
 export default {
     data() {
         return {
+            scaleFactor: 1, 
+            originalWidth: 1000, 
+            originalHeight: 500,
             canvas: null,
             ctx: null,
             jugadoresEquipo1: [],
@@ -287,7 +290,24 @@ export default {
             this.ctx.closePath();
             this.ctx.fillStyle = this.ctx.strokeStyle;
             this.ctx.fill();
-        }
+        },
+        updateCanvasSize() {
+    const container = this.$el.querySelector('#campo');
+    const maxWidth = container.clientWidth;
+    this.scaleFactor = maxWidth / this.originalWidth;
+    
+    this.canvas.style.width = maxWidth + 'px';
+    this.canvas.style.height = (this.originalHeight * this.scaleFactor) + 'px';
+  },
+  
+  getMousePos(event) {
+    const rect = this.canvas.getBoundingClientRect();
+    // Ajustamos las coordenadas con el factor de escala
+    return {
+      x: (event.clientX - rect.left) / this.scaleFactor,
+      y: (event.clientY - rect.top) / this.scaleFactor
+    };
+  }
     }
 };
 </script>
@@ -301,19 +321,20 @@ export default {
     color: white;
     font-family: Arial, sans-serif;
     margin: -10px;
-    
 }
 
 #campo {
     position: relative;
     border: 2px solid green;
     margin: 20px auto;
+    max-width: 1000px;
     display: inline-block;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
     background-color: black;
     /* margin-top: 100px; */
     margin-left: 50px;
+    overflow: auto;
 }
 
 canvas {
@@ -454,9 +475,10 @@ background-color: #111;
 } */
 
 #tacticaCanvas {
-  width: 100% !important;
+  width: 100% ;
   height: auto !important;
   max-width: 1000px;
+  display: block;
   aspect-ratio: 2 / 1; /* Mantiene relación de aspecto 1000x500 */
 }
 
