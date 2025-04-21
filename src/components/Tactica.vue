@@ -339,7 +339,7 @@ beforeDestroy() {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
     background-color: black;
-    /* margin-top: 100px; */
+    margin-top: 100px;
     margin-left: 50px;
     overflow: auto;
 }
