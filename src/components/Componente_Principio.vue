@@ -314,7 +314,7 @@ function closeMenu() {
     
     .img_boton {
         width: 28px;
-        margin-left: 6px;
+        margin-left: 106px;
     }
     
     /* Ajustes de logo */
