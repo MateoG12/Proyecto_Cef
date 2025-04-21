@@ -156,8 +156,8 @@
 </template>
 
 <script setup>
-const URL='http://127.0.0.1:8000'
-const URL2='https://proyecto-cef-backend-production.up.railway.app'
+const URL2='http://127.0.0.1:8000'
+const URL='https://proyecto-cef-backend-production.up.railway.app'
 import EmailVerification from './Subcomponetesadmin/EmailVerification.vue';
 import Swal from 'sweetalert2'
 import { ref, onMounted } from 'vue'

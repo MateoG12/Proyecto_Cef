@@ -469,7 +469,6 @@ background-color: #111;
 
 #app {
   min-width: 320px; /* Ancho mínimo para móviles */
-  max-width: 1200px; /* Ancho máximo para desktop */
   margin: 0 auto;
 }
 
