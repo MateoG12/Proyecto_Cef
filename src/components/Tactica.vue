@@ -60,7 +60,9 @@ export default {
     mounted() {
         this.canvas = document.getElementById('tacticaCanvas');
         this.ctx = this.canvas.getContext('2d');
-        
+          // Actualizamos el tamaño inicial
+        this.updateCanvasSize();
+        window.addEventListener('resize', this.updateCanvasSize);
         // Obtenemos el usuario actual del localStorage
         this.usuarioActual = localStorage.getItem('usuario');
         
@@ -68,7 +70,12 @@ export default {
         this.inicializarJugadores(1);
         this.inicializarJugadores(2);
         this.draw();
+        
     },
+
+beforeDestroy() {
+  window.removeEventListener('resize', this.updateCanvasSize);
+},
     methods: {
         // Cargar tácticas del usuario actual
         cargarTacticasUsuario() {
