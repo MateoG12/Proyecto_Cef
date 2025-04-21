@@ -340,7 +340,7 @@ beforeDestroy() {
     border-radius: 8px;
     background-color: black;
     margin-top: 100px;
-    margin-left: 50px;
+    margin-left: 400px;
     overflow: auto;
 }
 
