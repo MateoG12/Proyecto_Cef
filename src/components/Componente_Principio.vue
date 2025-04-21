@@ -325,13 +325,13 @@ function closeMenu() {
     
     /* Ajustes de menú hamburguesa */
     .hamburger-menu {
-        left: 12px;
-        top: 12px;
+        left: 42px;
+        top: 22px;
     }
     
     .hamburger-menu div {
-        width: 22px;
-        height: 2px;
+        width: 32px;
+        height: 12px;
     }
     
     /* Ajustes de contenedor */
