@@ -457,8 +457,7 @@ h3 {
         margin-left: 7.5vw; 
     }
 } 
-body{background-color: #111;
-margin-top: 100px;}
+body{background-color: #111;}
 .tactica-responsive-container {
 background-color: #111;
   max-width: 100%;
