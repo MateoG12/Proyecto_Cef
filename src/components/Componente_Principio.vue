@@ -320,6 +320,7 @@ function closeMenu() {
     /* Ajustes de logo */
     .logo .img {
         width: 70px;
+        margin-left: 100px;
     }
     
     /* Ajustes de menú hamburguesa */
