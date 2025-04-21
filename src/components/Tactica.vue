@@ -1,4 +1,5 @@
 <template>
+    <div class="tactica-responsive-container">
     <div id="app">
         <div id="campo">
             <canvas
@@ -29,6 +30,7 @@
                 </ul>
             </div>
         </div>
+    </div>
     </div>
 </template>
 <script>
@@ -290,7 +292,8 @@ export default {
 };
 </script>
 
-<style>
+<style >
+
 #app {
     background-color: #111;
     min-height: 100vh;
@@ -298,6 +301,7 @@ export default {
     color: white;
     font-family: Arial, sans-serif;
     margin: -10px;
+    
 }
 
 #campo {
@@ -308,8 +312,8 @@ export default {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
     background-color: black;
-    margin-top: 100px;
-    margin-left: 250px;
+    /* margin-top: 100px; */
+    margin-left: 50px;
 }
 
 canvas {
@@ -325,7 +329,7 @@ canvas {
     text-align: center;
     max-width: 1000px;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: 100px;
 }
 
 .tactica-controls {
@@ -349,7 +353,7 @@ canvas {
 }
 
 .tactica-list li {
-    padding: 8px;
+    
     margin: 5px 0;
     background-color: #333;
     border-radius: 4px;
@@ -425,4 +429,73 @@ h3 {
         margin-left: 7.5vw; 
     }
 } 
+body{background-color: #111;
+margin-top: 100px;}
+.tactica-responsive-container {
+background-color: #111;
+  max-width: 100%;
+  overflow: auto;
+  padding: 10px;
+  box-sizing: border-box;
+
+}
+
+#app {
+  min-width: 320px; /* Ancho mínimo para móviles */
+  max-width: 1200px; /* Ancho máximo para desktop */
+  margin: 0 auto;
+}
+
+/* #campo {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 20px auto;
+} */
+
+#tacticaCanvas {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 1000px;
+  aspect-ratio: 2 / 1; /* Mantiene relación de aspecto 1000x500 */
+}
+
+#panel {
+  width: 100%;
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .tactica-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .button-tactica, .tactica-input {
+    width: 100%;
+    margin: 5px 0;
+  }
+  
+  .tactica-list li {
+    flex-wrap: wrap;
+  }
+  
+  .small-button {
+    margin: 2px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  #app {
+    padding: 5px;
+  }
+  
+  #campo {
+    margin: 10px auto;
+  }
+}
 </style>
+
