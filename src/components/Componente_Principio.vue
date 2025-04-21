@@ -331,7 +331,7 @@ function closeMenu() {
     
     .hamburger-menu div {
         width: 32px;
-        height: 12px;
+        height: 7px;
     }
     
     /* Ajustes de contenedor */
