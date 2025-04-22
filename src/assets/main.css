@@ -1,5 +1,13 @@
 @import './base.css';
-
+@media (max-width: 390px) {
+  body {
+    transform: scale(0.5);
+    transform-origin: top left;
+    width: 200%; /* Compensa el zoom al 50% */
+    height: 200%;
+    overflow-x: hidden;
+  }
+}
 #app {
   max-width: 1280px;
   margin: 0 auto;
