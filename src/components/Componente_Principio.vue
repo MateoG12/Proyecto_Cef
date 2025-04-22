@@ -224,6 +224,22 @@ function closeMenu() {
     width: 100%;
     box-sizing: border-box;
 }
+@media (max-width: 868px) {
+    
+    .menuheader {
+        display: none;
+    }
+
+    .menuheader.menu-mobile {
+        display: flex;
+    }
+
+    .hamburger-menu {
+        display: flex;
+    }
+}
+
+
 
 /* Media Queries */
 @media (max-width: 768px) {
