@@ -225,7 +225,10 @@ function closeMenu() {
     box-sizing: border-box;
 }
 @media (max-width: 868px) {
-    
+    .headerheader {
+        height: 86px;
+    }
+
     .menuheader {
         display: none;
     }
@@ -237,6 +240,41 @@ function closeMenu() {
     .hamburger-menu {
         display: flex;
     }
+
+    .logo {
+        position: static;
+        transform: none;
+        margin-right: auto;
+    }
+    .img1{
+        margin-left: 290px;
+    } 
+    .logo {
+        margin: 0;
+        width: 80px;
+    }
+
+    .contenedorheader {
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
+    .auth-buttons {
+        position: absolute;
+        right: 20px;
+    }
+    .session-button {
+        padding: 5px 10px;
+        font-size: 12px;
+        margin-left: 8px;
+        border-radius: 15px;
+    }
+    
+    .img_boton {
+        width: 30px;
+        margin-left: 8px;
+    }
+
 }
 
 
