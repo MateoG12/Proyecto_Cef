@@ -357,7 +357,7 @@ function closeMenu() {
         height: 3px;
     }
 }
-@media (max-width: 395px) {
+@media (max-width: 390px) {
     .session-button {
         padding: 3px 8px;
         font-size: 10px;
